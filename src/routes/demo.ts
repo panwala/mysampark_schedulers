@@ -56,7 +56,7 @@ const sendWhatsAppTemplate = async (phoneNumber: any, imageUrl: string) => {
     "Content-Type": "application/json",
     Authorization: "Bearer OQW891APcEuT47TnB4ml0w",
   };
-
+  console.log("imageUrl",imageUrl)
   const body = {
     messaging_product: "whatsapp",
     recipient_type: "individual",
@@ -409,7 +409,7 @@ async function generateForAllUsers() {
         console.log(`🖼️ Image generated for user ${user.id}`);
 
         // Construct image URL
-        const imageUrl = `http://localhost:3000/output/${filename}`;
+        const imageUrl = `https://mysampark-schedulers.onrender.com/output/${filename}`;
 
         // Send via WhatsApp
         await sendWhatsAppTemplate(
