@@ -60,8 +60,7 @@ const sendWhatsAppTemplate = async (phoneNumber: any, imageUrl: string) => {
   const body = {
     messaging_product: "whatsapp",
     recipient_type: "individual",
-    to: "919624863068",
-    //phoneNumber,
+    to: phoneNumber,
     type: "template",
     template: {
       name: "image_delivery_update",
@@ -396,10 +395,10 @@ async function generateForAllUsers() {
           continue;
         }
         const business = user.active_business;
-        // if (business.post_schedult_time !== currentTime) {
-        //   console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
-        //   continue;
-        // }
+        if (business.post_schedult_time !== currentTime) {
+          console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
+          continue;
+        }
 
         console.log(" frameResponse.data", customFrames);
         const buffer = await generateImageBuffer(user, customFrames);
@@ -409,10 +408,6 @@ async function generateForAllUsers() {
         fs.writeFileSync(outputPath, buffer);
         console.log(`🖼️ Image generated for user ${user.id}`);
 
-        const exists = fs.existsSync(outputPath);
-        console.log(`✅ Image saved: ${exists ? "Yes" : "No"}`, outputPath);
-        console.log("__dirname", __dirname);
-        console.log("outputDir", outputDir);
         // Construct image URL
         // Serve this folder publicly via /output (see Express setup below)
         const uploadResponse = await uploadImageToAPI(
@@ -427,8 +422,6 @@ async function generateForAllUsers() {
           user.active_business.mobile_no || "919624863068",
           uploadResponse.data.ImageUrl
         );
-
-        break;
       } catch (err) {
         console.error(
           `❌ Error generating image for user ${user.id}:`,
