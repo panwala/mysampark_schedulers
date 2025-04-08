@@ -3,7 +3,7 @@
 const axios = require("axios");
 const cron = require("node-cron");
 const fs = require("fs");
-const FormDataNode = require("form-data"); // Make sure to import this package
+import FormData from "form-data";
 const path = require("path");
 const https = require("https");
 const { createCanvas, loadImage, registerFont } = require("canvas");
@@ -310,7 +310,34 @@ const generateImageBuffer = async (
     console.error("error", error.message);
   }
 };
+async function uploadImageToAPI(
+  filePath: string,
+  apiDomainUrl: string,
+  channelNumber: string,
+  apiKey: string
+) {
+  try {
+    const form = new FormData();
+    form.append("file", fs.createReadStream(filePath));
 
+    const response = await axios.post(
+      `${apiDomainUrl}/api/v1.0/uploads/${channelNumber}`,
+      form,
+      {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          ...form.getHeaders(), // ✅ works with correct FormData
+        },
+      }
+    );
+
+    console.log(`✅ Upload successful:`, response.data);
+    return response.data;
+  } catch (error: any) {
+    console.error(`❌ Upload failed: ${error.message}`);
+    throw error;
+  }
+}
 // 🌐 Fetch all users
 async function fetchAllUsers() {
   const response = await axios.get(
@@ -319,33 +346,6 @@ async function fetchAllUsers() {
   // console.log("response", response.data.data);
   return response.data.data;
 }
-// async function uploadImageToWhatsApp(buffer, filename) {
-//   try {
-//     const formData = new FormDataNode();
-//     console.log("buffer", buffer);
-//     console.log("filename", filename);
-//     formData.append("file", buffer, filename);
-//     formData.append("messaging_product", "whatsapp");
-
-//     const response = await axios.post(
-//       "https://cloudapi.wbbox.in/api/v1.0/media/upload",
-//       formData,
-//       {
-//         headers: {
-//           ...formData.getHeaders(),
-//           Authorization: "Bearer OQW891APcEuT47TnB4ml0w",
-//           apikey: "e2ce29d7-82f9-11ef-ad4f-92672d2d0c2d",
-//         },
-//       }
-//     );
-
-//     return response.data.media?.id || null;
-//   } catch (err) {
-//     console.log("erro in upload", err);
-//     console.error("❌ Failed to upload image:", err.message);
-//     return null;
-//   }
-// }
 // 🧠 Main runner
 async function generateForAllUsers() {
   try {
@@ -408,13 +408,20 @@ async function generateForAllUsers() {
         const outputPath = path.join(outputDir, filename);
         fs.writeFileSync(outputPath, buffer);
         console.log(`🖼️ Image generated for user ${user.id}`);
-        
+
         const exists = fs.existsSync(outputPath);
         console.log(`✅ Image saved: ${exists ? "Yes" : "No"}`, outputPath);
         console.log("__dirname", __dirname);
         console.log("outputDir", outputDir);
         // Construct image URL
         // Serve this folder publicly via /output (see Express setup below)
+        const uploadResponse = await uploadImageToAPI(
+          outputPath,
+          "https://cloudapi.wbbox.in",
+          "918849987778",
+          "OQW891APcEuT47TnB4ml0w"
+        );
+        
         const imageUrl = `https://mysampark-schedulers.onrender.com/output/${filename}`;
 
         // Send via WhatsApp
