@@ -354,6 +354,7 @@ async function generateForAllUsers() {
 
     // Create output dir if not exists
     const outputDir = path.join(__dirname, "output");
+    console.log("outputDir",outputDir)
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir);
     }
