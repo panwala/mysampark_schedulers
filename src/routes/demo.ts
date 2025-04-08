@@ -56,11 +56,11 @@ const sendWhatsAppTemplate = async (phoneNumber: any, imageUrl: string) => {
     "Content-Type": "application/json",
     Authorization: "Bearer OQW891APcEuT47TnB4ml0w",
   };
-  console.log("imageUrl",imageUrl)
+  console.log("imageUrl", imageUrl);
   const body = {
     messaging_product: "whatsapp",
     recipient_type: "individual",
-    to:"919624863068", 
+    to: "919624863068",
     //phoneNumber,
     type: "template",
     template: {
@@ -354,20 +354,20 @@ async function generateForAllUsers() {
 
     // Create output dir if not exists
     const outputDir = path.join(__dirname, "output");
-    console.log("outputDir",outputDir)
+    
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir);
     }
     function getCurrentTime() {
-      return new Date().toLocaleTimeString('en-GB', {
+      return new Date().toLocaleTimeString("en-GB", {
         hour12: false,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
       });
     }
     const currentTime = getCurrentTime();
-    console.log("currentTime",currentTime)
+    console.log("currentTime", currentTime);
     for (const user of users) {
       try {
         // console.log("user",user)
@@ -408,9 +408,9 @@ async function generateForAllUsers() {
         const outputPath = path.join(outputDir, filename);
         fs.writeFileSync(outputPath, buffer);
         console.log(`🖼️ Image generated for user ${user.id}`);
-
+        console.log("outputDir", outputDir);
         // Construct image URL
-        const imageUrl = `https://mysampark-schedulers.onrender.com/output/${filename}`;
+        const imageUrl = `https://mysampark-schedulers.onrender.com/opt/render/project/src/dist/routes/output/${filename}`;
 
         // Send via WhatsApp
         await sendWhatsAppTemplate(
