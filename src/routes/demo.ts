@@ -354,7 +354,7 @@ async function generateForAllUsers() {
 
     // Create output dir if not exists
     const outputDir = path.join(__dirname, "output");
-    
+
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir);
     }
@@ -410,7 +410,8 @@ async function generateForAllUsers() {
         console.log(`🖼️ Image generated for user ${user.id}`);
         console.log("outputDir", outputDir);
         // Construct image URL
-        const imageUrl = `https://mysampark-schedulers.onrender.com/opt/render/project/src/dist/routes/output/${filename}`;
+        // Serve this folder publicly via /output (see Express setup below)
+        const imageUrl = `https://mysampark-schedulers.onrender.com/output/${filename}`;
 
         // Send via WhatsApp
         await sendWhatsAppTemplate(
