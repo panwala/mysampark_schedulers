@@ -421,13 +421,11 @@ async function generateForAllUsers() {
           "918849987778",
           "OQW891APcEuT47TnB4ml0w"
         );
-        
-        const imageUrl = `https://mysampark-schedulers.onrender.com/output/${filename}`;
 
         // Send via WhatsApp
         await sendWhatsAppTemplate(
           user.active_business.mobile_no || "919624863068",
-          imageUrl
+          uploadResponse.data.ImageUrl
         );
 
         break;
