@@ -408,6 +408,10 @@ async function generateForAllUsers() {
         const outputPath = path.join(outputDir, filename);
         fs.writeFileSync(outputPath, buffer);
         console.log(`🖼️ Image generated for user ${user.id}`);
+        
+        const exists = fs.existsSync(outputPath);
+        console.log(`✅ Image saved: ${exists ? "Yes" : "No"}`, outputPath);
+        console.log("__dirname", __dirname);
         console.log("outputDir", outputDir);
         // Construct image URL
         // Serve this folder publicly via /output (see Express setup below)
