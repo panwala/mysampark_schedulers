@@ -73,7 +73,7 @@ const sendWhatsAppTemplate = async (phoneNumber: any, imageUrl: string) => {
             {
               type: "image",
               image: {
-                link: "https://img.freepik.com/free-vector/easter-eggs-green-background_1048-1289.jpg",
+                link: imageUrl,
               },
             },
           ],
