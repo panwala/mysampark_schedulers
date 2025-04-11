@@ -357,14 +357,16 @@ async function generateForAllUsers() {
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir);
     }
-    function getCurrentTime() {
-      return new Date().toLocaleTimeString("en-GB", {
+    function getCurrentTimeIST() {
+      return new Intl.DateTimeFormat("en-GB", {
         hour12: false,
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
-      });
+        timeZone: "Asia/Kolkata", // Set to IST
+      }).format(new Date());
     }
+    
     const currentTime = getCurrentTime();
     console.log("currentTime", currentTime);
     for (const user of users) {
