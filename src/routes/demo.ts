@@ -367,7 +367,7 @@ async function generateForAllUsers() {
       }).format(new Date());
     }
     
-    const currentTime = getCurrentTime();
+    const currentTime = getCurrentTimeIST();
     console.log("currentTime", currentTime);
     for (const user of users) {
       try {
