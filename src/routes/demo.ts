@@ -413,10 +413,10 @@ async function generateForAllUsers() {
           continue;
         }
         const business = user.active_business;
-        // if (business.post_schedult_time !== currentTime) {
-        //   console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
-        //   continue;
-        // }
+        if (business.post_schedult_time !== currentTime) {
+          console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
+          continue;
+        }
 
         // console.log(" frameResponse.data", customFrames);
         const buffer = await generateImageBuffer(user, customFrames);
