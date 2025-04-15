@@ -137,7 +137,7 @@ const generateImageBuffer = async (
 
     // Replace with users dynamic data
     const userData = singleuserData;
-    console.log("userData", userData);
+    // console.log("userData", userData);
     // Extracting required data from provided datasets
     const lineContent = framesData.line_content;
     const globalFont = framesData.globalfont;
@@ -413,15 +413,15 @@ async function generateForAllUsers() {
           continue;
         }
         const business = user.active_business;
-        if (business.post_schedult_time !== currentTime) {
-          console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
-          continue;
-        }
+        // if (business.post_schedult_time !== currentTime) {
+        //   console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
+        //   continue;
+        // }
 
-        console.log(" frameResponse.data", customFrames);
+        // console.log(" frameResponse.data", customFrames);
         const buffer = await generateImageBuffer(user, customFrames);
 
-        const filename = `user-${user.id}.png`;
+        const filename = `${Math.random()}user-${user.id}.png`;
         const outputPath = path.join(outputDir, filename);
         fs.writeFileSync(outputPath, buffer);
         console.log("outputPath", outputPath);
