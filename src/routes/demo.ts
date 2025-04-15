@@ -316,11 +316,11 @@ const generateImageBuffer = async (
         });
       }
     );
-    
+
     return canvas.toBuffer("image/png");
     // Set response headers and send the image
   } catch (error) {
-    console.log("error ",error)
+    console.log("error ", error);
     console.error("error", error.message);
   }
 };
@@ -348,7 +348,7 @@ async function uploadImageToAPI(
     console.log(`✅ Upload successful:`, response.data);
     return response.data;
   } catch (error: any) {
-    console.log("error",error)
+    console.log("error", error);
     console.error(`❌ Upload failed: ${error.message}`);
     throw error;
   }
@@ -382,7 +382,7 @@ async function generateForAllUsers() {
         timeZone: "Asia/Kolkata", // Set to IST
       }).format(new Date());
     }
-    
+
     const currentTime = getCurrentTimeIST();
     console.log("currentTime", currentTime);
     for (const user of users) {
@@ -413,10 +413,10 @@ async function generateForAllUsers() {
           continue;
         }
         const business = user.active_business;
-        // if (business.post_schedult_time !== currentTime) {
-        //   console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
-        //   continue;
-        // }
+        if (business.post_schedult_time !== currentTime) {
+          console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
+          continue;
+        }
 
         console.log(" frameResponse.data", customFrames);
         const buffer = await generateImageBuffer(user, customFrames);
@@ -424,7 +424,7 @@ async function generateForAllUsers() {
         const filename = `user-${user.id}.png`;
         const outputPath = path.join(outputDir, filename);
         fs.writeFileSync(outputPath, buffer);
-        console.log("outputPath",outputPath)
+        console.log("outputPath", outputPath);
         console.log(`🖼️ Image generated for user ${user.id}`);
 
         // Construct image URL
@@ -435,12 +435,12 @@ async function generateForAllUsers() {
           "918849987778",
           "OQW891APcEuT47TnB4ml0w"
         );
-        console.log("uploadResponse",uploadResponse)
+        console.log("uploadResponse", uploadResponse);
 
         // Send via WhatsApp
         await sendWhatsAppTemplate(
           user.active_business.mobile_no || "919624863068",
-      uploadResponse.data.ImageUrl
+          uploadResponse.data.ImageUrl
         );
       } catch (err) {
         console.error(
