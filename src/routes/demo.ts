@@ -44,12 +44,15 @@ registerFont(`${fontPath}/montserrat/Montserrat-Black.ttf`, {
   weight: "900",
 });
 
-// Utility to get current time in HH:mm:ss format
-const getCurrentTime = () => {
-  const now = new Date();
-  return now.toTimeString().split(" ")[0];
-};
-
+async function getBackgroundImageUrl(): Promise<string | null> {
+  try {
+    const res = await axios.get("https://testadmin.mysampark.com/api/imageapi");
+    return res.data?.data || null;
+  } catch (error) {
+    console.error("Error fetching background image:", error);
+    return null;
+  }
+}
 // Function to send WhatsApp message
 const sendWhatsAppTemplate = async (phoneNumber: any, imageUrl: string) => {
   const headers = {
@@ -157,10 +160,20 @@ const generateImageBuffer = async (
     ];
 
     // Load background image
-    const backgroundImage = await loadImage(framesVariantData.image_url);
+    // ✅ Step 1: Load background image from getBackgroundImageUrl()
+    const backgroundImageUrl = await getBackgroundImageUrl();
+    const backgroundImage = await loadImage(backgroundImageUrl);
+
+    // ✅ Create canvas with background image dimensions
     const canvas = createCanvas(backgroundImage.width, backgroundImage.height);
     const ctx = canvas.getContext("2d");
+
+    // ✅ Draw background image (base layer)
     ctx.drawImage(backgroundImage, 0, 0);
+
+    // ✅ (Optional) Overlay frame image on top of background
+    const frameOverlayImage = await loadImage(framesVariantData.image_url);
+    ctx.drawImage(frameOverlayImage, 0, 0);
 
     // Load icons for different business details
     const icons = {
@@ -303,9 +316,11 @@ const generateImageBuffer = async (
         });
       }
     );
+    
     return canvas.toBuffer("image/png");
     // Set response headers and send the image
   } catch (error) {
+    console.log("error ",error)
     console.error("error", error.message);
   }
 };
@@ -333,6 +348,7 @@ async function uploadImageToAPI(
     console.log(`✅ Upload successful:`, response.data);
     return response.data;
   } catch (error: any) {
+    console.log("error",error)
     console.error(`❌ Upload failed: ${error.message}`);
     throw error;
   }
@@ -397,10 +413,10 @@ async function generateForAllUsers() {
           continue;
         }
         const business = user.active_business;
-        if (business.post_schedult_time !== currentTime) {
-          console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
-          continue;
-        }
+        // if (business.post_schedult_time !== currentTime) {
+        //   console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
+        //   continue;
+        // }
 
         console.log(" frameResponse.data", customFrames);
         const buffer = await generateImageBuffer(user, customFrames);
@@ -408,6 +424,7 @@ async function generateForAllUsers() {
         const filename = `user-${user.id}.png`;
         const outputPath = path.join(outputDir, filename);
         fs.writeFileSync(outputPath, buffer);
+        console.log("outputPath",outputPath)
         console.log(`🖼️ Image generated for user ${user.id}`);
 
         // Construct image URL
@@ -418,11 +435,12 @@ async function generateForAllUsers() {
           "918849987778",
           "OQW891APcEuT47TnB4ml0w"
         );
+        console.log("uploadResponse",uploadResponse)
 
         // Send via WhatsApp
         await sendWhatsAppTemplate(
           user.active_business.mobile_no || "919624863068",
-          uploadResponse.data.ImageUrl
+      uploadResponse.data.ImageUrl
         );
       } catch (err) {
         console.error(
