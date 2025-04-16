@@ -371,59 +371,68 @@ async function generateForAllUsers() {
     console.log("currentTime", currentTime);
     for (const user of users) {
       try {
-        // console.log("user",user)
+        const business = user?.active_business;
+
+        // ✅ Check if active_business and its ID are valid
+        if (!business?.id) {
+          console.warn(
+            `⚠️ Skipping user ${user.id}: No active business or business ID.`
+          );
+          continue;
+        }
+
         // Step 2: Fetch custom frame
         const frameResponse = await axios.post(
           "https://testadmin.mysampark.com/api/display_bussiness_frame",
-          { business_id: user.id }
+          { business_id: business.id }
         );
 
         const customFrames = {
-          data: frameResponse.data.data, // array of frames
-          line_content: frameResponse.data.line_content, // corrected path
-          globalfont: frameResponse.data.globalfont, // corrected path
+          data: frameResponse.data?.data,
+          line_content: frameResponse.data?.line_content,
+          globalfont: frameResponse.data?.globalfont,
         };
 
-        // ✅ Proceed only if all three values exist and are valid
+        // ✅ Proceed only if all required frame data exists
         if (
           !Array.isArray(customFrames.data) ||
           customFrames.data.length === 0 ||
           !customFrames.line_content ||
           !Array.isArray(customFrames.globalfont) ||
-          customFrames.globalfont.length === 0 ||
-          user.active_business == null
+          customFrames.globalfont.length === 0
         ) {
-          console.error("❌ Missing required frame data for user", user.id);
+          console.error(`❌ Missing frame data for user ${user.id}`);
           continue;
         }
-        const business = user.active_business;
+
+        // ✅ Check if current time matches scheduled time
         if (business.post_schedult_time !== currentTime) {
           console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
           continue;
         }
 
-        // console.log(" frameResponse.data", customFrames);
+        // Step 3: Generate image buffer
         const buffer = await generateImageBuffer(user, customFrames);
 
+        // Step 4: Save image
         const filename = `${Math.random()}user-${user.id}.png`;
         const outputPath = path.join(outputDir, filename);
         fs.writeFileSync(outputPath, buffer);
-        console.log("outputPath", outputPath);
-        console.log(`🖼️ Image generated for user ${user.id}`);
+        console.log(`🖼️ Image generated for user ${user.id}: ${outputPath}`);
 
-        // Construct image URL
-        // Serve this folder publicly via /output (see Express setup below)
+        // Step 5: Upload image
         const uploadResponse = await uploadImageToAPI(
           outputPath,
           "https://cloudapi.wbbox.in",
           "918849987778",
           "OQW891APcEuT47TnB4ml0w"
         );
+
         console.log("uploadResponse", uploadResponse);
 
-        // Send via WhatsApp
+        // Step 6: Send via WhatsApp
         await sendWhatsAppTemplate(
-          user.active_business.mobile_no || "919624863068",
+          business.mobile_no || "919624863068",
           uploadResponse.data.ImageUrl
         );
       } catch (err) {
