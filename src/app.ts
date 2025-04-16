@@ -5,7 +5,7 @@ import routes from "./routes";
 const app = express();
 dotenv.config();
 require("./routes/demo");
-const PORT = process.env.PORT;
+const PORT = 43007;
 const path = require("path");
 const outputPath = path.join(__dirname, "output");
 app.use("/output", express.static(path.join(__dirname, "output")));
