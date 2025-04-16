@@ -132,13 +132,9 @@ const generateImageBuffer = async (
   }
 ) => {
   try {
-    // Replace with frames dynamic data
     const framesData = actualframesData;
-
-    // Replace with users dynamic data
     const userData = singleuserData;
-    // console.log("userData", userData);
-    // Extracting required data from provided datasets
+
     const lineContent = framesData.line_content;
     const globalFont = framesData.globalfont;
     const frameData = framesData.data[0];
@@ -146,8 +142,6 @@ const generateImageBuffer = async (
     const framesVariantData = frameData.frames_varinat[0];
     const framesVariantLines = framesVariantData.framesvariantline;
     const fontFamily = frameData.font_type;
-
-    // Business-related text data to be rendered on the image
 
     const businessData = [
       userData.active_business.business_name,
@@ -159,23 +153,24 @@ const generateImageBuffer = async (
       userData.active_business.website,
     ];
 
-    // Load background image
-    // ✅ Step 1: Load background image from getBackgroundImageUrl()
     const backgroundImageUrl = await getBackgroundImageUrl();
     const backgroundImage = await loadImage(backgroundImageUrl);
 
-    // ✅ Create canvas with background image dimensions
     const canvas = createCanvas(backgroundImage.width, backgroundImage.height);
     const ctx = canvas.getContext("2d");
-
-    // ✅ Draw background image (base layer)
     ctx.drawImage(backgroundImage, 0, 0);
 
-    // ✅ (Optional) Overlay frame image on top of background
     const frameOverlayImage = await loadImage(framesVariantData.image_url);
-    ctx.drawImage(frameOverlayImage, 0, 0);
+    ctx.drawImage(
+      frameOverlayImage,
+      0,
+      canvas.height - frameOverlayImage.height
+    );
 
-    // Load icons for different business details
+    let bottomTextContentHeight = canvas.height - frameOverlayImage.height;
+    // 🔧 Calculate overlay height once
+    const bottomOverlayHeight = frameOverlayImage.height;
+
     const icons = {
       email: await loadImage(frameData.frame_icon.email_icon),
       mobile1: await loadImage(frameData.frame_icon.mobile_no_1_icon),
@@ -185,7 +180,6 @@ const generateImageBuffer = async (
       instagram: await loadImage(frameData.frame_icon.instragram_icon),
     };
 
-    // Extract relevant font settings for different text elements
     const fontsData = [
       globalFont.find((f: { type: string }) => f.type === "name"),
       globalFont.find((f: { type: string }) => f.type === "mobile_no_1"),
@@ -196,7 +190,6 @@ const generateImageBuffer = async (
       globalFont.find((f: { type: string }) => f.type === "website"),
     ].filter((f) => f !== undefined);
 
-    // Extract text colors and group lines for rendering
     const textColours = [
       framesTextColour.line1,
       framesTextColour.line2,
@@ -213,7 +206,6 @@ const generateImageBuffer = async (
       lineContent.line5,
     ].filter((f) => f !== null);
 
-    // Loop through each text section and render it on the image
     framesVariantLines.forEach(
       (
         row: {
@@ -231,10 +223,8 @@ const generateImageBuffer = async (
         ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
         ctx.fillStyle = textColours[index] === "Y" ? frameData.y : frameData.x;
 
-        // Split lines of current row
         const linesOfCurrentRow = groupOfLines[index].split(",");
 
-        // Map business data to their respective text slots
         const texts = linesOfCurrentRow
           .map((line: string | number) => {
             const lineText = businessData[+line - 1];
@@ -242,7 +232,6 @@ const generateImageBuffer = async (
           })
           .filter((f: null) => f !== null);
 
-        // Calculate total width of all text elements combined
         const totalTextWidth =
           index === 0
             ? texts.reduce(
@@ -255,12 +244,9 @@ const generateImageBuffer = async (
                   sum + ctx.measureText(text.text).width,
                 0
               ) + iconSize;
+
         const spacing = (+row.width - totalTextWidth) / (texts.length + 1);
         let xPos = +row.x + spacing;
-
-        // ctx.strokeStyle = "red";
-        // ctx.lineWidth = 2;
-        // ctx.strokeRect(xPos, +row.y, +row.width, +row.height);
 
         // Render text and icons
         texts.forEach((text: { lineNo: number; text: any }) => {
@@ -269,7 +255,6 @@ const generateImageBuffer = async (
           ctx.font = `${fontWeight} ${+getFontSize.font_size}px ${fontFamily}`;
           fontSize = +getFontSize.font_size;
 
-          // Assign appropriate icon for each text line
           let icon: null;
           switch (text.lineNo) {
             case 2:
@@ -295,10 +280,10 @@ const generateImageBuffer = async (
           }
 
           // Calculate text position
-          const yPos = +row.y + +row.height / 2 + fontSize / 3;
+          const yPos =
+            +row.y + +row.height / 2 + fontSize / 3 + bottomTextContentHeight;
           const textWidth = ctx.measureText(text.text).width;
 
-          // Draw icon and text
           if (icon) {
             ctx.drawImage(
               icon,
@@ -318,7 +303,6 @@ const generateImageBuffer = async (
     );
 
     return canvas.toBuffer("image/png");
-    // Set response headers and send the image
   } catch (error) {
     console.log("error ", error);
     console.error("error", error.message);
