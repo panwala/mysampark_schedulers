@@ -44,22 +44,59 @@ registerFont(`${fontPath}/montserrat/Montserrat-Black.ttf`, {
   weight: "900",
 });
 
-async function getBackgroundImageUrl(): Promise<string | null> {
+async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
   try {
-    const res = await axios.get("https://testadmin.mysampark.com/api/imageapi");
-    return res.data?.data || null;
+    console.log("bussiness_id", bussiness_id);
+
+    //changes
+    // const res = await axios.post(
+    //   "https://testadmin.mysampark.com/api/imageapi",
+    //   { bussiness_id: bussiness_id }
+    // );
+    return {
+      story:
+        "https://testadmin.mysampark.com/images/15/story/67da6410d8d52_3.png",
+      post: "https://testadmin.mysampark.com/images/15/post/67da637ea1787_3.png",
+      caption:
+        "Success is a mindset, not a destination.  Transform your attitude, transform your results. #TechSolutions #SuccessMindset ",
+    };
+    // res.data || null;
+  } catch (error) {
+    console.error("Error fetching background image:", error);
+    return null;
+  }
+}
+
+async function getWhatsappMessageCaption(bussiness_id: Number): Promise<any> {
+  try {
+    //changes
+    // const res = await axios.post(
+    //   "https://testadmin.mysampark.com/api/imageapi",
+    //   { bussiness_id: bussiness_id }
+    // );
+    return {
+      caption:
+        "Success is a mindset, not a destination.  Transform your attitude, transform your results. #TechSolutions #SuccessMindset ",
+    };
+
+    // res.data || "";
   } catch (error) {
     console.error("Error fetching background image:", error);
     return null;
   }
 }
 // Function to send WhatsApp message
-const sendWhatsAppTemplate = async (phoneNumber: any, imageUrl: string) => {
+const sendWhatsAppTemplate = async (
+  phoneNumber: any,
+  imageUrl: string,
+  caption: any
+) => {
   const headers = {
     "Content-Type": "application/json",
     Authorization: "Bearer OQW891APcEuT47TnB4ml0w",
   };
   console.log("imageUrl", imageUrl);
+  console.log("caption", caption.caption);
   const body = {
     messaging_product: "whatsapp",
     recipient_type: "individual",
@@ -85,7 +122,7 @@ const sendWhatsAppTemplate = async (phoneNumber: any, imageUrl: string) => {
           parameters: [
             {
               type: "text",
-              text: "Banner Image",
+              text: caption.caption,
             },
           ],
         },
@@ -96,7 +133,7 @@ const sendWhatsAppTemplate = async (phoneNumber: any, imageUrl: string) => {
           parameters: [
             {
               type: "text",
-              text: "http://www.mysampark.com/",
+              text: caption.caption,
             },
           ],
         },
@@ -129,7 +166,9 @@ const generateImageBuffer = async (
     data: any; // array of frames
     line_content: any; // corrected path
     globalfont: any;
-  }
+  },
+  businessDatas: any,
+  counter: any
 ) => {
   try {
     const framesData = actualframesData;
@@ -144,17 +183,21 @@ const generateImageBuffer = async (
     const fontFamily = frameData.font_type;
 
     const businessData = [
-      userData.active_business.business_name,
-      userData.active_business.mobile_no,
-      userData.active_business.mobile_no_2,
-      userData.active_business.instragram_id,
-      userData.active_business.email,
-      userData.active_business.address,
-      userData.active_business.website,
+      businessDatas.business_name,
+      businessDatas.mobile_no,
+      businessDatas.mobile_no_2,
+      businessDatas.instragram_id,
+      businessDatas.email,
+      businessDatas.address,
+      businessDatas.website,
     ];
 
-    const backgroundImageUrl = await getBackgroundImageUrl();
-    const backgroundImage = await loadImage(backgroundImageUrl);
+    console.log("businessDatas", businessDatas);
+    const backgroundImageUrl = await getBackgroundImageUrl(businessDatas.id);
+    console.log("backgroundImageUrl", backgroundImageUrl);
+    const backgroundImage = await loadImage(
+      counter == 0 ? backgroundImageUrl.story : backgroundImageUrl.post
+    );
 
     const canvas = createCanvas(backgroundImage.width, backgroundImage.height);
     const ctx = canvas.getContext("2d");
@@ -166,7 +209,20 @@ const generateImageBuffer = async (
       0,
       canvas.height - frameOverlayImage.height
     );
-
+    // Logo image
+    //changes
+    //businessDatas.logo_image
+    const logoImage = await loadImage(
+      "https://img.freepik.com/premium-vector/water-logo-design-concept_761413-7077.jpg?semt=ais_hybrid&w=250"
+    );
+    const logoYPosition = canvas.width / 2 - logoImage.width / 2;
+    ctx.drawImage(
+      logoImage,
+      logoYPosition,
+      50, // Position
+      logoImage.width,
+      150 // Size
+    );
     let bottomTextContentHeight = canvas.height - frameOverlayImage.height;
     // 🔧 Calculate overlay height once
     const bottomOverlayHeight = frameOverlayImage.height;
@@ -371,70 +427,85 @@ async function generateForAllUsers() {
     console.log("currentTime", currentTime);
     for (const user of users) {
       try {
-        const business = user?.active_business;
+        for (let i = 0; i < user.businesses.length; i++) {
+          const business = user?.businesses[i];
 
-        // ✅ Check if active_business and its ID are valid
-        if (!business?.id) {
-          console.warn(
-            `⚠️ Skipping user ${user.id}: No active business or business ID.`
+          // ✅ Check if active_business and its ID are valid
+          if (!business?.id) {
+            console.warn(
+              `⚠️ Skipping user ${user.id}: No active business or business ID.`
+            );
+            continue;
+          }
+
+          // Step 2: Fetch custom frame
+          const frameResponse = await axios.post(
+            "https://testadmin.mysampark.com/api/display_bussiness_frame",
+            { business_id: business.id }
           );
-          continue;
+
+          const customFrames = {
+            data: frameResponse.data?.data,
+            line_content: frameResponse.data?.line_content,
+            globalfont: frameResponse.data?.globalfont,
+          };
+
+          // ✅ Proceed only if all required frame data exists
+          if (
+            !Array.isArray(customFrames.data) ||
+            customFrames.data.length === 0 ||
+            !customFrames.line_content ||
+            !Array.isArray(customFrames.globalfont) ||
+            customFrames.globalfont.length === 0
+          ) {
+            console.error(`❌ Missing frame data for user ${user.id}`);
+            continue;
+          }
+
+          // changes
+          // ✅ Check if current time matches scheduled time
+          // if (business.post_schedult_time !== currentTime) {
+          //   console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
+          //   continue;
+          // }
+
+          for (let j = 0; j <= 1; j++) {
+            // Step 3: Generate image buffer
+            const buffer = await generateImageBuffer(
+              user,
+              customFrames,
+              business,
+              j
+            );
+
+            // Step 4: Save image
+            const filename = `${Math.random()}user-${user.id}.png`;
+            const outputPath = path.join(outputDir, filename);
+            fs.writeFileSync(outputPath, buffer);
+            console.log(
+              `🖼️ Image generated for user ${user.id}: ${outputPath}`
+            );
+
+            // Step 5: Upload image
+            const uploadResponse = await uploadImageToAPI(
+              outputPath,
+              "https://cloudapi.wbbox.in",
+              "918849987778",
+              "OQW891APcEuT47TnB4ml0w"
+            );
+
+            // console.log("uploadResponse", uploadResponse);
+
+            // // // Step 6: Send via WhatsApp
+            //changes
+            await sendWhatsAppTemplate(
+              "919624863068",
+              // user.mobileno || "919624863068",
+              uploadResponse.data.ImageUrl,
+              await getWhatsappMessageCaption(business.id)
+            );
+          }
         }
-
-        // Step 2: Fetch custom frame
-        const frameResponse = await axios.post(
-          "https://testadmin.mysampark.com/api/display_bussiness_frame",
-          { business_id: business.id }
-        );
-
-        const customFrames = {
-          data: frameResponse.data?.data,
-          line_content: frameResponse.data?.line_content,
-          globalfont: frameResponse.data?.globalfont,
-        };
-
-        // ✅ Proceed only if all required frame data exists
-        if (
-          !Array.isArray(customFrames.data) ||
-          customFrames.data.length === 0 ||
-          !customFrames.line_content ||
-          !Array.isArray(customFrames.globalfont) ||
-          customFrames.globalfont.length === 0
-        ) {
-          console.error(`❌ Missing frame data for user ${user.id}`);
-          continue;
-        }
-
-        // ✅ Check if current time matches scheduled time
-        if (business.post_schedult_time !== currentTime) {
-          console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
-          continue;
-        }
-
-        // Step 3: Generate image buffer
-        const buffer = await generateImageBuffer(user, customFrames);
-
-        // Step 4: Save image
-        const filename = `${Math.random()}user-${user.id}.png`;
-        const outputPath = path.join(outputDir, filename);
-        fs.writeFileSync(outputPath, buffer);
-        console.log(`🖼️ Image generated for user ${user.id}: ${outputPath}`);
-
-        // Step 5: Upload image
-        const uploadResponse = await uploadImageToAPI(
-          outputPath,
-          "https://cloudapi.wbbox.in",
-          "918849987778",
-          "OQW891APcEuT47TnB4ml0w"
-        );
-
-        console.log("uploadResponse", uploadResponse);
-
-        // Step 6: Send via WhatsApp
-        await sendWhatsAppTemplate(
-          user.mobileno || "919624863068",
-          uploadResponse.data.ImageUrl
-        );
       } catch (err) {
         console.error(
           `❌ Error generating image for user ${user.id}:`,
