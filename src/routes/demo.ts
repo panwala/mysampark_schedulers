@@ -464,10 +464,10 @@ async function generateForAllUsers() {
 
           // changes
           // ✅ Check if current time matches scheduled time
-          // if (business.post_schedult_time !== currentTime) {
-          //   console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
-          //   continue;
-          // }
+          if (business.post_schedult_time !== currentTime) {
+            console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
+            continue;
+          }
 
           for (let j = 0; j <= 1; j++) {
             // Step 3: Generate image buffer
