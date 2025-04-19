@@ -13,35 +13,35 @@ const { createCanvas, loadImage, registerFont } = require("canvas");
 const fontPath = "./public/font";
 
 registerFont(`${fontPath}/montserrat/Montserrat-Regular.ttf`, {
-  family: "Montserrat",
+  family: "montserrat",
   weight: "normal",
 });
 registerFont(`${fontPath}/montserrat/Montserrat-Bold.ttf`, {
-  family: "Montserrat",
+  family: "montserrat",
   weight: "bold",
 });
 registerFont(`${fontPath}/montserrat/Montserrat-Medium.ttf`, {
-  family: "Montserrat",
+  family: "montserrat",
   weight: "500",
 });
 registerFont(`${fontPath}/montserrat/Montserrat-Light.ttf`, {
-  family: "Montserrat",
+  family: "montserrat",
   weight: "300",
 });
 registerFont(`${fontPath}/montserrat/Montserrat-Thin.ttf`, {
-  family: "Montserrat",
+  family: "montserrat",
   weight: "100",
 });
 registerFont(`${fontPath}/montserrat/Montserrat-ExtraBold.ttf`, {
-  family: "Montserrat",
+  family: "montserrat",
   weight: "800",
 });
 registerFont(`${fontPath}/montserrat/Montserrat-SemiBold.ttf`, {
-  family: "Montserrat",
+  family: "montserrat",
   weight: "600",
 });
 registerFont(`${fontPath}/montserrat/Montserrat-Black.ttf`, {
-  family: "Montserrat",
+  family: "montserrat",
   weight: "900",
 });
 
@@ -205,6 +205,7 @@ async function recolorImage(
 }
 
 // 🎨 Image rendering logic (reusable)
+
 const generateImageBuffer = async (
   singleuserData: any,
   actualframesData: {
@@ -219,15 +220,16 @@ const generateImageBuffer = async (
     const framesData = actualframesData;
     const userData = singleuserData;
 
+    // Extract necessary data from frames and user input
     const lineContent = framesData.line_content;
     const globalFont = framesData.globalfont;
     const frameData = framesData.data[0];
     const framesTextColour = frameData.frames_text_colour;
     const framesVariantData = frameData.frames_varinat[0];
     const framesVariantLines = framesVariantData.framesvariantline;
-    const fontFamily = frameData.font_type;
-    console.log("globalFont",globalFont)
+    const fontFamily = frameData.font_type || "montserrat"; // Default font family
 
+    // Prepare business data array in a specific order
     const businessData = [
       businessDatas.business_name,
       businessDatas.mobile_no,
@@ -238,31 +240,37 @@ const generateImageBuffer = async (
       businessDatas.website,
     ];
 
-    console.log("businessDatas", businessDatas);
+    // Load background image (story or post based on counter)
     const backgroundImageUrl = await getBackgroundImageUrl(businessDatas.id);
-    console.log(
-      "backgroundImageUrl",
-      counter == 0
-        ? backgroundImageUrl.data.story
-        : backgroundImageUrl.data.post
-    );
     const backgroundImage = await loadImage(
       counter == 0
         ? backgroundImageUrl.data.story
         : backgroundImageUrl.data.post
     );
 
+    // Create base canvas and draw background
     const canvas = createCanvas(backgroundImage.width, backgroundImage.height);
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(backgroundImage, 0, 0);
+    const mainCtx = canvas.getContext("2d");
+    mainCtx.drawImage(backgroundImage, 0, 0);
 
+    // Create high-resolution overlay canvas for better quality
+    const scale = 2;
+    const overlayCanvas = createCanvas(
+      canvas.width * scale,
+      canvas.height * scale
+    );
+    const ctx = overlayCanvas.getContext("2d");
+    ctx.scale(scale, scale);
+
+    // Draw the frame overlay at the bottom of the canvas
     const frameOverlayImage = await loadImage(framesVariantData.image_url);
     ctx.drawImage(
       frameOverlayImage,
       0,
       canvas.height - frameOverlayImage.height
     );
-    // Logo image
+
+    // Load and draw business logo, centered at the top
     const logoImage = await loadImage(
       businessDatas.logo_image_url ||
         "https://img.freepik.com/premium-vector/water-logo-design-concept_761413-7077.jpg?semt=ais_hybrid&w=250"
@@ -271,35 +279,18 @@ const generateImageBuffer = async (
     const aspectRatio = logoImage.width / logoImage.height;
     const calculatedWidth = desiredLogoHeight * aspectRatio;
     const logoXPosition = canvas.width / 2 - calculatedWidth / 2;
-    // const logoYPosition = canvas.width / 2 - logoImage.width / 2;
-    // ctx.drawImage(
-    //   logoImage,
-    //   logoYPosition,
-    //   50, // Position
-    //   logoImage.width,
-    //   150 // Size
-    // );
     ctx.drawImage(
       logoImage,
-      logoXPosition, // X position (centered)
-      50, // Y position (same as before)
+      logoXPosition,
+      50,
       calculatedWidth,
       desiredLogoHeight
     );
 
+    // Calculate vertical offset for text based on overlay height
     let bottomTextContentHeight = canvas.height - frameOverlayImage.height;
-    // 🔧 Calculate overlay height once
-    const bottomOverlayHeight = frameOverlayImage.height;
 
-    // const icons = {
-    //   email: await loadImage(frameData.frame_icon.email_icon),
-    //   mobile1: await loadImage(frameData.frame_icon.mobile_no_1_icon),
-    //   mobile2: await loadImage(frameData.frame_icon.mobile_no_2_icon),
-    //   location: await loadImage(frameData.frame_icon.location_icon),
-    //   website: await loadImage(frameData.frame_icon.website_icon),
-    //   instagram: await loadImage(frameData.frame_icon.instragram_icon),
-    // };
-
+    // Icon mapping from frame data
     const icons = {
       email: frameData.frame_icon.email_icon,
       mobile1: frameData.frame_icon.mobile_no_1_icon,
@@ -309,6 +300,7 @@ const generateImageBuffer = async (
       instagram: frameData.frame_icon.instragram_icon,
     };
 
+    // Prepare fonts for each business info type
     const fontsData = [
       globalFont.find((f: { type: string }) => f.type === "name"),
       globalFont.find((f: { type: string }) => f.type === "mobile_no_1"),
@@ -319,6 +311,7 @@ const generateImageBuffer = async (
       globalFont.find((f: { type: string }) => f.type === "website"),
     ].filter((f) => f !== undefined);
 
+    // Extract color toggles for each line (Y = use color 'y', otherwise 'x')
     const textColours = [
       framesTextColour.line1,
       framesTextColour.line2,
@@ -327,6 +320,7 @@ const generateImageBuffer = async (
       framesTextColour.line5,
     ].filter((f) => f !== null);
 
+    // Group business data lines by line index
     const groupOfLines = [
       lineContent.line1,
       lineContent.line2,
@@ -335,18 +329,20 @@ const generateImageBuffer = async (
       lineContent.line5,
     ].filter((f) => f !== null);
 
+    // Loop through each line layout configuration
     for (const [index, row] of framesVariantLines.entries()) {
-      let fontSize = +fontsData[0]?.font_size || 16;
+      let fontSize = +fontsData[0]?.font_size || 20;
       const fontWeight = "normal";
       const iconSize = fontSize * 2;
 
+      // Set default font and color for this line
       ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
       const currentTextColor =
         textColours[index] === "Y" ? frameData.y : frameData.x;
-      ctx.fillStyle = textColours[index] === "Y" ? frameData.y : frameData.x;
+      ctx.fillStyle = currentTextColor;
 
+      // Get the business data values for this line
       const linesOfCurrentRow = groupOfLines[index].split(",");
-
       const texts = linesOfCurrentRow
         .map((line: string | number) => {
           const lineText = businessData[+line - 1];
@@ -354,6 +350,7 @@ const generateImageBuffer = async (
         })
         .filter((f: null) => f !== null);
 
+      // Calculate total width needed for text and icons
       const totalTextWidth =
         index === 0
           ? texts.reduce(
@@ -370,7 +367,7 @@ const generateImageBuffer = async (
       const spacing = (+row.width - totalTextWidth) / (texts.length + 1);
       let xPos = +row.x + spacing;
 
-      // Render text and icons
+      // Draw each text + optional icon
       for (const text of texts) {
         const getFontSize = fontsData[text.lineNo - 1];
         const fontWeight = +getFontSize.font_weight || "normal";
@@ -378,6 +375,8 @@ const generateImageBuffer = async (
         fontSize = +getFontSize.font_size;
 
         let icon: Image | null = null;
+
+        // Determine which icon to draw based on line number
         switch (text.lineNo) {
           case 2:
             icon = await recolorImage(icons.mobile1, currentTextColor);
@@ -401,12 +400,13 @@ const generateImageBuffer = async (
             icon = null;
         }
 
-        // Calculate text position
+        // Calculate vertical position for current line
         const yPos =
           +row.y + +row.height / 2 + fontSize / 3 + bottomTextContentHeight;
         const textWidth = ctx.measureText(text.text).width;
 
         if (icon) {
+          // Draw icon and then text with spacing
           ctx.drawImage(
             icon,
             +xPos,
@@ -417,12 +417,27 @@ const generateImageBuffer = async (
           ctx.fillText(text.text, +xPos + iconSize, +yPos);
           xPos += textWidth + spacing;
         } else {
+          // Draw text only
           ctx.fillText(text.text, +xPos, +yPos);
           xPos += textWidth + spacing;
         }
       }
     }
 
+    // Merge overlay content onto the base canvas
+    mainCtx.drawImage(
+      overlayCanvas,
+      0,
+      0,
+      overlayCanvas.width,
+      overlayCanvas.height,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    // Return the final image buffer
     return canvas.toBuffer("image/png");
   } catch (error) {
     console.log("error ", error);
