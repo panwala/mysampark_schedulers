@@ -6,6 +6,7 @@ const fs = require("fs");
 import FormData from "form-data";
 const path = require("path");
 const https = require("https");
+import { Image } from "canvas";
 const { createCanvas, loadImage, registerFont } = require("canvas");
 
 /// Define font paths
@@ -47,20 +48,20 @@ registerFont(`${fontPath}/montserrat/Montserrat-Black.ttf`, {
 async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
   try {
     console.log("bussiness_id", bussiness_id);
-
-    //changes
-    // const res = await axios.post(
-    //   "https://testadmin.mysampark.com/api/imageapi",
-    //   { bussiness_id: bussiness_id }
-    // );
-    return {
-      story:
-        "https://testadmin.mysampark.com/images/15/story/67da6410d8d52_3.png",
-      post: "https://testadmin.mysampark.com/images/15/post/67da637ea1787_3.png",
-      caption:
-        "Success is a mindset, not a destination.  Transform your attitude, transform your results. #TechSolutions #SuccessMindset ",
-    };
-    // res.data || null;
+    const res = await axios.post(
+      "https://testadmin.mysampark.com/api/imageapi",
+      { bussiness_id: bussiness_id }
+    );
+    return (
+      res.data || {
+        story:
+          "https://testadmin.mysampark.com/images/15/story/67da6410d8d52_3.png",
+        post: "https://testadmin.mysampark.com/images/15/post/67da637ea1787_3.png",
+        caption:
+          "Success is a mindset, not a destination.  Transform your attitude, transform your results. #TechSolutions #SuccessMindset ",
+      }
+    );
+    res.data || null;
   } catch (error) {
     console.error("Error fetching background image:", error);
     return null;
@@ -69,17 +70,17 @@ async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
 
 async function getWhatsappMessageCaption(bussiness_id: Number): Promise<any> {
   try {
-    //changes
-    // const res = await axios.post(
-    //   "https://testadmin.mysampark.com/api/imageapi",
-    //   { bussiness_id: bussiness_id }
-    // );
-    return {
-      caption:
-        "Success is a mindset, not a destination.  Transform your attitude, transform your results. #TechSolutions #SuccessMindset ",
-    };
-
-    // res.data || "";
+    const res = await axios.post(
+      "https://testadmin.mysampark.com/api/imageapi",
+      { bussiness_id: bussiness_id }
+    );
+    console.log("ress", res.data.data);
+    return (
+      res.data.data || {
+        caption:
+          "Success is a mindset, not a destination.  Transform your attitude, transform your results. #TechSolutions #SuccessMindset ",
+      }
+    );
   } catch (error) {
     console.error("Error fetching background image:", error);
     return null;
@@ -96,7 +97,7 @@ const sendWhatsAppTemplate = async (
     Authorization: "Bearer OQW891APcEuT47TnB4ml0w",
   };
   console.log("imageUrl", imageUrl);
-  console.log("caption", caption.caption);
+  console.log("caption", caption);
   const body = {
     messaging_product: "whatsapp",
     recipient_type: "individual",
@@ -159,6 +160,50 @@ const sendWhatsAppTemplate = async (
   }
 };
 
+// ---- A new function for changing icons' color ---
+
+async function recolorImage(
+  imageUrl: string,
+  targetColor: string
+): Promise<Image> {
+  // Load original image
+  const original = await loadImage(imageUrl);
+
+  // Create canvas
+  const canvas = createCanvas(original.width, original.height);
+  const ctx = canvas.getContext("2d");
+
+  // Draw original image
+  ctx.drawImage(original, 0, 0);
+
+  // Get pixel data
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const data = imageData.data;
+
+  // Convert target color to RGB
+  const tempCanvas = createCanvas(1, 1);
+  const tempCtx = tempCanvas.getContext("2d");
+  tempCtx.fillStyle = targetColor;
+  tempCtx.fillRect(0, 0, 1, 1);
+  const [tr, tg, tb] = tempCtx.getImageData(0, 0, 1, 1).data;
+
+  // Replace all non-transparent pixels
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i + 3] > 0) {
+      // Only modify non-transparent pixels
+      data[i] = tr; // Red
+      data[i + 1] = tg; // Green
+      data[i + 2] = tb; // Blue
+    }
+  }
+
+  // Put modified data back
+  ctx.putImageData(imageData, 0, 0);
+
+  // Convert to Image
+  return loadImage(canvas.toBuffer("image/png"));
+}
+
 // 🎨 Image rendering logic (reusable)
 const generateImageBuffer = async (
   singleuserData: any,
@@ -181,6 +226,7 @@ const generateImageBuffer = async (
     const framesVariantData = frameData.frames_varinat[0];
     const framesVariantLines = framesVariantData.framesvariantline;
     const fontFamily = frameData.font_type;
+    console.log("globalFont",globalFont)
 
     const businessData = [
       businessDatas.business_name,
@@ -194,9 +240,16 @@ const generateImageBuffer = async (
 
     console.log("businessDatas", businessDatas);
     const backgroundImageUrl = await getBackgroundImageUrl(businessDatas.id);
-    console.log("backgroundImageUrl", backgroundImageUrl);
+    console.log(
+      "backgroundImageUrl",
+      counter == 0
+        ? backgroundImageUrl.data.story
+        : backgroundImageUrl.data.post
+    );
     const backgroundImage = await loadImage(
-      counter == 0 ? backgroundImageUrl.story : backgroundImageUrl.post
+      counter == 0
+        ? backgroundImageUrl.data.story
+        : backgroundImageUrl.data.post
     );
 
     const canvas = createCanvas(backgroundImage.width, backgroundImage.height);
@@ -210,30 +263,50 @@ const generateImageBuffer = async (
       canvas.height - frameOverlayImage.height
     );
     // Logo image
-    //changes
-    //businessDatas.logo_image
     const logoImage = await loadImage(
-      "https://img.freepik.com/premium-vector/water-logo-design-concept_761413-7077.jpg?semt=ais_hybrid&w=250"
+      businessDatas.logo_image_url ||
+        "https://img.freepik.com/premium-vector/water-logo-design-concept_761413-7077.jpg?semt=ais_hybrid&w=250"
     );
-    const logoYPosition = canvas.width / 2 - logoImage.width / 2;
+    const desiredLogoHeight = 150;
+    const aspectRatio = logoImage.width / logoImage.height;
+    const calculatedWidth = desiredLogoHeight * aspectRatio;
+    const logoXPosition = canvas.width / 2 - calculatedWidth / 2;
+    // const logoYPosition = canvas.width / 2 - logoImage.width / 2;
+    // ctx.drawImage(
+    //   logoImage,
+    //   logoYPosition,
+    //   50, // Position
+    //   logoImage.width,
+    //   150 // Size
+    // );
     ctx.drawImage(
       logoImage,
-      logoYPosition,
-      50, // Position
-      logoImage.width,
-      150 // Size
+      logoXPosition, // X position (centered)
+      50, // Y position (same as before)
+      calculatedWidth,
+      desiredLogoHeight
     );
+
     let bottomTextContentHeight = canvas.height - frameOverlayImage.height;
     // 🔧 Calculate overlay height once
     const bottomOverlayHeight = frameOverlayImage.height;
 
+    // const icons = {
+    //   email: await loadImage(frameData.frame_icon.email_icon),
+    //   mobile1: await loadImage(frameData.frame_icon.mobile_no_1_icon),
+    //   mobile2: await loadImage(frameData.frame_icon.mobile_no_2_icon),
+    //   location: await loadImage(frameData.frame_icon.location_icon),
+    //   website: await loadImage(frameData.frame_icon.website_icon),
+    //   instagram: await loadImage(frameData.frame_icon.instragram_icon),
+    // };
+
     const icons = {
-      email: await loadImage(frameData.frame_icon.email_icon),
-      mobile1: await loadImage(frameData.frame_icon.mobile_no_1_icon),
-      mobile2: await loadImage(frameData.frame_icon.mobile_no_2_icon),
-      location: await loadImage(frameData.frame_icon.location_icon),
-      website: await loadImage(frameData.frame_icon.website_icon),
-      instagram: await loadImage(frameData.frame_icon.instragram_icon),
+      email: frameData.frame_icon.email_icon,
+      mobile1: frameData.frame_icon.mobile_no_1_icon,
+      mobile2: frameData.frame_icon.mobile_no_2_icon,
+      location: frameData.frame_icon.location_icon,
+      website: frameData.frame_icon.website_icon,
+      instagram: frameData.frame_icon.instragram_icon,
     };
 
     const fontsData = [
@@ -262,101 +335,93 @@ const generateImageBuffer = async (
       lineContent.line5,
     ].filter((f) => f !== null);
 
-    framesVariantLines.forEach(
-      (
-        row: {
-          width: string | number;
-          x: string | number;
-          y: string | number;
-          height: string | number;
-        },
-        index: number
-      ) => {
-        let fontSize = +fontsData[0]?.font_size || 12;
-        const fontWeight = "normal";
-        const iconSize = fontSize * 2;
+    for (const [index, row] of framesVariantLines.entries()) {
+      let fontSize = +fontsData[0]?.font_size || 16;
+      const fontWeight = "normal";
+      const iconSize = fontSize * 2;
 
-        ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
-        ctx.fillStyle = textColours[index] === "Y" ? frameData.y : frameData.x;
+      ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
+      const currentTextColor =
+        textColours[index] === "Y" ? frameData.y : frameData.x;
+      ctx.fillStyle = textColours[index] === "Y" ? frameData.y : frameData.x;
 
-        const linesOfCurrentRow = groupOfLines[index].split(",");
+      const linesOfCurrentRow = groupOfLines[index].split(",");
 
-        const texts = linesOfCurrentRow
-          .map((line: string | number) => {
-            const lineText = businessData[+line - 1];
-            return { lineNo: +line, text: lineText || "" };
-          })
-          .filter((f: null) => f !== null);
+      const texts = linesOfCurrentRow
+        .map((line: string | number) => {
+          const lineText = businessData[+line - 1];
+          return { lineNo: +line, text: lineText || "" };
+        })
+        .filter((f: null) => f !== null);
 
-        const totalTextWidth =
-          index === 0
-            ? texts.reduce(
-                (sum: any, text: { text: any }) =>
-                  sum + ctx.measureText(text.text).width,
-                0
-              )
-            : texts.reduce(
-                (sum: any, text: { text: any }) =>
-                  sum + ctx.measureText(text.text).width,
-                0
-              ) + iconSize;
+      const totalTextWidth =
+        index === 0
+          ? texts.reduce(
+              (sum: any, text: { text: any }) =>
+                sum + ctx.measureText(text.text).width,
+              0
+            )
+          : texts.reduce(
+              (sum: any, text: { text: any }) =>
+                sum + ctx.measureText(text.text).width,
+              0
+            ) + iconSize;
 
-        const spacing = (+row.width - totalTextWidth) / (texts.length + 1);
-        let xPos = +row.x + spacing;
+      const spacing = (+row.width - totalTextWidth) / (texts.length + 1);
+      let xPos = +row.x + spacing;
 
-        // Render text and icons
-        texts.forEach((text: { lineNo: number; text: any }) => {
-          const getFontSize = fontsData[text.lineNo - 1];
-          const fontWeight = +getFontSize.font_weight || "normal";
-          ctx.font = `${fontWeight} ${+getFontSize.font_size}px ${fontFamily}`;
-          fontSize = +getFontSize.font_size;
+      // Render text and icons
+      for (const text of texts) {
+        const getFontSize = fontsData[text.lineNo - 1];
+        const fontWeight = +getFontSize.font_weight || "normal";
+        ctx.font = `${fontWeight} ${+getFontSize.font_size}px ${fontFamily}`;
+        fontSize = +getFontSize.font_size;
 
-          let icon: null;
-          switch (text.lineNo) {
-            case 2:
-              icon = icons.mobile1;
-              break;
-            case 3:
-              icon = icons.mobile2;
-              break;
-            case 4:
-              icon = icons.instagram;
-              break;
-            case 5:
-              icon = icons.email;
-              break;
-            case 6:
-              icon = icons.location;
-              break;
-            case 7:
-              icon = icons.website;
-              break;
-            default:
-              icon = null;
-          }
+        let icon: Image | null = null;
+        switch (text.lineNo) {
+          case 2:
+            icon = await recolorImage(icons.mobile1, currentTextColor);
+            break;
+          case 3:
+            icon = await recolorImage(icons.mobile2, currentTextColor);
+            break;
+          case 4:
+            icon = await recolorImage(icons.instagram, currentTextColor);
+            break;
+          case 5:
+            icon = await recolorImage(icons.email, currentTextColor);
+            break;
+          case 6:
+            icon = await recolorImage(icons.location, currentTextColor);
+            break;
+          case 7:
+            icon = await recolorImage(icons.website, currentTextColor);
+            break;
+          default:
+            icon = null;
+        }
 
-          // Calculate text position
-          const yPos =
-            +row.y + +row.height / 2 + fontSize / 3 + bottomTextContentHeight;
-          const textWidth = ctx.measureText(text.text).width;
+        // Calculate text position
+        const yPos =
+          +row.y + +row.height / 2 + fontSize / 3 + bottomTextContentHeight;
+        const textWidth = ctx.measureText(text.text).width;
 
-          if (icon) {
-            ctx.drawImage(
-              icon,
-              +xPos,
-              +yPos - iconSize / 1.5,
-              iconSize,
-              iconSize
-            );
-            ctx.fillText(text.text, +xPos + iconSize, +yPos);
-            xPos += textWidth + spacing;
-          } else {
-            ctx.fillText(text.text, +xPos, +yPos);
-            xPos += textWidth + spacing;
-          }
-        });
+        if (icon) {
+          ctx.drawImage(
+            icon,
+            +xPos,
+            +yPos - iconSize / 1.5,
+            iconSize,
+            iconSize
+          );
+          ctx.fillText(text.text, +xPos + iconSize, +yPos);
+          xPos += textWidth + spacing;
+        } else {
+          ctx.fillText(text.text, +xPos, +yPos);
+          xPos += textWidth + spacing;
+        }
       }
-    );
+    }
 
     return canvas.toBuffer("image/png");
   } catch (error) {
@@ -385,7 +450,7 @@ async function uploadImageToAPI(
       }
     );
 
-    console.log(`✅ Upload successful:`, response.data);
+    // console.log(`✅ Upload successful:`, response.data);
     return response.data;
   } catch (error: any) {
     console.log("error", error);
@@ -464,10 +529,10 @@ async function generateForAllUsers() {
 
           // changes
           // ✅ Check if current time matches scheduled time
-          if (business.post_schedult_time !== currentTime) {
-            console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
-            continue;
-          }
+          // if (business.post_schedult_time !== currentTime) {
+          //   console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
+          //   continue;
+          // }
 
           for (let j = 0; j <= 1; j++) {
             // Step 3: Generate image buffer
@@ -497,7 +562,7 @@ async function generateForAllUsers() {
             // console.log("uploadResponse", uploadResponse);
 
             // // // Step 6: Send via WhatsApp
-            //changes
+            // changes
             await sendWhatsAppTemplate(
               "919624863068",
               // user.mobileno || "919624863068",
