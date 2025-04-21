@@ -460,7 +460,7 @@ async function uploadImageToAPI(
 ) {
   try {
     const httpsAgent = new https.Agent({
-      rejectUnauthorized: false,     // ⚠️ turns off cert checking
+      rejectUnauthorized: false, // ⚠️ turns off cert checking
     });
     const form = new FormData();
     form.append("file", fs.createReadStream(filePath));
@@ -470,9 +470,9 @@ async function uploadImageToAPI(
       form,
       {
         httpsAgent,
-        proxy: false,              // just to be double‑sure
-        maxBodyLength: Infinity,   // allow very large uploads
-        timeout: 60000,            // 60 s timeout
+        proxy: false, // just to be double‑sure
+        maxBodyLength: Infinity, // allow very large uploads
+        timeout: 60000, // 60 s timeout
         headers: {
           Authorization: `Bearer ${apiKey}`,
           ...form.getHeaders(), // ✅ works with correct FormData
@@ -557,10 +557,10 @@ async function generateForAllUsers() {
 
           // changes
           // ✅ Check if current time matches scheduled time
-          // if (business.post_schedult_time !== currentTime) {
-          //   console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
-          //   continue;
-          // }
+          if (business.post_schedult_time !== currentTime) {
+            console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
+            continue;
+          }
           let captionResponse = await getWhatsappMessageCaption(business.id);
           for (let j = 0; j <= 1; j++) {
             // Step 3: Generate image buffer
