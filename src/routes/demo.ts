@@ -47,7 +47,6 @@ registerFont(`${fontPath}/montserrat/Montserrat-Black.ttf`, {
 const backgroundImageCache = new Map();
 async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
   try {
-    console.log("bussiness_id", bussiness_id);
     // at the top of your file, create a cache map
 
     // if we've already fetched for this ID, return the cached promise/result
@@ -255,11 +254,6 @@ const generateImageBuffer = async (
       counter == 0
         ? backgroundImageUrl.data.story
         : backgroundImageUrl.data.post
-    );
-    console.log(
-      "backgroundImageUrl with counter",
-      counter,
-      backgroundImageUrl.data
     );
 
     // Create base canvas and draw background
@@ -479,7 +473,6 @@ async function uploadImageToAPI(
       }
     );
 
-    // console.log(`✅ Upload successful:`, response.data);
     return response.data;
   } catch (error: any) {
     console.log("error", error);
@@ -492,7 +485,6 @@ async function fetchAllUsers() {
   const response = await axios.get(
     "https://testadmin.mysampark.com/api/all_user_list"
   );
-  // console.log("response", response.data.data);
   return response.data.data;
 }
 // 🧠 Main runner
@@ -558,14 +550,13 @@ async function generateForAllUsers() {
 
           // changes
           // ✅ Check if current time matches scheduled time
-          // if (business.post_schedult_time !== currentTime) {
-          //   console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
-          //   continue;
-          // }
+          if (business.post_schedult_time !== currentTime) {
+            console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
+            continue;
+          }
           let captionResponse = await getWhatsappMessageCaption(business.id);
           for (let j = 0; j <= 1; j++) {
             // Step 3: Generate image buffer
-            console.log("value of j", j);
             const buffer = await generateImageBuffer(
               user,
               customFrames,
@@ -584,23 +575,21 @@ async function generateForAllUsers() {
             );
 
             // Step 5: Upload image
-            // const uploadResponse = await uploadImageToAPI(
-            //   outputPath,
-            //   "https://cloudapi.wbbox.in",
-            //   "918849987778",
-            //   "OQW891APcEuT47TnB4ml0w"
-            // );
-
-            // console.log("uploadResponse", uploadResponse);
+            const uploadResponse = await uploadImageToAPI(
+              outputPath,
+              "https://cloudapi.wbbox.in",
+              "918849987778",
+              "OQW891APcEuT47TnB4ml0w"
+            );
 
             // Step 6: Send via WhatsApp
             // changes
-            // await sendWhatsAppTemplate(
-            //   "919624863068",
-            //   // user.mobileno || "919624863068",
-            //   uploadResponse.data.ImageUrl,
-            //   captionResponse
-            // );
+            await sendWhatsAppTemplate(
+              // "919624863068",
+              user.mobileno || "919624863068",
+              uploadResponse.data.ImageUrl,
+              captionResponse
+            );
           }
           break;
         }
