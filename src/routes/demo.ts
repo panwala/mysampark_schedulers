@@ -44,14 +44,24 @@ registerFont(`${fontPath}/montserrat/Montserrat-Black.ttf`, {
   family: "montserrat",
   weight: "900",
 });
-
+const backgroundImageCache = new Map();
 async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
   try {
     console.log("bussiness_id", bussiness_id);
+    // at the top of your file, create a cache map
+
+    // if we've already fetched for this ID, return the cached promise/result
+    if (backgroundImageCache.has(bussiness_id)) {
+      let cacheBusinessBackgroundImageResponse =
+        backgroundImageCache.get(bussiness_id);
+      backgroundImageCache.delete(bussiness_id);
+      return cacheBusinessBackgroundImageResponse;
+    }
     const res = await axios.post(
       "https://testadmin.mysampark.com/api/imageapi",
       { bussiness_id: bussiness_id }
     );
+    backgroundImageCache.set(bussiness_id, res.data);
     return (
       res.data || {
         story:
@@ -61,7 +71,6 @@ async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
           "Success is a mindset, not a destination.  Transform your attitude, transform your results. #TechSolutions #SuccessMindset ",
       }
     );
-    res.data || null;
   } catch (error) {
     console.error("Error fetching background image:", error);
     return null;
@@ -74,7 +83,7 @@ async function getWhatsappMessageCaption(bussiness_id: Number): Promise<any> {
       "https://testadmin.mysampark.com/api/imageapi",
       { bussiness_id: bussiness_id }
     );
-    console.log("ress", res.data.data);
+    // console.log("ress", res.data.data);
     return (
       res.data.data || {
         caption:
@@ -96,8 +105,8 @@ const sendWhatsAppTemplate = async (
     "Content-Type": "application/json",
     Authorization: "Bearer OQW891APcEuT47TnB4ml0w",
   };
-  console.log("imageUrl", imageUrl);
-  console.log("caption", caption);
+  // console.log("imageUrl", imageUrl);
+  // console.log("caption", caption);
   const body = {
     messaging_product: "whatsapp",
     recipient_type: "individual",
@@ -246,6 +255,11 @@ const generateImageBuffer = async (
       counter == 0
         ? backgroundImageUrl.data.story
         : backgroundImageUrl.data.post
+    );
+    console.log(
+      "backgroundImageUrl with counter",
+      counter,
+      backgroundImageUrl.data
     );
 
     // Create base canvas and draw background
@@ -544,13 +558,14 @@ async function generateForAllUsers() {
 
           // changes
           // ✅ Check if current time matches scheduled time
-          if (business.post_schedult_time !== currentTime) {
-            console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
-            continue;
-          }
+          // if (business.post_schedult_time !== currentTime) {
+          //   console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
+          //   continue;
+          // }
           let captionResponse = await getWhatsappMessageCaption(business.id);
           for (let j = 0; j <= 1; j++) {
             // Step 3: Generate image buffer
+            console.log("value of j", j);
             const buffer = await generateImageBuffer(
               user,
               customFrames,
@@ -569,24 +584,25 @@ async function generateForAllUsers() {
             );
 
             // Step 5: Upload image
-            const uploadResponse = await uploadImageToAPI(
-              outputPath,
-              "https://cloudapi.wbbox.in",
-              "918849987778",
-              "OQW891APcEuT47TnB4ml0w"
-            );
+            // const uploadResponse = await uploadImageToAPI(
+            //   outputPath,
+            //   "https://cloudapi.wbbox.in",
+            //   "918849987778",
+            //   "OQW891APcEuT47TnB4ml0w"
+            // );
 
             // console.log("uploadResponse", uploadResponse);
 
             // Step 6: Send via WhatsApp
             // changes
-            await sendWhatsAppTemplate(
-              // "919624863068",
-              user.mobileno || "919624863068",
-              uploadResponse.data.ImageUrl,
-              captionResponse
-            );
+            // await sendWhatsAppTemplate(
+            //   "919624863068",
+            //   // user.mobileno || "919624863068",
+            //   uploadResponse.data.ImageUrl,
+            //   captionResponse
+            // );
           }
+          break;
         }
       } catch (err) {
         console.error(
@@ -594,6 +610,7 @@ async function generateForAllUsers() {
           err.message
         );
       }
+      break;
     }
   } catch (err) {
     console.error("Status:", err.response?.status);
