@@ -548,7 +548,7 @@ async function generateForAllUsers() {
             console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
             continue;
           }
-
+          let captionResponse = await getWhatsappMessageCaption(business.id);
           for (let j = 0; j <= 1; j++) {
             // Step 3: Generate image buffer
             const buffer = await generateImageBuffer(
@@ -576,13 +576,13 @@ async function generateForAllUsers() {
 
             // console.log("uploadResponse", uploadResponse);
 
-            // // // Step 6: Send via WhatsApp
+            // Step 6: Send via WhatsApp
             // changes
             await sendWhatsAppTemplate(
               // "919624863068",
               user.mobileno || "919624863068",
               uploadResponse.data.ImageUrl,
-              await getWhatsappMessageCaption(business.id)
+              captionResponse
             );
           }
         }
