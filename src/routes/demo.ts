@@ -592,8 +592,8 @@ async function generateForAllUsers() {
             // Step 6: Send via WhatsApp
             // changes
             await sendWhatsAppTemplate(
-              "919624863068",
-              // user.mobileno || "919624863068",
+              // "919624863068",
+              user.mobileno || "919624863068",
               uploadResponse.data.ImageUrl,
               captionResponse
             );
