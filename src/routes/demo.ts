@@ -559,7 +559,7 @@ async function generateForAllUsers() {
             );
 
             // Step 4: Save image
-            const filename = `${Math.random()}user-${user.id}.png`;
+            const filename = `${Math.random()}user-${user.id}-${business.id}.png`;
             const outputPath = path.join(outputDir, filename);
             fs.writeFileSync(outputPath, buffer);
             console.log(
