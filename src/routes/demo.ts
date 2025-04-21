@@ -598,7 +598,6 @@ async function generateForAllUsers() {
               captionResponse
             );
           }
-          break;
         }
       } catch (err) {
         console.error(
@@ -606,7 +605,6 @@ async function generateForAllUsers() {
           err.message
         );
       }
-      break;
     }
   } catch (err) {
     console.error("Status:", err.response?.status);
