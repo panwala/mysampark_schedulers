@@ -45,6 +45,7 @@ registerFont(`${fontPath}/montserrat/Montserrat-Black.ttf`, {
   weight: "900",
 });
 const backgroundImageCache = new Map();
+const backgroundImagePostIdCache = new Map();
 async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
   try {
     // at the top of your file, create a cache map
@@ -59,6 +60,10 @@ async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
     const res = await axios.post(
       "https://testadmin.mysampark.com/api/imageapi",
       { bussiness_id: bussiness_id }
+    );
+    backgroundImagePostIdCache.set(
+      `${bussiness_id}-post_id`,
+      res.data.data.post_id
     );
     backgroundImageCache.set(bussiness_id, res.data);
     return (
@@ -91,6 +96,25 @@ async function getWhatsappMessageCaption(bussiness_id: Number): Promise<any> {
     );
   } catch (error) {
     console.error("Error fetching background image:", error);
+    return null;
+  }
+}
+
+async function updateUserPostIdOnServer(
+  user_id: Number,
+  post_id: Number
+): Promise<any> {
+  try {
+    console.log("user_id", user_id);
+    console.log("post_id", post_id);
+    const res = await axios.post(
+      "https://testadmin.mysampark.com/api/store_user_post",
+      { user_id: user_id, post_id: post_id, status: true }
+    );
+    // console.log("updateUserPostIdOnServer", res);
+    return res;
+  } catch (error) {
+    console.error("Error Updating User PostId on Server:", error);
     return null;
   }
 }
@@ -597,6 +621,25 @@ async function generateForAllUsers() {
               uploadResponse.data.ImageUrl,
               captionResponse
             );
+
+            console.log(
+              "Expression Evaluation Result",
+              backgroundImagePostIdCache.has(`${business.id}-post_id`) && j > 0
+            );
+            if (
+              backgroundImagePostIdCache.has(`${business.id}-post_id`) &&
+              j > 0
+            ) {
+              await updateUserPostIdOnServer(
+                user.id,
+                backgroundImagePostIdCache.get(`${business.id}-post_id`)
+              );
+              console.log(
+                "Now Deleting backgroundImagePostIdCache",
+                `${business.id}-post_id`
+              );
+              backgroundImagePostIdCache.delete(`${business.id}-post_id`);
+            }
           }
         }
       } catch (err) {
