@@ -129,14 +129,14 @@ const sendWhatsAppTemplate = async (
     Authorization: "Bearer OQW891APcEuT47TnB4ml0w",
   };
   // console.log("imageUrl", imageUrl);
-  // console.log("caption", caption);
+  console.log("caption in sendWhatsAppTemplate ", caption);
   const body = {
     messaging_product: "whatsapp",
     recipient_type: "individual",
     to: phoneNumber,
     type: "template",
     template: {
-      name: "image_delivery_update_with_caption",
+      name: "daily_post_update_mysampark",
       language: { code: "en" },
       components: [
         {
@@ -155,20 +155,17 @@ const sendWhatsAppTemplate = async (
           parameters: [
             {
               type: "text",
+              text: caption.bussiness_name,
+            },
+            {
+              type: "text",
+              text: caption.category_name,
+            },
+            {
+              type: "text",
               text: caption.caption,
             },
           ],
-        },
-        {
-          type: "button",
-          parameters: [
-            {
-              type: "text",
-              text: "http://www.mysampark.com/",
-            },
-          ],
-          sub_type: "url",
-          index: "0",
         },
       ],
     },
@@ -581,11 +578,12 @@ async function generateForAllUsers() {
 
           // changes
           // ✅ Check if current time matches scheduled time
-          if (business.post_schedult_time !== currentTime) {
-            console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
-            continue;
-          }
+          // if (business.post_schedult_time !== currentTime) {
+          //   console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
+          //   continue;
+          // }
           let captionResponse = await getWhatsappMessageCaption(business.id);
+          console.log("captionResponse", captionResponse);
           for (let j = 0; j <= 1; j++) {
             // Step 3: Generate image buffer
             const buffer = await generateImageBuffer(
@@ -616,8 +614,8 @@ async function generateForAllUsers() {
             // Step 6: Send via WhatsApp
             // changes
             await sendWhatsAppTemplate(
-              // "919624863068",
-              user.mobileno || "919624863068",
+              "919624863068",
+              // user.mobileno || "919624863068",
               uploadResponse.data.ImageUrl,
               captionResponse
             );
