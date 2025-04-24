@@ -136,7 +136,7 @@ const sendWhatsAppTemplate = async (
     to: phoneNumber,
     type: "template",
     template: {
-      name: "image_delivery_update",
+      name: "image_delivery_update_with_caption",
       language: { code: "en" },
       components: [
         {
@@ -161,14 +161,14 @@ const sendWhatsAppTemplate = async (
         },
         {
           type: "button",
-          sub_type: "url",
-          index: "0",
           parameters: [
             {
               type: "text",
-              text: caption.caption,
+              text: "http://www.mysampark.com/",
             },
           ],
+          sub_type: "url",
+          index: "0",
         },
       ],
     },
