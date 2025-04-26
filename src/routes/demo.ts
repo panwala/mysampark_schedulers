@@ -124,8 +124,17 @@ const sendWhatsAppTemplate = async (
   imageUrl: string,
   caption: any
 ) => {
+  function unicodeEscape(str) {
+    return str.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function (char) {
+      const high = char.charCodeAt(0);
+      const low = char.charCodeAt(1);
+      const codePoint = (high - 0xd800) * 0x400 + (low - 0xdc00) + 0x10000;
+      return "\\u{" + codePoint.toString(16) + "}";
+    });
+  }
+  
   const headers = {
-    "Content-Type": "application/json",
+    "Content-Type": "application/json; charset=UTF-8",
     Authorization: "Bearer OQW891APcEuT47TnB4ml0w",
   };
   // console.log("imageUrl", imageUrl);
@@ -163,7 +172,7 @@ const sendWhatsAppTemplate = async (
             },
             {
               type: "text",
-              text: caption.caption,
+              text:unicodeEscape(caption.caption.replace(/\uFFFD/g, "")),
             },
           ],
         },
@@ -578,10 +587,10 @@ async function generateForAllUsers() {
 
           // changes
           // ✅ Check if current time matches scheduled time
-          if (business.post_schedult_time !== currentTime) {
-            console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
-            continue;
-          }
+          // if (business.post_schedult_time !== currentTime) {
+          //   console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
+          //   continue;
+          // }
           let captionResponse = await getWhatsappMessageCaption(business.id);
           console.log("captionResponse", captionResponse);
           for (let j = 0; j <= 1; j++) {
@@ -604,19 +613,19 @@ async function generateForAllUsers() {
             );
 
             // Step 5: Upload image
-            const uploadResponse = await uploadImageToAPI(
-              outputPath,
-              "https://cloudapi.wbbox.in",
-              "918849987778",
-              "OQW891APcEuT47TnB4ml0w"
-            );
+            // const uploadResponse = await uploadImageToAPI(
+            //   outputPath,
+            //   "https://cloudapi.wbbox.in",
+            //   "918849987778",
+            //   "OQW891APcEuT47TnB4ml0w"
+            // );
 
             // Step 6: Send via WhatsApp
             // changes
             await sendWhatsAppTemplate(
-              // "919624863068",
-              user.mobileno || "919624863068",
-              uploadResponse.data.ImageUrl,
+              "919624863068",
+              // user.mobileno || "919624863068",
+            "https://testadmin.mysampark.com/images/14/story/67da62ce4774b_10.png", // uploadResponse.data.ImageUrl,
               captionResponse
             );
 
