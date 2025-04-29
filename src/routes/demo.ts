@@ -587,10 +587,10 @@ async function generateForAllUsers() {
 
           // changes
           // ✅ Check if current time matches scheduled time
-          // if (business.post_schedult_time !== currentTime) {
-          //   console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
-          //   continue;
-          // }
+          if (business.post_schedult_time !== currentTime) {
+            console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
+            continue;
+          }
           let captionResponse = await getWhatsappMessageCaption(business.id);
           console.log("captionResponse", captionResponse);
           for (let j = 0; j <= 1; j++) {
@@ -623,8 +623,8 @@ async function generateForAllUsers() {
             // Step 6: Send via WhatsApp
             // changes
             await sendWhatsAppTemplate(
-              "919624863068",
-              // user.mobileno || "919624863068",
+              // "919624863068",
+              user.mobileno || "919624863068",
               uploadResponse.data.ImageUrl,
               captionResponse
             );
