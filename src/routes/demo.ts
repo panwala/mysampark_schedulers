@@ -145,7 +145,7 @@ const sendWhatsAppTemplate = async (
     to: phoneNumber,
     type: "template",
     template: {
-      name: "mysampark_update",
+      name: "post_delivery_notification",
       language: { code: "en" },
       components: [
         {
