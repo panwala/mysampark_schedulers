@@ -208,10 +208,10 @@ const sendWhatsAppTemplate = async (
       }
     );
 
-    const result: any = await response.text();
-    console.log(`📤 WhatsApp response: ${result}`);
-    console.log(`📤 WhatsApp response: ${result.data}`);
-    return true;
+    const result: any = await response.json(); // 👈 parse response as JSON
+    console.log(`📤 WhatsApp response:`, result);
+    console.log(`📤 WhatsApp response data:`, result.data);
+    return result.data || true;
   } catch (error) {
     console.error("❌ Error sending WhatsApp message:", error);
     return false;
@@ -630,13 +630,13 @@ async function generateForAllUsers() {
 
         // changes
         // ✅ Check if current time matches scheduled time
-        if (
-          business.post_schedult_time !== currentTime &&
-          business.postUserSend !== currentTime
-        ) {
-          console.log(`⏰ Skipping user ${business.id}: Not scheduled for now`);
-          continue;
-        }
+        // if (
+        //   business.post_schedult_time !== currentTime &&
+        //   business.postUserSend !== currentTime
+        // ) {
+        //   console.log(`⏰ Skipping user ${business.id}: Not scheduled for now`);
+        //   continue;
+        // }
         let captionResponse = await getWhatsappMessageCaption(business.id);
         console.log("captionResponse", captionResponse);
         for (let j = 0; j <= 1; j++) {
@@ -649,10 +649,14 @@ async function generateForAllUsers() {
           );
 
           // Step 4: Save image
-          const filename = `${Math.random()}user-${business.id}-${business.id}.png`;
+          const filename = `${Math.random()}user-${business.id}-${
+            business.id
+          }.png`;
           const outputPath = path.join(outputDir, filename);
           fs.writeFileSync(outputPath, buffer);
-          console.log(`🖼️ Image generated for user ${business.id}: ${outputPath}`);
+          console.log(
+            `🖼️ Image generated for user ${business.id}: ${outputPath}`
+          );
 
           // Step 5: Upload image
           const uploadResponse = await uploadImageToAPI(
@@ -665,8 +669,8 @@ async function generateForAllUsers() {
           // Step 6: Send via WhatsApp
           // changes
           let whatsaappAPIresponse = await sendWhatsAppTemplate(
-            // "919624863068",
-            user.mobileno || "919624863068",
+            "919624863068",
+            // user.mobileno || "919624863068",
             uploadResponse.data.ImageUrl,
             captionResponse
           );
