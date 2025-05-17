@@ -128,7 +128,7 @@ async function updateUserPostIdOnServer(
         { user_id: user_id, post_id: post_id, status, bussiness_id }
       );
     }
-    console.log("updateUserPostIdOnServer", res);
+    // console.log("updateUserPostIdOnServer", res);
     return res;
   } catch (error) {
     console.error("Error Updating User PostId on Server:", error);
