@@ -102,16 +102,33 @@ async function getWhatsappMessageCaption(bussiness_id: Number): Promise<any> {
 
 async function updateUserPostIdOnServer(
   user_id: Number,
-  post_id: Number
+  post_id: Number,
+  status: Boolean,
+  bussiness_id: Number,
+  new_post_schedult_time?: String
 ): Promise<any> {
   try {
     console.log("user_id", user_id);
     console.log("post_id", post_id);
-    const res = await axios.post(
-      "https://testadmin.mysampark.com/api/store_user_post",
-      { user_id: user_id, post_id: post_id, status: true }
-    );
-    // console.log("updateUserPostIdOnServer", res);
+    let res;
+    if (!status) {
+      res = await axios.post(
+        "https://testadmin.mysampark.com/api/store_user_post",
+        {
+          user_id: user_id,
+          post_id: post_id,
+          status,
+          bussiness_id,
+          next_image_send_time: new_post_schedult_time,
+        }
+      );
+    } else {
+      res = await axios.post(
+        "https://testadmin.mysampark.com/api/store_user_post",
+        { user_id: user_id, post_id: post_id, status, bussiness_id }
+      );
+    }
+    console.log("updateUserPostIdOnServer", res);
     return res;
   } catch (error) {
     console.error("Error Updating User PostId on Server:", error);
@@ -191,10 +208,12 @@ const sendWhatsAppTemplate = async (
       }
     );
 
-    const result = await response.text();
+    const result: any = await response.text();
     console.log(`📤 WhatsApp response: ${result}`);
+    return result.success;
   } catch (error) {
     console.error("❌ Error sending WhatsApp message:", error);
+    return false;
   }
 };
 
@@ -520,7 +539,7 @@ async function uploadImageToAPI(
 // 🌐 Fetch all users
 async function fetchAllUsers() {
   const response = await axios.get(
-    "https://testadmin.mysampark.com/api/all_user_list"
+    "https://testadmin.mysampark.com/api/bussiness_list"
   );
   return response.data.data;
 }
@@ -545,113 +564,147 @@ async function generateForAllUsers() {
         timeZone: "Asia/Kolkata", // Set to IST
       }).format(new Date());
     }
+    function getCurrentTimeISTPlus10() {
+      // Get current time in IST
+      const now = new Date();
+
+      // Convert current time to IST by using toLocaleString and re-parsing it
+      const istNow = new Date(
+        now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+      );
+
+      // Add 10 minutes
+      istNow.setMinutes(istNow.getMinutes() + 10);
+
+      // Format the updated time
+      return new Intl.DateTimeFormat("en-GB", {
+        hour12: false,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        timeZone: "Asia/Kolkata",
+      }).format(istNow);
+    }
 
     const currentTime = getCurrentTimeIST();
     console.log("currentTime", currentTime);
+    let business;
     for (const user of users) {
       try {
-        for (let i = 0; i < user.businesses.length; i++) {
-          const business = user?.businesses[i];
+        // console.log("user", user);
+        // for (let i = 0; i < user.businesses.length; i++) {
+        business = user?.business;
 
-          // ✅ Check if active_business and its ID are valid
-          if (!business?.id) {
-            console.warn(
-              `⚠️ Skipping user ${user.id}: No active business or business ID.`
-            );
-            continue;
-          }
+        // ✅ Check if active_business and its ID are valid
+        if (!business?.id) {
+          console.warn(
+            `⚠️ Skipping user ${business.id}: No active business or business ID.`
+          );
+          continue;
+        }
 
-          // Step 2: Fetch custom frame
-          const frameResponse = await axios.post(
-            "https://testadmin.mysampark.com/api/display_bussiness_frame",
-            { business_id: business.id }
+        // Step 2: Fetch custom frame
+        const frameResponse = await axios.post(
+          "https://testadmin.mysampark.com/api/display_bussiness_frame",
+          { business_id: business.id }
+        );
+
+        const customFrames = {
+          data: frameResponse.data?.data,
+          line_content: frameResponse.data?.line_content,
+          globalfont: frameResponse.data?.globalfont,
+        };
+
+        // ✅ Proceed only if all required frame data exists
+        if (
+          !Array.isArray(customFrames.data) ||
+          customFrames.data.length === 0 ||
+          !customFrames.line_content ||
+          !Array.isArray(customFrames.globalfont) ||
+          customFrames.globalfont.length === 0
+        ) {
+          console.error(`❌ Missing frame data for user ${user.id}`);
+          continue;
+        }
+
+        // changes
+        // ✅ Check if current time matches scheduled time
+        // if (
+        //   business.post_schedult_time !== currentTime &&
+        //   business.postUserSend !== currentTime
+        // ) {
+        //   console.log(`⏰ Skipping user ${business.id}: Not scheduled for now`);
+        //   continue;
+        // }
+        let captionResponse = await getWhatsappMessageCaption(business.id);
+        console.log("captionResponse", captionResponse);
+        for (let j = 0; j <= 1; j++) {
+          // Step 3: Generate image buffer
+          const buffer = await generateImageBuffer(
+            user,
+            customFrames,
+            business,
+            j
           );
 
-          const customFrames = {
-            data: frameResponse.data?.data,
-            line_content: frameResponse.data?.line_content,
-            globalfont: frameResponse.data?.globalfont,
-          };
+          // Step 4: Save image
+          const filename = `${Math.random()}user-${user.id}-${business.id}.png`;
+          const outputPath = path.join(outputDir, filename);
+          fs.writeFileSync(outputPath, buffer);
+          console.log(`🖼️ Image generated for user ${user.id}: ${outputPath}`);
 
-          // ✅ Proceed only if all required frame data exists
-          if (
-            !Array.isArray(customFrames.data) ||
-            customFrames.data.length === 0 ||
-            !customFrames.line_content ||
-            !Array.isArray(customFrames.globalfont) ||
-            customFrames.globalfont.length === 0
-          ) {
-            console.error(`❌ Missing frame data for user ${user.id}`);
-            continue;
-          }
+          // Step 5: Upload image
+          const uploadResponse = await uploadImageToAPI(
+            outputPath,
+            "https://cloudapi.wbbox.in",
+            "918849987778",
+            "OQW891APcEuT47TnB4ml0w"
+          );
 
+          // Step 6: Send via WhatsApp
           // changes
-          // ✅ Check if current time matches scheduled time
-          if (business.post_schedult_time !== currentTime) {
-            console.log(`⏰ Skipping user ${user.id}: Not scheduled for now`);
-            continue;
-          }
-          let captionResponse = await getWhatsappMessageCaption(business.id);
-          console.log("captionResponse", captionResponse);
-          for (let j = 0; j <= 1; j++) {
-            // Step 3: Generate image buffer
-            const buffer = await generateImageBuffer(
-              user,
-              customFrames,
-              business,
-              j
-            );
-
-            // Step 4: Save image
-            const filename = `${Math.random()}user-${user.id}-${
-              business.id
-            }.png`;
-            const outputPath = path.join(outputDir, filename);
-            fs.writeFileSync(outputPath, buffer);
-            console.log(
-              `🖼️ Image generated for user ${user.id}: ${outputPath}`
-            );
-
-            // Step 5: Upload image
-            const uploadResponse = await uploadImageToAPI(
-              outputPath,
-              "https://cloudapi.wbbox.in",
-              "918849987778",
-              "OQW891APcEuT47TnB4ml0w"
-            );
-
-            // Step 6: Send via WhatsApp
-            // changes
-            await sendWhatsAppTemplate(
-              // "919624863068",
-              user.mobileno || "919624863068",
-              uploadResponse.data.ImageUrl,
-              captionResponse
-            );
-
-            console.log(
-              "Expression Evaluation Result",
-              backgroundImagePostIdCache.has(`${business.id}-post_id`) && j > 0
-            );
-            if (
-              backgroundImagePostIdCache.has(`${business.id}-post_id`) &&
-              j > 0
-            ) {
+          let whatsaappAPIresponse = await sendWhatsAppTemplate(
+            // "919624863068",
+            user.mobileno || "919624863068",
+            uploadResponse.data.ImageUrl,
+            captionResponse
+          );
+          console.log("whatsaappAPIresponse", whatsaappAPIresponse);
+          // console.log(
+          //   "Expression Evaluation Result",
+          //   backgroundImagePostIdCache.has(`${business.id}-post_id`) && j > 0
+          // );
+          if (
+            backgroundImagePostIdCache.has(`${business.id}-post_id`) &&
+            j > 0
+          ) {
+            if (!whatsaappAPIresponse) {
               await updateUserPostIdOnServer(
-                user.id,
-                backgroundImagePostIdCache.get(`${business.id}-post_id`)
+                business.user_id,
+                backgroundImagePostIdCache.get(`${business.id}-post_id`),
+                false,
+                business.id,
+                getCurrentTimeISTPlus10()
               );
-              console.log(
-                "Now Deleting backgroundImagePostIdCache",
-                `${business.id}-post_id`
+            } else {
+              await updateUserPostIdOnServer(
+                business.user_id,
+                backgroundImagePostIdCache.get(`${business.id}-post_id`),
+                true,
+                business.id
               );
-              backgroundImagePostIdCache.delete(`${business.id}-post_id`);
             }
+            console.log(
+              "Now Deleting backgroundImagePostIdCache",
+              `${business.id}-post_id`
+            );
+            backgroundImagePostIdCache.delete(`${business.id}-post_id`);
           }
         }
+        // }
       } catch (err) {
         console.error(
-          `❌ Error generating image for user ${user.id}:`,
+          `❌ Error generating image for user ${business.id}:`,
           err.message
         );
       }
