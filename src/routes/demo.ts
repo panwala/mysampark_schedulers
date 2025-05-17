@@ -629,13 +629,13 @@ async function generateForAllUsers() {
 
         // changes
         // ✅ Check if current time matches scheduled time
-        // if (
-        //   business.post_schedult_time !== currentTime &&
-        //   business.postUserSend !== currentTime
-        // ) {
-        //   console.log(`⏰ Skipping user ${business.id}: Not scheduled for now`);
-        //   continue;
-        // }
+        if (
+          business.post_schedult_time !== currentTime &&
+          business.postUserSend !== currentTime
+        ) {
+          console.log(`⏰ Skipping user ${business.id}: Not scheduled for now`);
+          continue;
+        }
         let captionResponse = await getWhatsappMessageCaption(business.id);
         console.log("captionResponse", captionResponse);
         for (let j = 0; j <= 1; j++) {
