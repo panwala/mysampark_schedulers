@@ -624,7 +624,7 @@ async function generateForAllUsers() {
           !Array.isArray(customFrames.globalfont) ||
           customFrames.globalfont.length === 0
         ) {
-          console.error(`❌ Missing frame data for user ${user.id}`);
+          console.error(`❌ Missing frame data for user ${business.id}`);
           continue;
         }
 
@@ -649,10 +649,10 @@ async function generateForAllUsers() {
           );
 
           // Step 4: Save image
-          const filename = `${Math.random()}user-${user.id}-${business.id}.png`;
+          const filename = `${Math.random()}user-${business.id}-${business.id}.png`;
           const outputPath = path.join(outputDir, filename);
           fs.writeFileSync(outputPath, buffer);
-          console.log(`🖼️ Image generated for user ${user.id}: ${outputPath}`);
+          console.log(`🖼️ Image generated for user ${business.id}: ${outputPath}`);
 
           // Step 5: Upload image
           const uploadResponse = await uploadImageToAPI(
