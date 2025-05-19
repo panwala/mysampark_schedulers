@@ -597,10 +597,17 @@ async function generateForAllUsers() {
         business = user?.business;
 
         // ✅ Check if active_business and its ID are valid
-        if (!business?.id) {
-          console.warn(
-            `⚠️ Skipping user ${business.id}: No active business or business ID.`
-          );
+        if (!business || !business.id || business.whatsapp_number == null) {
+          const businessId = business?.id ?? "unknown";
+          const reason = !business
+            ? "Missing business object"
+            : !business.id
+            ? "Missing business ID"
+            : business.whatsapp_number == null
+            ? "Missing WhatsApp number"
+            : "Unknown reason"; // fallback (shouldn't hit)
+
+          console.warn(`⚠️ Skipping business ${businessId}: ${reason}.`);
           continue;
         }
 
@@ -670,7 +677,7 @@ async function generateForAllUsers() {
           // changes
           let whatsaappAPIresponse = await sendWhatsAppTemplate(
             // "919624863068",
-            user.mobileno || "919624863068",
+            business.whatsapp_number || "919624863068",
             uploadResponse.data.ImageUrl,
             captionResponse
           );
