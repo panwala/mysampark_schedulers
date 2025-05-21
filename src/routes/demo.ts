@@ -637,6 +637,11 @@ async function generateForAllUsers() {
 
         // changes
         // ✅ Check if current time matches scheduled time
+        console.log(
+          "timing condition",
+          business.post_schedult_time !== currentTime &&
+            business.postUserSend !== currentTime
+        );
         if (
           business.post_schedult_time !== currentTime &&
           business.postUserSend !== currentTime
