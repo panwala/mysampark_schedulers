@@ -561,7 +561,8 @@ async function uploadToPostImages(imagePath: string): Promise<string> {
     fs.copyFileSync(imagePath, destinationPath);
     
     // Get server address
-    const serverAddress = process.env.BASE_URL || `http://localhost:${43007}`;
+    const serverAddress = `https://cron.mysampark.com`
+    process.env.BASE_URL || `http://localhost:${43007}`;
     
     // Schedule cleanup after 10 seconds
     setTimeout(() => {
