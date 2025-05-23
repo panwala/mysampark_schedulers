@@ -735,7 +735,7 @@ async function generateForAllUsers() {
 
 // ⏰ Cron job scheduled for 12:30 AM every day
 // "* * * * *"
-cron.schedule("23 6* * *", () => {
+cron.schedule("31 6 * * *", () => {
   console.log("🚀 Cron job started at", new Date().toLocaleString());
   generateForAllUsers();
 });
