@@ -9,15 +9,24 @@ import { processUserImage } from "./routes/generateImageRoute";
 const https = require("https");
 const { createCanvas, loadImage, registerFont } = require("canvas");
 const os = require('os');
+const path = require("path");
 
-/// Define font paths
+// Create uploads directory if it doesn't exist
+const uploadsDir = path.join(__dirname, '..', 'public', 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 const app = express();
 app.use(express.json({ limit: "8mb" }));
 app.use(express.urlencoded({ extended: true, limit: "8mb" }));
+
+// Serve static files from public directory
+app.use('/uploads', express.static(path.join(__dirname, '..', 'public', 'uploads')));
+
 dotenv.config();
 require("./routes/demo");
 const PORT = 43007;
-const path = require("path");
 
 // Function to get server IP addresses
 function getServerAddresses(): { internal: string[], external: string[] } {

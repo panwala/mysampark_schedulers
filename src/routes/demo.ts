@@ -8,9 +8,6 @@ const path = require("path");
 const https = require("https");
 import { Image } from "canvas";
 const { createCanvas, loadImage, registerFont } = require("canvas");
-const express = require('express');
-const app = express();
-const os = require('os');
 
 /// Define font paths
 const fontPath = "./public/font";
@@ -509,195 +506,37 @@ async function uploadImageToAPI(
   filePath: string,
   apiDomainUrl: string,
   channelNumber: string,
-  apiKey: string,
-  maxRetries = 3
+  apiKey: string
 ) {
-  let attempt = 0;
-  
-  while (attempt < maxRetries) {
-    try {
-      // Validate file exists and is not too large
-      const stats = await fs.promises.stat(filePath);
-      const fileSizeInMB = stats.size / (1024 * 1024);
-      if (fileSizeInMB > 5) { // Reduced to 5MB to be safer
-        throw new Error('File size too large. Maximum size is 5MB.');
-      }
-
-      const httpsAgent = new https.Agent({
-        rejectUnauthorized: false,
-        keepAlive: true,
-        timeout: 60000 // Increased timeout to 60 seconds
-      });
-
-      const form = new FormData();
-      const fileStream = fs.createReadStream(filePath);
-      
-      // Add error handler for file stream
-      fileStream.on('error', (err) => {
-        throw new Error(`File stream error: ${err.message}`);
-      });
-
-      form.append("file", fileStream, {
-        filename: path.basename(filePath),
-        contentType: 'image/png',
-        knownLength: stats.size
-      });
-
-      const config = {
-        httpsAgent,
-        proxy: false,
-        maxBodyLength: 10 * 1024 * 1024, // Increased to 10MB
-        maxContentLength: 10 * 1024 * 1024,
-        timeout: 60000,
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          ...form.getHeaders(),
-          'Accept': 'application/json',
-          'Connection': 'keep-alive'
-        },
-        onUploadProgress: (progressEvent: any) => {
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          console.log(`Upload Progress (Attempt ${attempt + 1}/${maxRetries}): ${percentCompleted}%`);
-        }
-      };
-
-      console.log(`Starting file upload (Attempt ${attempt + 1}/${maxRetries})...`);
-      console.log('Upload URL:', `${apiDomainUrl}/api/v1.0/uploads/${channelNumber}`);
-      
-      // Add validation for API domain and channel number
-      if (!apiDomainUrl.startsWith('http')) {
-        throw new Error('Invalid API domain URL');
-      }
-      
-      if (!channelNumber.match(/^\d+$/)) {
-        throw new Error('Invalid channel number format');
-      }
-
-      const response = await axios.post(
-        `${apiDomainUrl}/api/v1.0/uploads/${channelNumber}`,
-        form,
-        config
-      );
-
-      // Log the complete response for debugging
-      console.log('Upload Response:', JSON.stringify(response.data, null, 2));
-
-      if (!response.data?.success) {
-        throw new Error('Upload failed: ' + (response.data?.statusDesc || 'Unknown error'));
-      }
-
-      console.log('Upload completed successfully');
-
-      if (!response.data?.data?.ImageUrl) {
-        throw new Error('Invalid response format from upload API');
-      }
-
-      // Clean up the file after successful upload
-      try {
-        await fs.promises.unlink(filePath);
-        console.log('Temporary file cleaned up:', filePath);
-      } catch (cleanupError) {
-        console.warn('Failed to clean up temporary file:', cleanupError);
-      }
-
-      return response.data;
-
-    } catch (error: any) {
-      attempt++;
-      
-      // Log detailed error information
-      console.error('Upload Error Details:', {
-        attempt,
-        message: error.message,
-        response: error.response?.data,
-        status: error.response?.status,
-        headers: error.response?.headers,
-        config: error.config
-      });
-
-      // Handle specific error cases
-      if (error.code === 'ENOENT') {
-        throw new Error('File not found: ' + filePath);
-      }
-      
-      if (error.response?.status === 413) {
-        throw new Error('File size too large. Please reduce the image size.');
-      }
-      
-      if (error.response?.status === 401) {
-        throw new Error('Authentication failed. Please check your API key.');
-      }
-
-      // For server errors (500) and network errors, retry if attempts remain
-      if (attempt < maxRetries && (
-        error.response?.status === 500 || 
-        error.code === 'ECONNRESET' || 
-        error.code === 'ETIMEDOUT' ||
-        error.code === 'ECONNABORTED'
-      )) {
-        console.log(`Retrying upload after error (Attempt ${attempt}/${maxRetries})...`);
-        // Add exponential backoff delay with jitter
-        const backoffDelay = Math.min(1000 * Math.pow(2, attempt) + Math.random() * 1000, 10000);
-        await new Promise(resolve => setTimeout(resolve, backoffDelay));
-        continue;
-      }
-
-      // If we've exhausted all retries or hit a non-retryable error, throw
-      throw new Error(
-        `Upload failed after ${attempt} attempts: ${error.message}`
-      );
-    }
-  }
-  
-  throw new Error(`Upload failed after ${maxRetries} attempts`);
-}
-
-async function uploadImageToServer(filePath: string): Promise<string> {
   try {
-    const form = new FormData();
-    const fileStream = fs.createReadStream(filePath);
-    
-    form.append("image", fileStream, {
-      filename: path.basename(filePath),
-      contentType: 'image/png'
+    const httpsAgent = new https.Agent({
+      rejectUnauthorized: false, // ⚠️ turns off cert checking
     });
+    const form = new FormData();
+    form.append("file", fs.createReadStream(filePath));
 
     const response = await axios.post(
-      "https://testadmin.mysampark.com/api/upload_image",
+      `${apiDomainUrl}/api/v1.0/uploads/${channelNumber}`,
       form,
       {
+        httpsAgent,
+        proxy: false, // just to be double‑sure
+        maxBodyLength: Infinity, // allow very large uploads
+        timeout: 60000, // 60 s timeout
         headers: {
-          ...form.getHeaders(),
-          'Accept': 'application/json'
+          Authorization: `Bearer ${apiKey}`,
+          ...form.getHeaders(), // ✅ works with correct FormData
         },
-        maxBodyLength: Infinity,
-        maxContentLength: Infinity
       }
     );
 
-    if (!response.data?.success) {
-      throw new Error('Upload failed: ' + (response.data?.message || 'Unknown error'));
-    }
-
-    // Clean up the temporary file
-    try {
-      await fs.promises.unlink(filePath);
-      console.log('Temporary file cleaned up:', filePath);
-    } catch (cleanupError) {
-      console.warn('Failed to clean up temporary file:', cleanupError);
-    }
-
-    return response.data.url; // Assuming the API returns the image URL in this format
+    return response.data;
   } catch (error: any) {
-    console.error('Server Upload Error:', {
-      message: error.message,
-      response: error.response?.data,
-      status: error.response?.status
-    });
-    throw new Error(`Failed to upload image to server: ${error.message}`);
+    console.log("error", error);
+    console.error(`❌ Upload failed: ${error.message}`);
+    throw error;
   }
 }
-
 // 🌐 Fetch all users
 async function fetchAllUsers() {
   const response = await axios.get(
@@ -705,18 +544,55 @@ async function fetchAllUsers() {
   );
   return response.data.data;
 }
+
+// Add image upload function
+async function uploadToPostImages(imagePath: string): Promise<string> {
+  try {
+    // Get the original filename
+    const originalFilename = path.basename(imagePath);
+    
+    // Generate a unique filename
+    const uniqueFilename = `${Date.now()}-${Math.random().toString(36).substring(2)}-${originalFilename}`;
+    
+    // Define the destination path in the public uploads directory
+    const destinationPath = path.join(__dirname, '..', '..', 'public', 'uploads', uniqueFilename);
+    
+    // Copy the file to the public directory
+    fs.copyFileSync(imagePath, destinationPath);
+    
+    // Get server address
+    const serverAddress = process.env.BASE_URL || `http://localhost:${43007}`;
+    
+    // Schedule cleanup after 10 seconds
+    setTimeout(() => {
+      try {
+        // Delete both the original and the copied file
+        fs.unlinkSync(imagePath);
+        fs.unlinkSync(destinationPath);
+        console.log(`🧹 Cleaned up files: ${imagePath} and ${destinationPath}`);
+      } catch (cleanupError) {
+        console.error('Error during file cleanup:', cleanupError);
+      }
+    }, 10000); // 10 seconds
+
+    // Return the public URL
+    return `${serverAddress}/uploads/${uniqueFilename}`;
+  } catch (error) {
+    console.error('Error saving image:', error);
+    throw error;
+  }
+}
 // 🧠 Main runner
 async function generateForAllUsers() {
   try {
     const users = await fetchAllUsers();
     console.log(`✅ Fetched ${users.length} users`);
 
-    // Create output dir if not exists
     const outputDir = path.join(__dirname, "output");
-
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir);
     }
+
     function getCurrentTimeIST() {
       return new Intl.DateTimeFormat("en-GB", {
         hour12: false,
@@ -821,26 +697,34 @@ async function generateForAllUsers() {
             j
           );
 
-          // Generate a unique filename using timestamp and IDs
-          const timestamp = Date.now();
-          const filename = `image_${timestamp}_${business.id}_${j}.png`;
+          // Step 4: Save image
+          const filename = `${Math.random()}user-${business.id}-${
+            business.id
+          }.png`;
           const outputPath = path.join(outputDir, filename);
-          
-          // Save the image
           fs.writeFileSync(outputPath, buffer);
-          console.log(`🖼️ Image generated and saved: ${outputPath}`);
+          console.log(
+            `🖼️ Image generated for user ${business.id}: ${outputPath}`
+          );
+         let uploadResponse = await uploadToPostImages(outputPath);
+         console.log("uploadResponse", uploadResponse);
+          // Step 5: Upload image
+          // const uploadResponse = await uploadImageToAPI(
+          //   outputPath,
+          //   "https://cloudapi.wbbox.in",
+          //   "918849987778",
+          //   "OQW891APcEuT47TnB4ml0w"
+          // );
 
-          // Get the public URL for the image
-          const imageUrl = getPublicImageUrl(filename);
-          console.log(`📤 Image URL generated: ${imageUrl}`);
-
-          // Send via WhatsApp using the local URL
+          // Step 6: Send via WhatsApp
+          // changes
           let whatsaappAPIresponse = await sendWhatsAppTemplate(
-            business.whatsapp_number || "919624863068",
-            imageUrl,
+            "919624863068",
+            // business.whatsapp_number || "919624863068",
+            uploadResponse,
             captionResponse
           );
-
+          console.log("whatsaappAPIresponse", whatsaappAPIresponse);
           // console.log(
           //   "Expression Evaluation Result",
           //   backgroundImagePostIdCache.has(`${business.id}-post_id`) && j > 0
@@ -872,7 +756,6 @@ async function generateForAllUsers() {
             backgroundImagePostIdCache.delete(`${business.id}-post_id`);
           }
         }
-        // }
       } catch (err) {
         console.error(
           `❌ Error generating image for user ${business.id}:`,
@@ -880,102 +763,14 @@ async function generateForAllUsers() {
         );
       }
     }
-
-    // Optional: Clean up old images (keeping last 24 hours)
-    cleanupOldImages(outputDir);
   } catch (err) {
     console.error("❌ Error in main process:", err);
   }
 }
 
-// Function to clean up old images
-function cleanupOldImages(directory: string) {
-  try {
-    const files = fs.readdirSync(directory);
-    const now = Date.now();
-    const oneDayAgo = now - (24 * 60 * 60 * 1000); // 24 hours in milliseconds
-
-    files.forEach(file => {
-      const filePath = path.join(directory, file);
-      const stats = fs.statSync(filePath);
-      
-      if (stats.mtimeMs < oneDayAgo) {
-        fs.unlinkSync(filePath);
-        console.log(`🗑️ Cleaned up old image: ${file}`);
-      }
-    });
-  } catch (error) {
-    console.warn('⚠️ Error cleaning up old images:', error);
-  }
-}
-
 // ⏰ Cron job scheduled for 12:30 AM every day
-// "* * * * *"
-cron.schedule("22 12 * * *", () => {
+cron.schedule("* * * * *", () => {
   console.log("🚀 Cron job started at", new Date().toLocaleString());
   generateForAllUsers();
 });
 
-// Serve static files from the output directory
-app.use('/images', express.static(path.join(__dirname, 'output')));
-
-// Function to get server IP addresses
-function getServerAddresses(): { internal: string[], external: string[] } {
-  const interfaces = os.networkInterfaces();
-  const addresses = {
-    internal: [],
-    external: []
-  };
-
-  Object.keys(interfaces).forEach((interfaceName) => {
-    interfaces[interfaceName]?.forEach((interface_) => {
-      // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
-      if (interface_.family === 'IPv4') {
-        if (interface_.internal) {
-          addresses.internal.push(interface_.address);
-        } else {
-          addresses.external.push(interface_.address);
-        }
-      }
-    });
-  });
-
-  return addresses;
-}
-
-// Function to get public URL for an image with detected IP
-function getPublicImageUrl(filename: string): string {
-  // Try to get the base URL from environment variable first
-  if (process.env.BASE_URL) {
-    return `${process.env.BASE_URL}/images/${filename}`;
-  }
-
-  // If no BASE_URL is set, try to use the server's IP
-  const addresses = getServerAddresses();
-  const serverIP = addresses.external[0] || addresses.internal[0] || 'localhost';
-  const serverUrl = `http://${serverIP}:${PORT}`;
-  
-  console.log('Available Server URLs:');
-  console.log('Internal addresses:', addresses.internal.map(ip => `http://${ip}:${PORT}`));
-  console.log('External addresses:', addresses.external.map(ip => `http://${ip}:${PORT}`));
-  console.log('Using server URL:', serverUrl);
-  
-  return `${serverUrl}/images/${filename}`;
-}
-
-// Start the server with IP information
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  const addresses = getServerAddresses();
-  console.log('\nServer is running on:');
-  console.log('Internal addresses:');
-  addresses.internal.forEach(ip => {
-    console.log(`  http://${ip}:${PORT}`);
-  });
-  console.log('\nExternal addresses:');
-  addresses.external.forEach(ip => {
-    console.log(`  http://${ip}:${PORT}`);
-  });
-  console.log('\nLocal address:');
-  console.log(`  http://localhost:${PORT}`);
-});
