@@ -8,6 +8,7 @@ const path = require("path");
 const https = require("https");
 import { Image } from "canvas";
 const { createCanvas, loadImage, registerFont } = require("canvas");
+import { logger } from '../utils/logger';
 
 /// Define font paths
 const fontPath = "./public/font";
@@ -548,38 +549,32 @@ async function fetchAllUsers() {
 // Add image upload function
 async function uploadToPostImages(imagePath: string): Promise<string> {
   try {
-    // Get the original filename
     const originalFilename = path.basename(imagePath);
-    
-    // Generate a unique filename
     const uniqueFilename = `${Date.now()}-${Math.random().toString(36).substring(2)}-${originalFilename}`;
-    
-    // Define the destination path in the public uploads directory
     const destinationPath = path.join(__dirname, '..', '..', 'public', 'uploads', uniqueFilename);
     
-    // Copy the file to the public directory
+    await logger.info('Starting file upload', { originalFilename, uniqueFilename });
+    
     fs.copyFileSync(imagePath, destinationPath);
     
-    // Get server address
-    const serverAddress = `https://cron.mysampark.com`
-    process.env.BASE_URL || `http://localhost:${43007}`;
+    const serverAddress = `https://cron.mysampark.com`;
     
-    // Schedule cleanup after 10 seconds
-    setTimeout(() => {
+    setTimeout(async () => {
       try {
-        // Delete both the original and the copied file
         fs.unlinkSync(imagePath);
         fs.unlinkSync(destinationPath);
-        console.log(`🧹 Cleaned up files: ${imagePath} and ${destinationPath}`);
+        await logger.info('Files cleaned up successfully', { imagePath, destinationPath });
       } catch (cleanupError) {
-        console.error('Error during file cleanup:', cleanupError);
+        await logger.error('Error during file cleanup', cleanupError);
       }
-    }, 10000); // 10 seconds
+    }, 10000);
 
-    // Return the public URL
-    return `${serverAddress}/uploads/${uniqueFilename}`;
+    const publicUrl = `${serverAddress}/uploads/${uniqueFilename}`;
+    await logger.success('File uploaded successfully', { publicUrl });
+    
+    return publicUrl;
   } catch (error) {
-    console.error('Error saving image:', error);
+    await logger.error('Error saving image', error);
     throw error;
   }
 }
@@ -587,11 +582,12 @@ async function uploadToPostImages(imagePath: string): Promise<string> {
 async function generateForAllUsers() {
   try {
     const users = await fetchAllUsers();
-    console.log(`✅ Fetched ${users.length} users`);
+    await logger.info(`Starting image generation for ${users.length} users`);
 
     const outputDir = path.join(__dirname, "output");
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir);
+      await logger.info('Created output directory', { outputDir });
     }
 
     function getCurrentTimeIST() {
@@ -626,15 +622,13 @@ async function generateForAllUsers() {
     }
 
     const currentTime = getCurrentTimeIST();
-    console.log("currentTime", currentTime);
+    await logger.info('Current time (IST)', { currentTime });
+    
     let business;
     for (const user of users) {
       try {
-        // console.log("user", user);
-        // for (let i = 0; i < user.businesses.length; i++) {
         business = user?.business;
 
-        // ✅ Check if active_business and its ID are valid
         if (!business || !business.id || business.whatsapp_number == null) {
           const businessId = business?.id ?? "unknown";
           const reason = !business
@@ -643,13 +637,18 @@ async function generateForAllUsers() {
             ? "Missing business ID"
             : business.whatsapp_number == null
             ? "Missing WhatsApp number"
-            : "Unknown reason"; // fallback (shouldn't hit)
+            : "Unknown reason";
 
-          console.warn(`⚠️ Skipping business ${businessId}: ${reason}.`);
+          await logger.warn(`Skipping business`, { businessId, reason });
           continue;
         }
 
-        // Step 2: Fetch custom frame
+        await logger.info('Processing business', { 
+          businessId: business.id,
+          userId: user.id,
+          businessName: business.business_name 
+        });
+
         const frameResponse = await axios.post(
           "https://testadmin.mysampark.com/api/display_bussiness_frame",
           { business_id: business.id }
@@ -661,7 +660,6 @@ async function generateForAllUsers() {
           globalfont: frameResponse.data?.globalfont,
         };
 
-        // ✅ Proceed only if all required frame data exists
         if (
           !Array.isArray(customFrames.data) ||
           customFrames.data.length === 0 ||
@@ -669,71 +667,50 @@ async function generateForAllUsers() {
           !Array.isArray(customFrames.globalfont) ||
           customFrames.globalfont.length === 0
         ) {
-          console.error(`❌ Missing frame data for user ${business.id}`);
+          await logger.error('Missing frame data', { businessId: business.id });
           continue;
         }
 
-        // changes
-        // ✅ Check if current time matches scheduled time
-        console.log(
-          "timing condition",
-          business.post_schedult_time !== currentTime &&
-            business.postUserSend !== currentTime
-        );
         if (
           business.post_schedult_time !== currentTime &&
           business.postUserSend !== currentTime
         ) {
-          console.log(`⏰ Skipping user ${business.id}: Not scheduled for now`);
+          await logger.info('Skipping - not scheduled for now', { 
+            businessId: business.id,
+            scheduledTime: business.post_schedult_time,
+            currentTime 
+          });
           continue;
         }
-        let captionResponse = await getWhatsappMessageCaption(business.id);
-        console.log("captionResponse", captionResponse);
-        for (let j = 0; j <= 1; j++) {
-          // Step 3: Generate image buffer
-          const buffer = await generateImageBuffer(
-            user,
-            customFrames,
-            business,
-            j
-          );
 
-          // Step 4: Save image
-          const filename = `${Math.random()}user-${business.id}-${
-            business.id
-          }.png`;
+        let captionResponse = await getWhatsappMessageCaption(business.id);
+        await logger.info('Retrieved caption', { businessId: business.id, caption: captionResponse });
+
+        for (let j = 0; j <= 1; j++) {
+          await logger.info(`Generating image ${j + 1}/2`, { businessId: business.id });
+          
+          const buffer = await generateImageBuffer(user, customFrames, business, j);
+          const filename = `${Math.random()}user-${business.id}-${business.id}.png`;
           const outputPath = path.join(outputDir, filename);
           fs.writeFileSync(outputPath, buffer);
-          console.log(
-            `🖼️ Image generated for user ${business.id}: ${outputPath}`
-          );
-         let uploadResponse = await uploadToPostImages(outputPath);
-         console.log("uploadResponse", uploadResponse);
-          // Step 5: Upload image
-          // const uploadResponse = await uploadImageToAPI(
-          //   outputPath,
-          //   "https://cloudapi.wbbox.in",
-          //   "918849987778",
-          //   "OQW891APcEuT47TnB4ml0w"
-          // );
+          await logger.success('Image generated', { businessId: business.id, outputPath });
 
-          // Step 6: Send via WhatsApp
-          // changes
+          let uploadResponse = await uploadToPostImages(outputPath);
+          await logger.success('Image uploaded', { businessId: business.id, url: uploadResponse });
+
           let whatsaappAPIresponse = await sendWhatsAppTemplate(
             // "919624863068",
             business.whatsapp_number || "919624863068",
             uploadResponse,
             captionResponse
           );
-          console.log("whatsaappAPIresponse", whatsaappAPIresponse);
-          console.log(
-            "Expression Evaluation Result",
-            backgroundImagePostIdCache.has(`${business.id}-post_id`) && j > 0
-          );
-          if (
-            backgroundImagePostIdCache.has(`${business.id}-post_id`) &&
-            j > 0
-          ) {
+          await logger.info('WhatsApp message sent', { 
+            businessId: business.id,
+            success: whatsaappAPIresponse,
+            phone: business.whatsapp_number || "919624863068"
+          });
+
+          if (backgroundImagePostIdCache.has(`${business.id}-post_id`) && j > 0) {
             if (!whatsaappAPIresponse) {
               await updateUserPostIdOnServer(
                 business.user_id,
@@ -742,6 +719,10 @@ async function generateForAllUsers() {
                 business.id,
                 getCurrentTimeISTPlus10()
               );
+              await logger.warn('WhatsApp send failed, updated server with next attempt time', { 
+                businessId: business.id,
+                nextAttempt: getCurrentTimeISTPlus10() 
+              });
             } else {
               await updateUserPostIdOnServer(
                 business.user_id,
@@ -749,29 +730,27 @@ async function generateForAllUsers() {
                 true,
                 business.id
               );
+              await logger.success('Updated server with successful send', { businessId: business.id });
             }
-            console.log(
-              "Now Deleting backgroundImagePostIdCache",
-              `${business.id}-post_id`
-            );
             backgroundImagePostIdCache.delete(`${business.id}-post_id`);
+            await logger.info('Cleared post ID from cache', { businessId: business.id });
           }
         }
       } catch (err) {
-        console.error(
-          `❌ Error generating image for user ${business.id}:`,
-          err.message
-        );
+        await logger.error(`Error processing business ${business?.id}`, err);
       }
     }
   } catch (err) {
-    console.error("❌ Error in main process:", err);
+    await logger.error('Error in main process', err);
   }
 }
 
-// ⏰ Cron job scheduled for 12:30 AM every day
+// Cron job scheduled for every minute
 cron.schedule("* * * * *", () => {
-  console.log("🚀 Cron job started at", new Date().toLocaleString());
-  generateForAllUsers();
+  logger.info('🚀 Cron job started', { timestamp: new Date().toLocaleString() })
+    .then(() => generateForAllUsers())
+    .catch(async (err) => {
+      await logger.error('Cron job failed', err);
+    });
 });
 
