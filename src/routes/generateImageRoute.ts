@@ -51,15 +51,30 @@ async function generateImageBuffer(user: any, framesData: any): Promise<Buffer> 
   // load background
   const bgUrl = await getBackgroundImageUrl();
   const bgImage = await loadImage(bgUrl);
-  const canvas = createCanvas(bgImage.width, bgImage.height);
+  
+  // Create canvas with optimized dimensions
+  const maxWidth = 1200; // Maximum width to maintain quality while reducing size
+  const aspectRatio = bgImage.height / bgImage.width;
+  const width = Math.min(bgImage.width, maxWidth);
+  const height = Math.round(width * aspectRatio);
+  
+  const canvas = createCanvas(width, height);
   const ctx = canvas.getContext("2d");
-  ctx.drawImage(bgImage, 0, 0);
+  
+  // Draw background with smooth scaling
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(bgImage, 0, 0, width, height);
 
   // load frame overlay
   const frame = framesData.data[0];
   const variant = frame.frames_varinat[0];
   const overlay = await loadImage(variant.image_url);
-  ctx.drawImage(overlay, 0, canvas.height - overlay.height);
+  
+  // Scale overlay proportionally
+  const overlayScale = width / bgImage.width;
+  const overlayHeight = overlay.height * overlayScale;
+  ctx.drawImage(overlay, 0, height - overlayHeight, width, overlayHeight);
 
   // prepare text lines, icons, fonts, colors
   const { line_content, globalfont } = framesData;
@@ -71,6 +86,9 @@ async function generateImageBuffer(user: any, framesData: any): Promise<Buffer> 
     location: await loadImage(frame.frame_icon.location_icon),
     website: await loadImage(frame.frame_icon.website_icon),
   };
+
+  // Scale text and icons based on canvas size
+  const scaleFactor = width / bgImage.width;
   const businessFields = [
     user.active_business.business_name,
     user.active_business.mobile_no,
@@ -104,7 +122,12 @@ async function generateImageBuffer(user: any, framesData: any): Promise<Buffer> 
     });
   });
 
-  return canvas.toBuffer("image/png");
+  // Return optimized PNG buffer
+  return canvas.toBuffer('image/png', {
+    compressionLevel: 8,
+    filters: canvas.PNG_FILTER_NONE,
+    resolution: 72
+  });
 }
 
 // Helper: upload image to API
