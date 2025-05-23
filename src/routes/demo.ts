@@ -675,18 +675,18 @@ async function generateForAllUsers() {
 
         // changes
         // ✅ Check if current time matches scheduled time
-        // console.log(
-        //   "timing condition",
-        //   business.post_schedult_time !== currentTime &&
-        //     business.postUserSend !== currentTime
-        // );
-        // if (
-        //   business.post_schedult_time !== currentTime &&
-        //   business.postUserSend !== currentTime
-        // ) {
-        //   console.log(`⏰ Skipping user ${business.id}: Not scheduled for now`);
-        //   continue;
-        // }
+        console.log(
+          "timing condition",
+          business.post_schedult_time !== currentTime &&
+            business.postUserSend !== currentTime
+        );
+        if (
+          business.post_schedult_time !== currentTime &&
+          business.postUserSend !== currentTime
+        ) {
+          console.log(`⏰ Skipping user ${business.id}: Not scheduled for now`);
+          continue;
+        }
         let captionResponse = await getWhatsappMessageCaption(business.id);
         console.log("captionResponse", captionResponse);
         for (let j = 0; j <= 1; j++) {
@@ -726,10 +726,10 @@ async function generateForAllUsers() {
             captionResponse
           );
           console.log("whatsaappAPIresponse", whatsaappAPIresponse);
-          // console.log(
-          //   "Expression Evaluation Result",
-          //   backgroundImagePostIdCache.has(`${business.id}-post_id`) && j > 0
-          // );
+          console.log(
+            "Expression Evaluation Result",
+            backgroundImagePostIdCache.has(`${business.id}-post_id`) && j > 0
+          );
           if (
             backgroundImagePostIdCache.has(`${business.id}-post_id`) &&
             j > 0
@@ -770,7 +770,7 @@ async function generateForAllUsers() {
 }
 
 // ⏰ Cron job scheduled for 12:30 AM every day
-cron.schedule("57 9 * * *", () => {
+cron.schedule("* * * * *", () => {
   console.log("🚀 Cron job started at", new Date().toLocaleString());
   generateForAllUsers();
 });
