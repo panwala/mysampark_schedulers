@@ -720,8 +720,8 @@ async function generateForAllUsers() {
           // Step 6: Send via WhatsApp
           // changes
           let whatsaappAPIresponse = await sendWhatsAppTemplate(
-            "919624863068",
-            // business.whatsapp_number || "919624863068",
+            // "919624863068",
+            business.whatsapp_number || "919624863068",
             uploadResponse,
             captionResponse
           );
