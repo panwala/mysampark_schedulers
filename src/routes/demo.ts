@@ -265,7 +265,7 @@ async function recolorImage(
 
 // 🎨 Image rendering logic (reusable)
 
-const generateImageBuffer = async (
+export const generateImageBuffer = async (
   singleuserData: any,
   actualframesData: {
     data: any; // array of frames
@@ -539,7 +539,7 @@ async function uploadImageToAPI(
   }
 }
 // 🌐 Fetch all users
-async function fetchAllUsers() {
+export async function fetchAllUsers() {
   const response = await axios.get(
     "https://testadmin.mysampark.com/api/bussiness_list"
   );
@@ -805,7 +805,11 @@ async function generateForAllUsers() {
               businessId: business.id,
               error: imageError.message,
               stack: imageError.stack,
-              timestamp: new Date().toISOString()
+              timestamp: new Date().toISOString(),
+              customFrames,
+              business,
+              user
+              
             });
             failureCount++;
             continue;
@@ -863,4 +867,6 @@ cron.schedule("*/30 * * * *", () => {
       });
     });
 });
+
+export { generateForAllUsers };
 

@@ -39,7 +39,7 @@ logDownloadRoute.get('/logs', async (req: Request, res: Response) => {
 });
 
 // Download a specific log file
-logDownloadRoute.get('/logs/download/:filename', async (req: Request, res: Response) => {
+logDownloadRoute.get('/logs/download/:filename', async (req: any, res: any) => {
     try {
         const filename = req.params.filename;
         

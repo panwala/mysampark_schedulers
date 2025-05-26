@@ -1,0 +1,2996 @@
+[2025-05-26T18:30:00.418Z] [INFO] 🚀 Starting scheduled job
+{
+  "timestamp": "2025-05-26T18:30:00.418Z",
+  "schedule": "Every 30 minutes"
+}
+[2025-05-26T18:30:00.425Z] [INFO] 🔄 Starting batch image generation process
+{
+  "startTime": "2025-05-26T18:30:00.425Z",
+  "environment": "development"
+}
+[2025-05-26T18:30:00.559Z] [INFO] 👥 Retrieved user list
+{
+  "totalUsers": 0,
+  "timestamp": "2025-05-26T18:30:00.559Z"
+}
+[2025-05-26T18:30:00.664Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:00:00",
+  "timestamp": "2025-05-26T18:30:00.664Z"
+}
+[2025-05-26T18:30:00.667Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 0,
+  "successful": 0,
+  "failed": 0,
+  "durationSeconds": 0.242,
+  "startTime": "2025-05-26T18:30:00.425Z",
+  "endTime": "2025-05-26T18:30:00.667Z"
+}
+[2025-05-26T18:31:06.902Z] [INFO] 📥 Image processing request received
+{
+  "businessId": 3,
+  "timestamp": "2025-05-26T18:31:06.902Z"
+}
+[2025-05-26T18:31:06.905Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:06.905Z"
+}
+[2025-05-26T18:31:07.063Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.063Z"
+}
+[2025-05-26T18:31:07.066Z] [INFO] 🔄 Processed images for business ID: 3 - Call 1
+[2025-05-26T18:31:07.068Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.068Z"
+}
+[2025-05-26T18:31:07.198Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.198Z"
+}
+[2025-05-26T18:31:07.199Z] [INFO] 🔄 Processed images for business ID: 3 - Call 2
+[2025-05-26T18:31:07.200Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.200Z"
+}
+[2025-05-26T18:31:07.307Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.307Z"
+}
+[2025-05-26T18:31:07.310Z] [INFO] 🔄 Processed images for business ID: 3 - Call 3
+[2025-05-26T18:31:07.311Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.311Z"
+}
+[2025-05-26T18:31:07.415Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.415Z"
+}
+[2025-05-26T18:31:07.416Z] [INFO] 🔄 Processed images for business ID: 3 - Call 4
+[2025-05-26T18:31:07.416Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.416Z"
+}
+[2025-05-26T18:31:07.530Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.530Z"
+}
+[2025-05-26T18:31:07.532Z] [INFO] 🔄 Processed images for business ID: 3 - Call 5
+[2025-05-26T18:31:07.533Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.533Z"
+}
+[2025-05-26T18:31:07.653Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.653Z"
+}
+[2025-05-26T18:31:07.655Z] [INFO] 🔄 Processed images for business ID: 3 - Call 6
+[2025-05-26T18:31:07.656Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.656Z"
+}
+[2025-05-26T18:31:07.771Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.771Z"
+}
+[2025-05-26T18:31:07.773Z] [INFO] 🔄 Processed images for business ID: 3 - Call 7
+[2025-05-26T18:31:07.774Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.774Z"
+}
+[2025-05-26T18:31:07.890Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.890Z"
+}
+[2025-05-26T18:31:07.896Z] [INFO] 🔄 Processed images for business ID: 3 - Call 8
+[2025-05-26T18:31:07.898Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:07.898Z"
+}
+[2025-05-26T18:31:08.019Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.019Z"
+}
+[2025-05-26T18:31:08.022Z] [INFO] 🔄 Processed images for business ID: 3 - Call 9
+[2025-05-26T18:31:08.023Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.023Z"
+}
+[2025-05-26T18:31:08.151Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.151Z"
+}
+[2025-05-26T18:31:08.153Z] [INFO] 🔄 Processed images for business ID: 3 - Call 10
+[2025-05-26T18:31:08.154Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.154Z"
+}
+[2025-05-26T18:31:08.368Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.367Z"
+}
+[2025-05-26T18:31:08.370Z] [INFO] 🔄 Processed images for business ID: 3 - Call 11
+[2025-05-26T18:31:08.371Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.371Z"
+}
+[2025-05-26T18:31:08.481Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.481Z"
+}
+[2025-05-26T18:31:08.483Z] [INFO] 🔄 Processed images for business ID: 3 - Call 12
+[2025-05-26T18:31:08.485Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.485Z"
+}
+[2025-05-26T18:31:08.603Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.603Z"
+}
+[2025-05-26T18:31:08.605Z] [INFO] 🔄 Processed images for business ID: 3 - Call 13
+[2025-05-26T18:31:08.607Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.607Z"
+}
+[2025-05-26T18:31:08.724Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.723Z"
+}
+[2025-05-26T18:31:08.728Z] [INFO] 🔄 Processed images for business ID: 3 - Call 14
+[2025-05-26T18:31:08.729Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.729Z"
+}
+[2025-05-26T18:31:08.867Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.866Z"
+}
+[2025-05-26T18:31:08.870Z] [INFO] 🔄 Processed images for business ID: 3 - Call 15
+[2025-05-26T18:31:08.871Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.871Z"
+}
+[2025-05-26T18:31:08.980Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.980Z"
+}
+[2025-05-26T18:31:08.983Z] [INFO] 🔄 Processed images for business ID: 3 - Call 16
+[2025-05-26T18:31:08.985Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:08.984Z"
+}
+[2025-05-26T18:31:09.072Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.072Z"
+}
+[2025-05-26T18:31:09.073Z] [INFO] 🔄 Processed images for business ID: 3 - Call 17
+[2025-05-26T18:31:09.074Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.074Z"
+}
+[2025-05-26T18:31:09.177Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.177Z"
+}
+[2025-05-26T18:31:09.179Z] [INFO] 🔄 Processed images for business ID: 3 - Call 18
+[2025-05-26T18:31:09.180Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.180Z"
+}
+[2025-05-26T18:31:09.274Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.274Z"
+}
+[2025-05-26T18:31:09.278Z] [INFO] 🔄 Processed images for business ID: 3 - Call 19
+[2025-05-26T18:31:09.280Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.279Z"
+}
+[2025-05-26T18:31:09.398Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.398Z"
+}
+[2025-05-26T18:31:09.400Z] [INFO] 🔄 Processed images for business ID: 3 - Call 20
+[2025-05-26T18:31:09.401Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.401Z"
+}
+[2025-05-26T18:31:09.498Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.498Z"
+}
+[2025-05-26T18:31:09.500Z] [INFO] 🔄 Processed images for business ID: 3 - Call 21
+[2025-05-26T18:31:09.502Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.502Z"
+}
+[2025-05-26T18:31:09.602Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.602Z"
+}
+[2025-05-26T18:31:09.604Z] [INFO] 🔄 Processed images for business ID: 3 - Call 22
+[2025-05-26T18:31:09.606Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.606Z"
+}
+[2025-05-26T18:31:09.703Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.703Z"
+}
+[2025-05-26T18:31:09.705Z] [INFO] 🔄 Processed images for business ID: 3 - Call 23
+[2025-05-26T18:31:09.707Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.706Z"
+}
+[2025-05-26T18:31:09.805Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.805Z"
+}
+[2025-05-26T18:31:09.807Z] [INFO] 🔄 Processed images for business ID: 3 - Call 24
+[2025-05-26T18:31:09.811Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.811Z"
+}
+[2025-05-26T18:31:09.918Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.918Z"
+}
+[2025-05-26T18:31:09.919Z] [INFO] 🔄 Processed images for business ID: 3 - Call 25
+[2025-05-26T18:31:09.920Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:09.920Z"
+}
+[2025-05-26T18:31:10.014Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.014Z"
+}
+[2025-05-26T18:31:10.016Z] [INFO] 🔄 Processed images for business ID: 3 - Call 26
+[2025-05-26T18:31:10.017Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.017Z"
+}
+[2025-05-26T18:31:10.103Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.103Z"
+}
+[2025-05-26T18:31:10.105Z] [INFO] 🔄 Processed images for business ID: 3 - Call 27
+[2025-05-26T18:31:10.106Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.106Z"
+}
+[2025-05-26T18:31:10.206Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.206Z"
+}
+[2025-05-26T18:31:10.209Z] [INFO] 🔄 Processed images for business ID: 3 - Call 28
+[2025-05-26T18:31:10.211Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.211Z"
+}
+[2025-05-26T18:31:10.320Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.320Z"
+}
+[2025-05-26T18:31:10.322Z] [INFO] 🔄 Processed images for business ID: 3 - Call 29
+[2025-05-26T18:31:10.323Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.323Z"
+}
+[2025-05-26T18:31:10.422Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.422Z"
+}
+[2025-05-26T18:31:10.425Z] [INFO] 🔄 Processed images for business ID: 3 - Call 30
+[2025-05-26T18:31:10.428Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.428Z"
+}
+[2025-05-26T18:31:10.519Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.519Z"
+}
+[2025-05-26T18:31:10.522Z] [INFO] 🔄 Processed images for business ID: 3 - Call 31
+[2025-05-26T18:31:10.523Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.523Z"
+}
+[2025-05-26T18:31:10.628Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.628Z"
+}
+[2025-05-26T18:31:10.630Z] [INFO] 🔄 Processed images for business ID: 3 - Call 32
+[2025-05-26T18:31:10.632Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.632Z"
+}
+[2025-05-26T18:31:10.729Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.729Z"
+}
+[2025-05-26T18:31:10.733Z] [INFO] 🔄 Processed images for business ID: 3 - Call 33
+[2025-05-26T18:31:10.734Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.734Z"
+}
+[2025-05-26T18:31:10.819Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.819Z"
+}
+[2025-05-26T18:31:10.821Z] [INFO] 🔄 Processed images for business ID: 3 - Call 34
+[2025-05-26T18:31:10.822Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.822Z"
+}
+[2025-05-26T18:31:10.915Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.915Z"
+}
+[2025-05-26T18:31:10.918Z] [INFO] 🔄 Processed images for business ID: 3 - Call 35
+[2025-05-26T18:31:10.919Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:10.919Z"
+}
+[2025-05-26T18:31:11.034Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.033Z"
+}
+[2025-05-26T18:31:11.036Z] [INFO] 🔄 Processed images for business ID: 3 - Call 36
+[2025-05-26T18:31:11.038Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.038Z"
+}
+[2025-05-26T18:31:11.134Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.134Z"
+}
+[2025-05-26T18:31:11.136Z] [INFO] 🔄 Processed images for business ID: 3 - Call 37
+[2025-05-26T18:31:11.138Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.138Z"
+}
+[2025-05-26T18:31:11.224Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.224Z"
+}
+[2025-05-26T18:31:11.229Z] [INFO] 🔄 Processed images for business ID: 3 - Call 38
+[2025-05-26T18:31:11.231Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.231Z"
+}
+[2025-05-26T18:31:11.335Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.335Z"
+}
+[2025-05-26T18:31:11.337Z] [INFO] 🔄 Processed images for business ID: 3 - Call 39
+[2025-05-26T18:31:11.339Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.339Z"
+}
+[2025-05-26T18:31:11.437Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.436Z"
+}
+[2025-05-26T18:31:11.439Z] [INFO] 🔄 Processed images for business ID: 3 - Call 40
+[2025-05-26T18:31:11.440Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.440Z"
+}
+[2025-05-26T18:31:11.540Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.540Z"
+}
+[2025-05-26T18:31:11.544Z] [INFO] 🔄 Processed images for business ID: 3 - Call 41
+[2025-05-26T18:31:11.546Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.546Z"
+}
+[2025-05-26T18:31:11.654Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.654Z"
+}
+[2025-05-26T18:31:11.656Z] [INFO] 🔄 Processed images for business ID: 3 - Call 42
+[2025-05-26T18:31:11.658Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.658Z"
+}
+[2025-05-26T18:31:11.762Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.762Z"
+}
+[2025-05-26T18:31:11.765Z] [INFO] 🔄 Processed images for business ID: 3 - Call 43
+[2025-05-26T18:31:11.766Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.766Z"
+}
+[2025-05-26T18:31:11.849Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.849Z"
+}
+[2025-05-26T18:31:11.852Z] [INFO] 🔄 Processed images for business ID: 3 - Call 44
+[2025-05-26T18:31:11.853Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.853Z"
+}
+[2025-05-26T18:31:11.944Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.944Z"
+}
+[2025-05-26T18:31:11.946Z] [INFO] 🔄 Processed images for business ID: 3 - Call 45
+[2025-05-26T18:31:11.948Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:11.948Z"
+}
+[2025-05-26T18:31:12.039Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:12.039Z"
+}
+[2025-05-26T18:31:12.041Z] [INFO] 🔄 Processed images for business ID: 3 - Call 46
+[2025-05-26T18:31:12.045Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:12.045Z"
+}
+[2025-05-26T18:31:12.136Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:12.135Z"
+}
+[2025-05-26T18:31:12.138Z] [INFO] 🔄 Processed images for business ID: 3 - Call 47
+[2025-05-26T18:31:12.139Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:12.139Z"
+}
+[2025-05-26T18:31:12.230Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:12.230Z"
+}
+[2025-05-26T18:31:12.233Z] [INFO] 🔄 Processed images for business ID: 3 - Call 48
+[2025-05-26T18:31:12.234Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:12.234Z"
+}
+[2025-05-26T18:31:12.329Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:12.328Z"
+}
+[2025-05-26T18:31:12.330Z] [INFO] 🔄 Processed images for business ID: 3 - Call 49
+[2025-05-26T18:31:12.330Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:12.330Z"
+}
+[2025-05-26T18:31:12.428Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:12.428Z"
+}
+[2025-05-26T18:31:12.430Z] [INFO] 🔄 Processed images for business ID: 3 - Call 50
+[2025-05-26T18:31:58.068Z] [INFO] 📥 Image processing request received
+{
+  "businessId": 3,
+  "timestamp": "2025-05-26T18:31:58.068Z"
+}
+[2025-05-26T18:31:58.097Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:58.097Z"
+}
+[2025-05-26T18:31:58.317Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:58.316Z"
+}
+[2025-05-26T18:31:58.320Z] [INFO] 🔄 Processed images for business ID: 3 - Call 1
+[2025-05-26T18:31:58.322Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:58.322Z"
+}
+[2025-05-26T18:31:58.454Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:58.454Z"
+}
+[2025-05-26T18:31:58.460Z] [INFO] 🔄 Processed images for business ID: 3 - Call 2
+[2025-05-26T18:31:58.462Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:58.462Z"
+}
+[2025-05-26T18:31:58.566Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:58.566Z"
+}
+[2025-05-26T18:31:58.569Z] [INFO] 🔄 Processed images for business ID: 3 - Call 3
+[2025-05-26T18:31:58.570Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:58.570Z"
+}
+[2025-05-26T18:31:58.741Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:58.741Z"
+}
+[2025-05-26T18:31:58.746Z] [INFO] 🔄 Processed images for business ID: 3 - Call 4
+[2025-05-26T18:31:58.751Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:58.751Z"
+}
+[2025-05-26T18:31:58.884Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:58.884Z"
+}
+[2025-05-26T18:31:58.886Z] [INFO] 🔄 Processed images for business ID: 3 - Call 5
+[2025-05-26T18:31:58.888Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:58.888Z"
+}
+[2025-05-26T18:31:59.017Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.017Z"
+}
+[2025-05-26T18:31:59.019Z] [INFO] 🔄 Processed images for business ID: 3 - Call 6
+[2025-05-26T18:31:59.020Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.020Z"
+}
+[2025-05-26T18:31:59.161Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.161Z"
+}
+[2025-05-26T18:31:59.163Z] [INFO] 🔄 Processed images for business ID: 3 - Call 7
+[2025-05-26T18:31:59.165Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.165Z"
+}
+[2025-05-26T18:31:59.306Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.306Z"
+}
+[2025-05-26T18:31:59.309Z] [INFO] 🔄 Processed images for business ID: 3 - Call 8
+[2025-05-26T18:31:59.311Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.311Z"
+}
+[2025-05-26T18:31:59.438Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.438Z"
+}
+[2025-05-26T18:31:59.443Z] [INFO] 🔄 Processed images for business ID: 3 - Call 9
+[2025-05-26T18:31:59.444Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.444Z"
+}
+[2025-05-26T18:31:59.559Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.559Z"
+}
+[2025-05-26T18:31:59.561Z] [INFO] 🔄 Processed images for business ID: 3 - Call 10
+[2025-05-26T18:31:59.562Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.562Z"
+}
+[2025-05-26T18:31:59.681Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.680Z"
+}
+[2025-05-26T18:31:59.684Z] [INFO] 🔄 Processed images for business ID: 3 - Call 11
+[2025-05-26T18:31:59.686Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.686Z"
+}
+[2025-05-26T18:31:59.796Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.796Z"
+}
+[2025-05-26T18:31:59.798Z] [INFO] 🔄 Processed images for business ID: 3 - Call 12
+[2025-05-26T18:31:59.800Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.800Z"
+}
+[2025-05-26T18:31:59.915Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.914Z"
+}
+[2025-05-26T18:31:59.916Z] [INFO] 🔄 Processed images for business ID: 3 - Call 13
+[2025-05-26T18:31:59.917Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:31:59.917Z"
+}
+[2025-05-26T18:32:00.033Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:00.033Z"
+}
+[2025-05-26T18:32:00.034Z] [INFO] 🔄 Processed images for business ID: 3 - Call 14
+[2025-05-26T18:32:00.035Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:00.035Z"
+}
+[2025-05-26T18:32:00.143Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:00.143Z"
+}
+[2025-05-26T18:32:00.145Z] [INFO] 🔄 Processed images for business ID: 3 - Call 15
+[2025-05-26T18:32:00.146Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:00.146Z"
+}
+[2025-05-26T18:32:30.371Z] [INFO] 📥 Image processing request received
+{
+  "businessId": 3,
+  "timestamp": "2025-05-26T18:32:30.370Z"
+}
+[2025-05-26T18:32:30.463Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:30.463Z"
+}
+[2025-05-26T18:32:30.749Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:30.749Z"
+}
+[2025-05-26T18:32:30.754Z] [INFO] 🔄 Processed images for business ID: 3 - Call 1
+[2025-05-26T18:32:30.757Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:30.757Z"
+}
+[2025-05-26T18:32:30.882Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:30.881Z"
+}
+[2025-05-26T18:32:30.884Z] [INFO] 🔄 Processed images for business ID: 3 - Call 2
+[2025-05-26T18:32:30.885Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:30.885Z"
+}
+[2025-05-26T18:32:31.010Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.009Z"
+}
+[2025-05-26T18:32:31.013Z] [INFO] 🔄 Processed images for business ID: 3 - Call 3
+[2025-05-26T18:32:31.017Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.017Z"
+}
+[2025-05-26T18:32:31.143Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.143Z"
+}
+[2025-05-26T18:32:31.145Z] [INFO] 🔄 Processed images for business ID: 3 - Call 4
+[2025-05-26T18:32:31.146Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.146Z"
+}
+[2025-05-26T18:32:31.272Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.272Z"
+}
+[2025-05-26T18:32:31.276Z] [INFO] 🔄 Processed images for business ID: 3 - Call 5
+[2025-05-26T18:32:31.277Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.277Z"
+}
+[2025-05-26T18:32:31.394Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.393Z"
+}
+[2025-05-26T18:32:31.396Z] [INFO] 🔄 Processed images for business ID: 3 - Call 6
+[2025-05-26T18:32:31.397Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.397Z"
+}
+[2025-05-26T18:32:31.508Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.508Z"
+}
+[2025-05-26T18:32:31.511Z] [INFO] 🔄 Processed images for business ID: 3 - Call 7
+[2025-05-26T18:32:31.516Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.516Z"
+}
+[2025-05-26T18:32:31.634Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.634Z"
+}
+[2025-05-26T18:32:31.635Z] [INFO] 🔄 Processed images for business ID: 3 - Call 8
+[2025-05-26T18:32:31.637Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.637Z"
+}
+[2025-05-26T18:32:31.740Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.740Z"
+}
+[2025-05-26T18:32:31.742Z] [INFO] 🔄 Processed images for business ID: 3 - Call 9
+[2025-05-26T18:32:31.743Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.743Z"
+}
+[2025-05-26T18:32:31.848Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.848Z"
+}
+[2025-05-26T18:32:31.849Z] [INFO] 🔄 Processed images for business ID: 3 - Call 10
+[2025-05-26T18:32:31.850Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.850Z"
+}
+[2025-05-26T18:32:31.958Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.958Z"
+}
+[2025-05-26T18:32:31.959Z] [INFO] 🔄 Processed images for business ID: 3 - Call 11
+[2025-05-26T18:32:31.960Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:31.960Z"
+}
+[2025-05-26T18:32:32.073Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.073Z"
+}
+[2025-05-26T18:32:32.074Z] [INFO] 🔄 Processed images for business ID: 3 - Call 12
+[2025-05-26T18:32:32.075Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.075Z"
+}
+[2025-05-26T18:32:32.178Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.178Z"
+}
+[2025-05-26T18:32:32.179Z] [INFO] 🔄 Processed images for business ID: 3 - Call 13
+[2025-05-26T18:32:32.180Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.180Z"
+}
+[2025-05-26T18:32:32.315Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.315Z"
+}
+[2025-05-26T18:32:32.318Z] [INFO] 🔄 Processed images for business ID: 3 - Call 14
+[2025-05-26T18:32:32.319Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.319Z"
+}
+[2025-05-26T18:32:32.428Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.428Z"
+}
+[2025-05-26T18:32:32.429Z] [INFO] 🔄 Processed images for business ID: 3 - Call 15
+[2025-05-26T18:32:32.430Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.430Z"
+}
+[2025-05-26T18:32:32.540Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.540Z"
+}
+[2025-05-26T18:32:32.543Z] [INFO] 🔄 Processed images for business ID: 3 - Call 16
+[2025-05-26T18:32:32.544Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.544Z"
+}
+[2025-05-26T18:32:32.660Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.660Z"
+}
+[2025-05-26T18:32:32.662Z] [INFO] 🔄 Processed images for business ID: 3 - Call 17
+[2025-05-26T18:32:32.663Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.663Z"
+}
+[2025-05-26T18:32:32.775Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.775Z"
+}
+[2025-05-26T18:32:32.776Z] [INFO] 🔄 Processed images for business ID: 3 - Call 18
+[2025-05-26T18:32:32.777Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.777Z"
+}
+[2025-05-26T18:32:32.878Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.878Z"
+}
+[2025-05-26T18:32:32.881Z] [INFO] 🔄 Processed images for business ID: 3 - Call 19
+[2025-05-26T18:32:32.882Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:32.882Z"
+}
+[2025-05-26T18:32:33.003Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.002Z"
+}
+[2025-05-26T18:32:33.008Z] [INFO] 🔄 Processed images for business ID: 3 - Call 20
+[2025-05-26T18:32:33.009Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.009Z"
+}
+[2025-05-26T18:32:33.113Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.113Z"
+}
+[2025-05-26T18:32:33.114Z] [INFO] 🔄 Processed images for business ID: 3 - Call 21
+[2025-05-26T18:32:33.115Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.115Z"
+}
+[2025-05-26T18:32:33.213Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.213Z"
+}
+[2025-05-26T18:32:33.215Z] [INFO] 🔄 Processed images for business ID: 3 - Call 22
+[2025-05-26T18:32:33.216Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.216Z"
+}
+[2025-05-26T18:32:33.331Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.331Z"
+}
+[2025-05-26T18:32:33.334Z] [INFO] 🔄 Processed images for business ID: 3 - Call 23
+[2025-05-26T18:32:33.336Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.336Z"
+}
+[2025-05-26T18:32:33.444Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.444Z"
+}
+[2025-05-26T18:32:33.445Z] [INFO] 🔄 Processed images for business ID: 3 - Call 24
+[2025-05-26T18:32:33.446Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.446Z"
+}
+[2025-05-26T18:32:33.548Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.548Z"
+}
+[2025-05-26T18:32:33.549Z] [INFO] 🔄 Processed images for business ID: 3 - Call 25
+[2025-05-26T18:32:33.550Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.550Z"
+}
+[2025-05-26T18:32:33.654Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.654Z"
+}
+[2025-05-26T18:32:33.657Z] [INFO] 🔄 Processed images for business ID: 3 - Call 26
+[2025-05-26T18:32:33.659Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.659Z"
+}
+[2025-05-26T18:32:33.766Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.766Z"
+}
+[2025-05-26T18:32:33.768Z] [INFO] 🔄 Processed images for business ID: 3 - Call 27
+[2025-05-26T18:32:33.770Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.770Z"
+}
+[2025-05-26T18:32:33.873Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.873Z"
+}
+[2025-05-26T18:32:33.875Z] [INFO] 🔄 Processed images for business ID: 3 - Call 28
+[2025-05-26T18:32:33.876Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.876Z"
+}
+[2025-05-26T18:32:33.973Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.973Z"
+}
+[2025-05-26T18:32:33.975Z] [INFO] 🔄 Processed images for business ID: 3 - Call 29
+[2025-05-26T18:32:33.975Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:33.975Z"
+}
+[2025-05-26T18:32:34.077Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:34.077Z"
+}
+[2025-05-26T18:32:34.080Z] [INFO] 🔄 Processed images for business ID: 3 - Call 30
+[2025-05-26T18:32:34.083Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:34.083Z"
+}
+[2025-05-26T18:32:34.205Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:34.205Z"
+}
+[2025-05-26T18:32:34.207Z] [INFO] 🔄 Processed images for business ID: 3 - Call 31
+[2025-05-26T18:32:34.207Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:34.207Z"
+}
+[2025-05-26T18:32:34.312Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:34.312Z"
+}
+[2025-05-26T18:32:34.313Z] [INFO] 🔄 Processed images for business ID: 3 - Call 32
+[2025-05-26T18:32:34.314Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:32:34.314Z"
+}
+[2025-05-26T18:33:30.364Z] [INFO] 📥 Image processing request received
+{
+  "businessId": 3,
+  "timestamp": "2025-05-26T18:33:30.363Z"
+}
+[2025-05-26T18:33:30.368Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:33:30.368Z"
+}
+[2025-05-26T18:33:30.528Z] [INFO] 📁 Created output directory
+{
+  "outputDir": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output",
+  "timestamp": "2025-05-26T18:33:30.527Z"
+}
+[2025-05-26T18:33:30.575Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:03:30",
+  "timestamp": "2025-05-26T18:33:30.575Z"
+}
+[2025-05-26T18:33:30.577Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:33:30.577Z"
+}
+[2025-05-26T18:33:30.578Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:33:31.954Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 27,
+    "story": "https://testadmin.mysampark.com/images/20/story/67da5d0679655_7.png",
+    "post": "https://testadmin.mysampark.com/images/20/post/67da5ce74994a_7.png",
+    "caption": "Check out the latest collection from Clothes ABC - perfect for all occasions! #Fashion #StyleTips",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Marketing & Sales Tips"
+  },
+  "timestamp": "2025-05-26T18:33:31.954Z"
+}
+[2025-05-26T18:33:31.961Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:33:31.961Z"
+}
+[2025-05-26T18:33:34.130Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.2182141226873513user-3-3.png",
+  "timestamp": "2025-05-26T18:33:34.130Z"
+}
+[2025-05-26T18:33:34.133Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:33:34.133Z"
+}
+[2025-05-26T18:33:34.572Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.5195125880073734user-3-3.png",
+  "timestamp": "2025-05-26T18:33:34.572Z"
+}
+[2025-05-26T18:33:34.575Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 4.207,
+  "startTime": "2025-05-26T18:33:30.368Z",
+  "endTime": "2025-05-26T18:33:34.575Z"
+}
+[2025-05-26T18:33:34.578Z] [INFO] 🔄 Processed images for business ID: 3 - Call 1
+[2025-05-26T18:34:13.447Z] [INFO] 📥 Image processing request received
+{
+  "businessId": 3,
+  "timestamp": "2025-05-26T18:34:13.447Z"
+}
+[2025-05-26T18:34:13.455Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:34:13.455Z"
+}
+[2025-05-26T18:34:13.681Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:04:13",
+  "timestamp": "2025-05-26T18:34:13.681Z"
+}
+[2025-05-26T18:34:13.683Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:34:13.683Z"
+}
+[2025-05-26T18:34:13.686Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:34:14.628Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 799,
+    "story": "https://testadmin.mysampark.com/images/86/story/6810627624edc_10.png",
+    "post": "https://testadmin.mysampark.com/images/86/post/68106257c48cb_10.png",
+    "caption": "\"Stay focused and put in the deep work with Clothes ABC. #Focus #DeepWork\"",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Focus and Deep Work"
+  },
+  "timestamp": "2025-05-26T18:34:14.628Z"
+}
+[2025-05-26T18:34:14.635Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:34:14.635Z"
+}
+[2025-05-26T18:34:16.482Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.4874521807281782user-3-3.png",
+  "timestamp": "2025-05-26T18:34:16.482Z"
+}
+[2025-05-26T18:34:16.484Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:34:16.484Z"
+}
+[2025-05-26T18:34:16.970Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.27823817535164364user-3-3.png",
+  "timestamp": "2025-05-26T18:34:16.970Z"
+}
+[2025-05-26T18:34:16.972Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 3.517,
+  "startTime": "2025-05-26T18:34:13.455Z",
+  "endTime": "2025-05-26T18:34:16.972Z"
+}
+[2025-05-26T18:34:16.976Z] [INFO] 🔄 Processed images for business ID: 3 - Call 1
+[2025-05-26T18:34:16.978Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:34:16.978Z"
+}
+[2025-05-26T18:34:17.086Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:04:17",
+  "timestamp": "2025-05-26T18:34:17.086Z"
+}
+[2025-05-26T18:34:17.088Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:34:17.088Z"
+}
+[2025-05-26T18:34:17.089Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:34:18.065Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 37,
+    "story": "https://testadmin.mysampark.com/images/12/story/67da5ddadef66_7.png",
+    "post": "https://testadmin.mysampark.com/images/12/post/67da5dac0d71c_7.png",
+    "caption": "\"Leaders inspire greatness in others. Motivate yourself with powerful words. #Quotes #Leadership\"",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Leaders’ Quotes"
+  },
+  "timestamp": "2025-05-26T18:34:18.065Z"
+}
+[2025-05-26T18:34:18.068Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:34:18.068Z"
+}
+[2025-05-26T18:34:21.063Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.8025443509698209user-3-3.png",
+  "timestamp": "2025-05-26T18:34:21.063Z"
+}
+[2025-05-26T18:34:21.067Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:34:21.067Z"
+}
+[2025-05-26T18:34:22.069Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.4668145169424984user-3-3.png",
+  "timestamp": "2025-05-26T18:34:22.069Z"
+}
+[2025-05-26T18:34:22.074Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 5.095,
+  "startTime": "2025-05-26T18:34:16.978Z",
+  "endTime": "2025-05-26T18:34:22.073Z"
+}
+[2025-05-26T18:34:22.106Z] [INFO] 🔄 Processed images for business ID: 3 - Call 2
+[2025-05-26T18:34:22.111Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:34:22.111Z"
+}
+[2025-05-26T18:34:22.231Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:04:22",
+  "timestamp": "2025-05-26T18:34:22.231Z"
+}
+[2025-05-26T18:34:22.235Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:34:22.235Z"
+}
+[2025-05-26T18:34:22.237Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:34:23.872Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 780,
+    "story": "https://testadmin.mysampark.com/images/85/story/681061dea0bb3_3.png",
+    "post": "https://testadmin.mysampark.com/images/85/post/681061ce0d561_3.png",
+    "caption": "Clothes ABC: Lessons from Failure. #FashionFailures #LearnAndGrow",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Lessons from Failure"
+  },
+  "timestamp": "2025-05-26T18:34:23.872Z"
+}
+[2025-05-26T18:34:23.879Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:34:23.879Z"
+}
+[2025-05-26T18:34:27.651Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.9851167531495404user-3-3.png",
+  "timestamp": "2025-05-26T18:34:27.651Z"
+}
+[2025-05-26T18:34:27.659Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:34:27.659Z"
+}
+[2025-05-26T18:34:28.730Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.7024545932180137user-3-3.png",
+  "timestamp": "2025-05-26T18:34:28.730Z"
+}
+[2025-05-26T18:34:28.735Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 6.624,
+  "startTime": "2025-05-26T18:34:22.111Z",
+  "endTime": "2025-05-26T18:34:28.735Z"
+}
+[2025-05-26T18:34:28.741Z] [INFO] 🔄 Processed images for business ID: 3 - Call 3
+[2025-05-26T18:34:28.744Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:34:28.744Z"
+}
+[2025-05-26T18:34:28.865Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:04:28",
+  "timestamp": "2025-05-26T18:34:28.864Z"
+}
+[2025-05-26T18:34:28.871Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:34:28.871Z"
+}
+[2025-05-26T18:34:28.874Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:34:29.886Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 799,
+    "story": "https://testadmin.mysampark.com/images/86/story/6810627624edc_10.png",
+    "post": "https://testadmin.mysampark.com/images/86/post/68106257c48cb_10.png",
+    "caption": "\"Stay focused and put in the deep work to achieve your goals with Clothes ABC. #Focus #DeepWork\"",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Focus and Deep Work"
+  },
+  "timestamp": "2025-05-26T18:34:29.886Z"
+}
+[2025-05-26T18:34:29.892Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:34:29.892Z"
+}
+[2025-05-26T18:34:32.073Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.17085473441973353user-3-3.png",
+  "timestamp": "2025-05-26T18:34:32.073Z"
+}
+[2025-05-26T18:34:32.075Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:34:32.075Z"
+}
+[2025-05-26T18:34:32.976Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.7181184514190793user-3-3.png",
+  "timestamp": "2025-05-26T18:34:32.976Z"
+}
+[2025-05-26T18:34:32.978Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 4.234,
+  "startTime": "2025-05-26T18:34:28.744Z",
+  "endTime": "2025-05-26T18:34:32.978Z"
+}
+[2025-05-26T18:34:32.980Z] [INFO] 🔄 Processed images for business ID: 3 - Call 4
+[2025-05-26T18:34:32.991Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:34:32.991Z"
+}
+[2025-05-26T18:34:33.107Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:04:33",
+  "timestamp": "2025-05-26T18:34:33.107Z"
+}
+[2025-05-26T18:34:33.108Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:34:33.108Z"
+}
+[2025-05-26T18:34:33.109Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:34:34.493Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 753,
+    "story": "https://testadmin.mysampark.com/images/83/story/68105e3301beb_9.png",
+    "post": "https://testadmin.mysampark.com/images/83/post/68105e253a585_9.png",
+    "caption": "Stay self-disciplined and consistent in your style with Clothes ABC! #FashionGoals #ClothesABC",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Self-Discipline and Consistency"
+  },
+  "timestamp": "2025-05-26T18:34:34.493Z"
+}
+[2025-05-26T18:34:34.495Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:34:34.495Z"
+}
+[2025-05-26T18:34:36.665Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.4975535735508976user-3-3.png",
+  "timestamp": "2025-05-26T18:34:36.665Z"
+}
+[2025-05-26T18:34:36.667Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:34:36.667Z"
+}
+[2025-05-26T18:34:37.477Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.06462381408070739user-3-3.png",
+  "timestamp": "2025-05-26T18:34:37.477Z"
+}
+[2025-05-26T18:34:37.480Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 4.489,
+  "startTime": "2025-05-26T18:34:32.991Z",
+  "endTime": "2025-05-26T18:34:37.480Z"
+}
+[2025-05-26T18:34:37.482Z] [INFO] 🔄 Processed images for business ID: 3 - Call 5
+[2025-05-26T18:34:37.489Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:34:37.489Z"
+}
+[2025-05-26T18:34:37.614Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:04:37",
+  "timestamp": "2025-05-26T18:34:37.614Z"
+}
+[2025-05-26T18:34:37.617Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:34:37.617Z"
+}
+[2025-05-26T18:34:37.620Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:34:38.803Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 74,
+    "story": "https://testadmin.mysampark.com/images/13/story/67da61ce6ec6e_3.png",
+    "post": "https://testadmin.mysampark.com/images/13/post/67da618652176_3.png",
+    "caption": "Thank you to all our amazing customers for your support! We couldn't do it without you. #CustomerAppreciation #ClothesABC",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Customer Appreciation"
+  },
+  "timestamp": "2025-05-26T18:34:38.803Z"
+}
+[2025-05-26T18:34:38.806Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:34:38.806Z"
+}
+[2025-05-26T18:34:40.390Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.7805838175134225user-3-3.png",
+  "timestamp": "2025-05-26T18:34:40.390Z"
+}
+[2025-05-26T18:34:40.392Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:34:40.392Z"
+}
+[2025-05-26T18:34:40.763Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.5602587872163964user-3-3.png",
+  "timestamp": "2025-05-26T18:34:40.763Z"
+}
+[2025-05-26T18:34:40.766Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 3.277,
+  "startTime": "2025-05-26T18:34:37.489Z",
+  "endTime": "2025-05-26T18:34:40.766Z"
+}
+[2025-05-26T18:34:40.768Z] [INFO] 🔄 Processed images for business ID: 3 - Call 6
+[2025-05-26T18:34:40.770Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:34:40.770Z"
+}
+[2025-05-26T18:34:40.886Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:04:40",
+  "timestamp": "2025-05-26T18:34:40.886Z"
+}
+[2025-05-26T18:34:40.888Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:34:40.888Z"
+}
+[2025-05-26T18:34:40.889Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:34:41.748Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 89,
+    "story": "https://testadmin.mysampark.com/images/15/story/67da63ff56cfa_9.png",
+    "post": "https://testadmin.mysampark.com/images/15/post/67da637e68dbb_9.png",
+    "caption": "\"Dress for success with Clothes ABC! Show off your attitude with style. #FashionGoals #ConfidenceBoost\"",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Attitude & Success Quotes"
+  },
+  "timestamp": "2025-05-26T18:34:41.748Z"
+}
+[2025-05-26T18:34:41.750Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:34:41.750Z"
+}
+[2025-05-26T18:34:43.476Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.055507692764287686user-3-3.png",
+  "timestamp": "2025-05-26T18:34:43.476Z"
+}
+[2025-05-26T18:34:43.478Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:34:43.478Z"
+}
+[2025-05-26T18:34:43.978Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.9736310804282509user-3-3.png",
+  "timestamp": "2025-05-26T18:34:43.978Z"
+}
+[2025-05-26T18:34:43.980Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 3.21,
+  "startTime": "2025-05-26T18:34:40.770Z",
+  "endTime": "2025-05-26T18:34:43.980Z"
+}
+[2025-05-26T18:34:43.985Z] [INFO] 🔄 Processed images for business ID: 3 - Call 7
+[2025-05-26T18:34:43.986Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:34:43.986Z"
+}
+[2025-05-26T18:34:44.099Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:04:44",
+  "timestamp": "2025-05-26T18:34:44.099Z"
+}
+[2025-05-26T18:34:44.103Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:34:44.103Z"
+}
+[2025-05-26T18:34:44.108Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:34:45.143Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 787,
+    "story": "https://testadmin.mysampark.com/images/85/story/681061e6ee7c6_10.png",
+    "post": "https://testadmin.mysampark.com/images/85/post/681061ce73378_10.png",
+    "caption": "\"Lessons from Failure: Embrace setbacks as stepping stones to success. #ClothesABC #FashionForward\"",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Lessons from Failure"
+  },
+  "timestamp": "2025-05-26T18:34:45.143Z"
+}
+[2025-05-26T18:34:45.148Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:34:45.148Z"
+}
+[2025-05-26T18:34:47.011Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.3358691497448696user-3-3.png",
+  "timestamp": "2025-05-26T18:34:47.011Z"
+}
+[2025-05-26T18:34:47.014Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:34:47.014Z"
+}
+[2025-05-26T18:34:47.630Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.12605006084937176user-3-3.png",
+  "timestamp": "2025-05-26T18:34:47.630Z"
+}
+[2025-05-26T18:34:47.633Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 3.647,
+  "startTime": "2025-05-26T18:34:43.986Z",
+  "endTime": "2025-05-26T18:34:47.633Z"
+}
+[2025-05-26T18:34:47.636Z] [INFO] 🔄 Processed images for business ID: 3 - Call 8
+[2025-05-26T18:34:47.639Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:34:47.639Z"
+}
+[2025-05-26T18:34:47.749Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:04:47",
+  "timestamp": "2025-05-26T18:34:47.749Z"
+}
+[2025-05-26T18:34:47.752Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:34:47.751Z"
+}
+[2025-05-26T18:34:47.755Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:34:48.833Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 69,
+    "story": "https://testadmin.mysampark.com/images/13/story/67da61b5e9854_8.png",
+    "post": "https://testadmin.mysampark.com/images/13/post/67da6186093fa_8.png",
+    "caption": "Thank you for being a part of our Clothes ABC family! Your support means the world to us. #CustomerAppreciation #ClothesABC",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Customer Appreciation"
+  },
+  "timestamp": "2025-05-26T18:34:48.833Z"
+}
+[2025-05-26T18:34:48.839Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:34:48.839Z"
+}
+[2025-05-26T18:34:50.423Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.39457190816350374user-3-3.png",
+  "timestamp": "2025-05-26T18:34:50.423Z"
+}
+[2025-05-26T18:34:50.426Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:34:50.426Z"
+}
+[2025-05-26T18:34:50.871Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.35992480506378177user-3-3.png",
+  "timestamp": "2025-05-26T18:34:50.871Z"
+}
+[2025-05-26T18:34:50.873Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 3.234,
+  "startTime": "2025-05-26T18:34:47.639Z",
+  "endTime": "2025-05-26T18:34:50.873Z"
+}
+[2025-05-26T18:34:50.875Z] [INFO] 🔄 Processed images for business ID: 3 - Call 9
+[2025-05-26T18:34:50.876Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:34:50.876Z"
+}
+[2025-05-26T18:34:50.990Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:04:50",
+  "timestamp": "2025-05-26T18:34:50.989Z"
+}
+[2025-05-26T18:34:50.992Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:34:50.992Z"
+}
+[2025-05-26T18:34:50.993Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:34:51.901Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 79,
+    "story": "https://testadmin.mysampark.com/images/14/story/67da62cdba9e9_4.png",
+    "post": "https://testadmin.mysampark.com/images/14/post/67da62b211840_4.png",
+    "caption": "Check out our latest collection from Clothes ABC - perfect for building your network in style! #ClothesABC #FashionForward",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Network Building"
+  },
+  "timestamp": "2025-05-26T18:34:51.901Z"
+}
+[2025-05-26T18:34:51.906Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:34:51.906Z"
+}
+[2025-05-26T18:34:54.694Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.506417241184308user-3-3.png",
+  "timestamp": "2025-05-26T18:34:54.694Z"
+}
+[2025-05-26T18:34:54.699Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:34:54.699Z"
+}
+[2025-05-26T18:34:55.752Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.6710157945187325user-3-3.png",
+  "timestamp": "2025-05-26T18:34:55.752Z"
+}
+[2025-05-26T18:34:55.793Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 4.917,
+  "startTime": "2025-05-26T18:34:50.876Z",
+  "endTime": "2025-05-26T18:34:55.793Z"
+}
+[2025-05-26T18:34:55.800Z] [INFO] 🔄 Processed images for business ID: 3 - Call 10
+[2025-05-26T18:35:28.711Z] [INFO] 📥 Image processing request received
+{
+  "businessId": 3,
+  "timestamp": "2025-05-26T18:35:28.710Z"
+}
+[2025-05-26T18:35:28.717Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:35:28.717Z"
+}
+[2025-05-26T18:35:29.004Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:05:29",
+  "timestamp": "2025-05-26T18:35:29.004Z"
+}
+[2025-05-26T18:35:29.008Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:35:29.008Z"
+}
+[2025-05-26T18:35:29.015Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:35:31.531Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 849,
+    "story": "https://testadmin.mysampark.com/images/88/story/681065034ccd6_24.png",
+    "post": "https://testadmin.mysampark.com/images/88/post/681064cf53a33_24.png",
+    "caption": "\"Upgrade your wardrobe with Clothes ABC - the ultimate fashion destination! Elevate your style game with our latest collection. #ClothesABC #FashionForward\"",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Business Psychology"
+  },
+  "timestamp": "2025-05-26T18:35:31.531Z"
+}
+[2025-05-26T18:35:31.535Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:35:31.535Z"
+}
+[2025-05-26T18:35:35.284Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.12237147153575778user-3-3.png",
+  "timestamp": "2025-05-26T18:35:35.284Z"
+}
+[2025-05-26T18:35:35.287Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:35:35.287Z"
+}
+[2025-05-26T18:35:35.907Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.08036475084466543user-3-3.png",
+  "timestamp": "2025-05-26T18:35:35.907Z"
+}
+[2025-05-26T18:35:35.909Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 7.192,
+  "startTime": "2025-05-26T18:35:28.717Z",
+  "endTime": "2025-05-26T18:35:35.909Z"
+}
+[2025-05-26T18:35:35.912Z] [INFO] 🔄 Processed images for business ID: 3 - Call 1
+[2025-05-26T18:35:35.917Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:35:35.917Z"
+}
+[2025-05-26T18:35:36.044Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:05:36",
+  "timestamp": "2025-05-26T18:35:36.044Z"
+}
+[2025-05-26T18:35:36.045Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:35:36.045Z"
+}
+[2025-05-26T18:35:36.049Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:35:37.028Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 114,
+    "story": "https://testadmin.mysampark.com/images/17/story/67da69f64699c_9.png",
+    "post": "https://testadmin.mysampark.com/images/17/post/67da69e5dab6b_9.png",
+    "caption": "\"Learn your ABCs with Clothes ABC - the perfect way to educate little ones about fashion! #Educational #Learning\"",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Educational & Learning"
+  },
+  "timestamp": "2025-05-26T18:35:37.027Z"
+}
+[2025-05-26T18:35:37.034Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:35:37.034Z"
+}
+[2025-05-26T18:35:38.490Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.560822906124306user-3-3.png",
+  "timestamp": "2025-05-26T18:35:38.490Z"
+}
+[2025-05-26T18:35:38.492Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:35:38.492Z"
+}
+[2025-05-26T18:35:38.768Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.034010717507948485user-3-3.png",
+  "timestamp": "2025-05-26T18:35:38.768Z"
+}
+[2025-05-26T18:35:38.771Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 2.854,
+  "startTime": "2025-05-26T18:35:35.917Z",
+  "endTime": "2025-05-26T18:35:38.771Z"
+}
+[2025-05-26T18:35:38.787Z] [INFO] 🔄 Processed images for business ID: 3 - Call 2
+[2025-05-26T18:35:38.794Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:35:38.794Z"
+}
+[2025-05-26T18:35:38.905Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:05:38",
+  "timestamp": "2025-05-26T18:35:38.905Z"
+}
+[2025-05-26T18:35:38.906Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:35:38.906Z"
+}
+[2025-05-26T18:35:38.908Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:35:40.440Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 676,
+    "story": "https://testadmin.mysampark.com/images/78/story/68105a16dcec7_8.png",
+    "post": "https://testadmin.mysampark.com/images/78/post/681059fed6fb2_8.png",
+    "caption": "\"Unleash your style with Clothes ABC - where innovation meets creativity! #FashionForward #Trendsetters\"",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Innovation & Creativity"
+  },
+  "timestamp": "2025-05-26T18:35:40.440Z"
+}
+[2025-05-26T18:35:40.446Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:35:40.446Z"
+}
+[2025-05-26T18:35:42.958Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.6377459933972598user-3-3.png",
+  "timestamp": "2025-05-26T18:35:42.958Z"
+}
+[2025-05-26T18:35:42.960Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:35:42.960Z"
+}
+[2025-05-26T18:35:43.468Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.09654589893911125user-3-3.png",
+  "timestamp": "2025-05-26T18:35:43.468Z"
+}
+[2025-05-26T18:35:43.470Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 4.676,
+  "startTime": "2025-05-26T18:35:38.794Z",
+  "endTime": "2025-05-26T18:35:43.470Z"
+}
+[2025-05-26T18:35:43.472Z] [INFO] 🔄 Processed images for business ID: 3 - Call 3
+[2025-05-26T18:35:43.472Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:35:43.472Z"
+}
+[2025-05-26T18:35:43.583Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:05:43",
+  "timestamp": "2025-05-26T18:35:43.583Z"
+}
+[2025-05-26T18:35:43.585Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:35:43.585Z"
+}
+[2025-05-26T18:35:43.586Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:35:44.599Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 691,
+    "story": "https://testadmin.mysampark.com/images/79/story/68105b9a03548_5.png",
+    "post": "https://testadmin.mysampark.com/images/79/post/68105ac3ddc22_5.png",
+    "caption": "\"Teamwork & Collaboration: the key to success in creating stylish and trendy clothes! #FashionGoals #ClothesABC\"",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Teamwork & Collaboration"
+  },
+  "timestamp": "2025-05-26T18:35:44.599Z"
+}
+[2025-05-26T18:35:44.605Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:35:44.605Z"
+}
+[2025-05-26T18:35:46.899Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.23878652175547077user-3-3.png",
+  "timestamp": "2025-05-26T18:35:46.899Z"
+}
+[2025-05-26T18:35:46.901Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:35:46.901Z"
+}
+[2025-05-26T18:35:47.929Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.30914335450905006user-3-3.png",
+  "timestamp": "2025-05-26T18:35:47.929Z"
+}
+[2025-05-26T18:35:47.933Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 4.461,
+  "startTime": "2025-05-26T18:35:43.472Z",
+  "endTime": "2025-05-26T18:35:47.933Z"
+}
+[2025-05-26T18:35:47.936Z] [INFO] 🔄 Processed images for business ID: 3 - Call 4
+[2025-05-26T18:35:47.937Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:35:47.937Z"
+}
+[2025-05-26T18:35:48.064Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:05:48",
+  "timestamp": "2025-05-26T18:35:48.064Z"
+}
+[2025-05-26T18:35:48.065Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:35:48.065Z"
+}
+[2025-05-26T18:35:48.067Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:35:49.047Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 739,
+    "story": "https://testadmin.mysampark.com/images/82/story/68105d761bcb5_6.png",
+    "post": "https://testadmin.mysampark.com/images/82/post/68105d5f5dc06_6.png",
+    "caption": "\"Striking the perfect balance between work and play with Clothes ABC! #WorkLifeBalance #FashionForward\"",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Work-Life Balance"
+  },
+  "timestamp": "2025-05-26T18:35:49.047Z"
+}
+[2025-05-26T18:35:49.049Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:35:49.049Z"
+}
+[2025-05-26T18:35:50.496Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.7327735170586844user-3-3.png",
+  "timestamp": "2025-05-26T18:35:50.495Z"
+}
+[2025-05-26T18:35:50.499Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:35:50.499Z"
+}
+[2025-05-26T18:35:50.909Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.4011880839374702user-3-3.png",
+  "timestamp": "2025-05-26T18:35:50.908Z"
+}
+[2025-05-26T18:35:50.911Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 2.974,
+  "startTime": "2025-05-26T18:35:47.937Z",
+  "endTime": "2025-05-26T18:35:50.911Z"
+}
+[2025-05-26T18:35:50.914Z] [INFO] 🔄 Processed images for business ID: 3 - Call 5
+[2025-05-26T18:35:50.920Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:35:50.920Z"
+}
+[2025-05-26T18:35:51.047Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:05:51",
+  "timestamp": "2025-05-26T18:35:51.047Z"
+}
+[2025-05-26T18:35:51.051Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:35:51.051Z"
+}
+[2025-05-26T18:35:51.054Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:35:51.961Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 714,
+    "story": "https://testadmin.mysampark.com/images/80/story/68105c3866a54_9.png",
+    "post": "https://testadmin.mysampark.com/images/80/post/68105c21d994d_9.png",
+    "caption": "\"Stay mindful and positive in Clothes ABC. #Mindfulness #PositiveThinking\"",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Mindfulness & Positive Thinking"
+  },
+  "timestamp": "2025-05-26T18:35:51.961Z"
+}
+[2025-05-26T18:35:51.967Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:35:51.967Z"
+}
+[2025-05-26T18:35:53.431Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.7099378596128283user-3-3.png",
+  "timestamp": "2025-05-26T18:35:53.431Z"
+}
+[2025-05-26T18:35:53.437Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:35:53.437Z"
+}
+[2025-05-26T18:35:53.775Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.8874989972563598user-3-3.png",
+  "timestamp": "2025-05-26T18:35:53.775Z"
+}
+[2025-05-26T18:35:53.782Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 2.862,
+  "startTime": "2025-05-26T18:35:50.920Z",
+  "endTime": "2025-05-26T18:35:53.782Z"
+}
+[2025-05-26T18:35:53.792Z] [INFO] 🔄 Processed images for business ID: 3 - Call 6
+[2025-05-26T18:35:53.798Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:35:53.798Z"
+}
+[2025-05-26T18:35:53.904Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:05:53",
+  "timestamp": "2025-05-26T18:35:53.904Z"
+}
+[2025-05-26T18:35:53.905Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:35:53.905Z"
+}
+[2025-05-26T18:35:53.907Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:35:55.084Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 776,
+    "story": "https://testadmin.mysampark.com/images/84/story/68105f1e0d597_16.png",
+    "post": "https://testadmin.mysampark.com/images/84/post/68105eef88cc4_16.png",
+    "caption": "\"Dare to be bold with Clothes ABC. Take risks, show courage. #FashionForward #DareToBeDifferent\"",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Risk and Courage"
+  },
+  "timestamp": "2025-05-26T18:35:55.084Z"
+}
+[2025-05-26T18:35:55.089Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:35:55.089Z"
+}
+[2025-05-26T18:35:57.014Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.09883192915089944user-3-3.png",
+  "timestamp": "2025-05-26T18:35:57.014Z"
+}
+[2025-05-26T18:35:57.017Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:35:57.017Z"
+}
+[2025-05-26T18:35:57.733Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.7150162819109294user-3-3.png",
+  "timestamp": "2025-05-26T18:35:57.733Z"
+}
+[2025-05-26T18:35:57.735Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 3.936,
+  "startTime": "2025-05-26T18:35:53.798Z",
+  "endTime": "2025-05-26T18:35:57.734Z"
+}
+[2025-05-26T18:35:57.736Z] [INFO] 🔄 Processed images for business ID: 3 - Call 7
+[2025-05-26T18:35:57.737Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:35:57.737Z"
+}
+[2025-05-26T18:35:57.896Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:05:57",
+  "timestamp": "2025-05-26T18:35:57.896Z"
+}
+[2025-05-26T18:35:57.899Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:35:57.899Z"
+}
+[2025-05-26T18:35:57.901Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:35:59.384Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 722,
+    "story": "https://testadmin.mysampark.com/images/81/story/68105cd61bcca_4.png",
+    "post": "https://testadmin.mysampark.com/images/81/post/68105cc787dca_4.png",
+    "caption": "\"Stay stylish and organized with Clothes ABC - the perfect wardrobe solution! #TimeManagementWisdom #FashionForward\"",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Time Management Wisdom"
+  },
+  "timestamp": "2025-05-26T18:35:59.384Z"
+}
+[2025-05-26T18:35:59.387Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:35:59.387Z"
+}
+[2025-05-26T18:36:01.054Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.687562598967014user-3-3.png",
+  "timestamp": "2025-05-26T18:36:01.053Z"
+}
+[2025-05-26T18:36:01.056Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:36:01.056Z"
+}
+[2025-05-26T18:36:01.540Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.6838954277856313user-3-3.png",
+  "timestamp": "2025-05-26T18:36:01.540Z"
+}
+[2025-05-26T18:36:01.542Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 3.805,
+  "startTime": "2025-05-26T18:35:57.737Z",
+  "endTime": "2025-05-26T18:36:01.542Z"
+}
+[2025-05-26T18:36:01.547Z] [INFO] 🔄 Processed images for business ID: 3 - Call 8
+[2025-05-26T18:36:01.549Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:01.549Z"
+}
+[2025-05-26T18:36:01.686Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "00:06:01",
+  "timestamp": "2025-05-26T18:36:01.686Z"
+}
+[2025-05-26T18:36:01.689Z] [INFO] 🏢 Processing business
+{
+  "businessId": 3,
+  "businessName": "Clothes ABC",
+  "whatsappNumber": "7383161048",
+  "timestamp": "2025-05-26T18:36:01.689Z"
+}
+[2025-05-26T18:36:01.692Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 3
+}
+[2025-05-26T18:36:02.713Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 3,
+  "caption": {
+    "post_id": 822,
+    "story": "https://testadmin.mysampark.com/images/87/story/681063bcdc9fd_14.png",
+    "post": "https://testadmin.mysampark.com/images/87/post/681063a507709_14.png",
+    "caption": "\"Empower yourself with Financial Literacy through Clothes ABC. #FinancialLiteracy #ClothesABC\"",
+    "bussiness_name": "Clothes ABC",
+    "category_name": "Financial Literacy"
+  },
+  "timestamp": "2025-05-26T18:36:02.713Z"
+}
+[2025-05-26T18:36:02.719Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 3,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T18:36:02.719Z"
+}
+[2025-05-26T18:36:04.831Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.04303778152705373user-3-3.png",
+  "timestamp": "2025-05-26T18:36:04.831Z"
+}
+[2025-05-26T18:36:04.833Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 3,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T18:36:04.833Z"
+}
+[2025-05-26T18:36:05.498Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 3,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\services\\output\\0.03260954297371765user-3-3.png",
+  "timestamp": "2025-05-26T18:36:05.498Z"
+}
+[2025-05-26T18:36:05.500Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 3.951,
+  "startTime": "2025-05-26T18:36:01.549Z",
+  "endTime": "2025-05-26T18:36:05.500Z"
+}
+[2025-05-26T18:36:05.502Z] [INFO] 🔄 Processed images for business ID: 3 - Call 9
+[2025-05-26T18:36:05.504Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:05.504Z"
+}
+[2025-05-26T18:36:05.734Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:05.734Z"
+}
+[2025-05-26T18:36:05.738Z] [INFO] 🔄 Processed images for business ID: 3 - Call 10
+[2025-05-26T18:36:05.739Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:05.739Z"
+}
+[2025-05-26T18:36:05.936Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:05.936Z"
+}
+[2025-05-26T18:36:05.938Z] [INFO] 🔄 Processed images for business ID: 3 - Call 11
+[2025-05-26T18:36:05.939Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:05.939Z"
+}
+[2025-05-26T18:36:06.144Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:06.144Z"
+}
+[2025-05-26T18:36:06.146Z] [INFO] 🔄 Processed images for business ID: 3 - Call 12
+[2025-05-26T18:36:06.146Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:06.146Z"
+}
+[2025-05-26T18:36:06.272Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:06.272Z"
+}
+[2025-05-26T18:36:06.273Z] [INFO] 🔄 Processed images for business ID: 3 - Call 13
+[2025-05-26T18:36:06.274Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:06.274Z"
+}
+[2025-05-26T18:36:06.389Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:06.389Z"
+}
+[2025-05-26T18:36:06.391Z] [INFO] 🔄 Processed images for business ID: 3 - Call 14
+[2025-05-26T18:36:06.392Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:06.392Z"
+}
+[2025-05-26T18:36:06.516Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:06.516Z"
+}
+[2025-05-26T18:36:06.518Z] [INFO] 🔄 Processed images for business ID: 3 - Call 15
+[2025-05-26T18:36:06.520Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:06.519Z"
+}
+[2025-05-26T18:36:06.636Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:06.636Z"
+}
+[2025-05-26T18:36:06.639Z] [INFO] 🔄 Processed images for business ID: 3 - Call 16
+[2025-05-26T18:36:06.640Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:06.640Z"
+}
+[2025-05-26T18:36:06.771Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:06.771Z"
+}
+[2025-05-26T18:36:06.774Z] [INFO] 🔄 Processed images for business ID: 3 - Call 17
+[2025-05-26T18:36:06.776Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:06.776Z"
+}
+[2025-05-26T18:36:06.962Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:06.962Z"
+}
+[2025-05-26T18:36:06.965Z] [INFO] 🔄 Processed images for business ID: 3 - Call 18
+[2025-05-26T18:36:06.966Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:06.966Z"
+}
+[2025-05-26T18:36:07.080Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.080Z"
+}
+[2025-05-26T18:36:07.081Z] [INFO] 🔄 Processed images for business ID: 3 - Call 19
+[2025-05-26T18:36:07.081Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.081Z"
+}
+[2025-05-26T18:36:07.189Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.189Z"
+}
+[2025-05-26T18:36:07.190Z] [INFO] 🔄 Processed images for business ID: 3 - Call 20
+[2025-05-26T18:36:07.191Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.191Z"
+}
+[2025-05-26T18:36:07.300Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.300Z"
+}
+[2025-05-26T18:36:07.301Z] [INFO] 🔄 Processed images for business ID: 3 - Call 21
+[2025-05-26T18:36:07.302Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.302Z"
+}
+[2025-05-26T18:36:07.410Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.410Z"
+}
+[2025-05-26T18:36:07.413Z] [INFO] 🔄 Processed images for business ID: 3 - Call 22
+[2025-05-26T18:36:07.414Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.414Z"
+}
+[2025-05-26T18:36:07.539Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.539Z"
+}
+[2025-05-26T18:36:07.541Z] [INFO] 🔄 Processed images for business ID: 3 - Call 23
+[2025-05-26T18:36:07.543Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.543Z"
+}
+[2025-05-26T18:36:07.667Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.666Z"
+}
+[2025-05-26T18:36:07.669Z] [INFO] 🔄 Processed images for business ID: 3 - Call 24
+[2025-05-26T18:36:07.670Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.670Z"
+}
+[2025-05-26T18:36:07.780Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.780Z"
+}
+[2025-05-26T18:36:07.782Z] [INFO] 🔄 Processed images for business ID: 3 - Call 25
+[2025-05-26T18:36:07.784Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.784Z"
+}
+[2025-05-26T18:36:07.891Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.891Z"
+}
+[2025-05-26T18:36:07.893Z] [INFO] 🔄 Processed images for business ID: 3 - Call 26
+[2025-05-26T18:36:07.895Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.895Z"
+}
+[2025-05-26T18:36:07.998Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:07.998Z"
+}
+[2025-05-26T18:36:08.000Z] [INFO] 🔄 Processed images for business ID: 3 - Call 27
+[2025-05-26T18:36:08.000Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.000Z"
+}
+[2025-05-26T18:36:08.105Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.105Z"
+}
+[2025-05-26T18:36:08.108Z] [INFO] 🔄 Processed images for business ID: 3 - Call 28
+[2025-05-26T18:36:08.109Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.109Z"
+}
+[2025-05-26T18:36:08.218Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.218Z"
+}
+[2025-05-26T18:36:08.222Z] [INFO] 🔄 Processed images for business ID: 3 - Call 29
+[2025-05-26T18:36:08.224Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.224Z"
+}
+[2025-05-26T18:36:08.335Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.335Z"
+}
+[2025-05-26T18:36:08.338Z] [INFO] 🔄 Processed images for business ID: 3 - Call 30
+[2025-05-26T18:36:08.339Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.339Z"
+}
+[2025-05-26T18:36:08.449Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.449Z"
+}
+[2025-05-26T18:36:08.452Z] [INFO] 🔄 Processed images for business ID: 3 - Call 31
+[2025-05-26T18:36:08.453Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.453Z"
+}
+[2025-05-26T18:36:08.564Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.564Z"
+}
+[2025-05-26T18:36:08.566Z] [INFO] 🔄 Processed images for business ID: 3 - Call 32
+[2025-05-26T18:36:08.568Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.568Z"
+}
+[2025-05-26T18:36:08.673Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.673Z"
+}
+[2025-05-26T18:36:08.675Z] [INFO] 🔄 Processed images for business ID: 3 - Call 33
+[2025-05-26T18:36:08.677Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.677Z"
+}
+[2025-05-26T18:36:08.782Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.782Z"
+}
+[2025-05-26T18:36:08.785Z] [INFO] 🔄 Processed images for business ID: 3 - Call 34
+[2025-05-26T18:36:08.786Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.786Z"
+}
+[2025-05-26T18:36:08.889Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.889Z"
+}
+[2025-05-26T18:36:08.892Z] [INFO] 🔄 Processed images for business ID: 3 - Call 35
+[2025-05-26T18:36:08.893Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:08.893Z"
+}
+[2025-05-26T18:36:09.001Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.000Z"
+}
+[2025-05-26T18:36:09.003Z] [INFO] 🔄 Processed images for business ID: 3 - Call 36
+[2025-05-26T18:36:09.005Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.005Z"
+}
+[2025-05-26T18:36:09.104Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.104Z"
+}
+[2025-05-26T18:36:09.106Z] [INFO] 🔄 Processed images for business ID: 3 - Call 37
+[2025-05-26T18:36:09.108Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.108Z"
+}
+[2025-05-26T18:36:09.225Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.225Z"
+}
+[2025-05-26T18:36:09.227Z] [INFO] 🔄 Processed images for business ID: 3 - Call 38
+[2025-05-26T18:36:09.229Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.229Z"
+}
+[2025-05-26T18:36:09.334Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.334Z"
+}
+[2025-05-26T18:36:09.337Z] [INFO] 🔄 Processed images for business ID: 3 - Call 39
+[2025-05-26T18:36:09.338Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.338Z"
+}
+[2025-05-26T18:36:09.440Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.440Z"
+}
+[2025-05-26T18:36:09.442Z] [INFO] 🔄 Processed images for business ID: 3 - Call 40
+[2025-05-26T18:36:09.444Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.444Z"
+}
+[2025-05-26T18:36:09.546Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.546Z"
+}
+[2025-05-26T18:36:09.547Z] [INFO] 🔄 Processed images for business ID: 3 - Call 41
+[2025-05-26T18:36:09.547Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.547Z"
+}
+[2025-05-26T18:36:09.658Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.658Z"
+}
+[2025-05-26T18:36:09.660Z] [INFO] 🔄 Processed images for business ID: 3 - Call 42
+[2025-05-26T18:36:09.662Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.662Z"
+}
+[2025-05-26T18:36:09.772Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.772Z"
+}
+[2025-05-26T18:36:09.774Z] [INFO] 🔄 Processed images for business ID: 3 - Call 43
+[2025-05-26T18:36:09.776Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.776Z"
+}
+[2025-05-26T18:36:09.875Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.875Z"
+}
+[2025-05-26T18:36:09.878Z] [INFO] 🔄 Processed images for business ID: 3 - Call 44
+[2025-05-26T18:36:09.879Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.879Z"
+}
+[2025-05-26T18:36:09.981Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.981Z"
+}
+[2025-05-26T18:36:09.984Z] [INFO] 🔄 Processed images for business ID: 3 - Call 45
+[2025-05-26T18:36:09.985Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:09.985Z"
+}
+[2025-05-26T18:36:10.088Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:10.088Z"
+}
+[2025-05-26T18:36:10.090Z] [INFO] 🔄 Processed images for business ID: 3 - Call 46
+[2025-05-26T18:36:10.091Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:10.091Z"
+}
+[2025-05-26T18:36:10.188Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:10.188Z"
+}
+[2025-05-26T18:36:10.190Z] [INFO] 🔄 Processed images for business ID: 3 - Call 47
+[2025-05-26T18:36:10.191Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:10.191Z"
+}
+[2025-05-26T18:36:10.306Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:10.306Z"
+}
+[2025-05-26T18:36:10.309Z] [INFO] 🔄 Processed images for business ID: 3 - Call 48
+[2025-05-26T18:36:10.310Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:10.310Z"
+}
+[2025-05-26T18:36:10.411Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:10.411Z"
+}
+[2025-05-26T18:36:10.413Z] [INFO] 🔄 Processed images for business ID: 3 - Call 49
+[2025-05-26T18:36:10.414Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:10.414Z"
+}
+[2025-05-26T18:36:10.515Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:36:10.515Z"
+}
+[2025-05-26T18:36:10.518Z] [INFO] 🔄 Processed images for business ID: 3 - Call 50
+[2025-05-26T18:37:18.045Z] [INFO] 📥 Image processing request received
+{
+  "businessId": 3,
+  "timestamp": "2025-05-26T18:37:18.045Z"
+}
+[2025-05-26T18:37:18.049Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:18.048Z"
+}
+[2025-05-26T18:37:18.553Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:18.553Z"
+}
+[2025-05-26T18:37:18.557Z] [INFO] 🔄 Processed images for business ID: 3 - Call 1
+[2025-05-26T18:37:18.560Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:18.560Z"
+}
+[2025-05-26T18:37:18.675Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:18.675Z"
+}
+[2025-05-26T18:37:18.677Z] [INFO] 🔄 Processed images for business ID: 3 - Call 2
+[2025-05-26T18:37:18.677Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:18.677Z"
+}
+[2025-05-26T18:37:18.782Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:18.782Z"
+}
+[2025-05-26T18:37:18.784Z] [INFO] 🔄 Processed images for business ID: 3 - Call 3
+[2025-05-26T18:37:18.785Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:18.785Z"
+}
+[2025-05-26T18:37:18.884Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:18.884Z"
+}
+[2025-05-26T18:37:18.886Z] [INFO] 🔄 Processed images for business ID: 3 - Call 4
+[2025-05-26T18:37:18.888Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:18.888Z"
+}
+[2025-05-26T18:37:18.980Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:18.980Z"
+}
+[2025-05-26T18:37:18.981Z] [INFO] 🔄 Processed images for business ID: 3 - Call 5
+[2025-05-26T18:37:18.982Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:18.982Z"
+}
+[2025-05-26T18:37:19.066Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.066Z"
+}
+[2025-05-26T18:37:19.068Z] [INFO] 🔄 Processed images for business ID: 3 - Call 6
+[2025-05-26T18:37:19.069Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.069Z"
+}
+[2025-05-26T18:37:19.169Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.169Z"
+}
+[2025-05-26T18:37:19.171Z] [INFO] 🔄 Processed images for business ID: 3 - Call 7
+[2025-05-26T18:37:19.173Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.173Z"
+}
+[2025-05-26T18:37:19.286Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.286Z"
+}
+[2025-05-26T18:37:19.289Z] [INFO] 🔄 Processed images for business ID: 3 - Call 8
+[2025-05-26T18:37:19.290Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.290Z"
+}
+[2025-05-26T18:37:19.394Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.394Z"
+}
+[2025-05-26T18:37:19.397Z] [INFO] 🔄 Processed images for business ID: 3 - Call 9
+[2025-05-26T18:37:19.398Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.398Z"
+}
+[2025-05-26T18:37:19.495Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.495Z"
+}
+[2025-05-26T18:37:19.497Z] [INFO] 🔄 Processed images for business ID: 3 - Call 10
+[2025-05-26T18:37:19.499Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.499Z"
+}
+[2025-05-26T18:37:19.617Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.617Z"
+}
+[2025-05-26T18:37:19.619Z] [INFO] 🔄 Processed images for business ID: 3 - Call 11
+[2025-05-26T18:37:19.620Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.620Z"
+}
+[2025-05-26T18:37:19.716Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.716Z"
+}
+[2025-05-26T18:37:19.718Z] [INFO] 🔄 Processed images for business ID: 3 - Call 12
+[2025-05-26T18:37:19.720Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.720Z"
+}
+[2025-05-26T18:37:19.823Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.823Z"
+}
+[2025-05-26T18:37:19.828Z] [INFO] 🔄 Processed images for business ID: 3 - Call 13
+[2025-05-26T18:37:19.830Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.830Z"
+}
+[2025-05-26T18:37:19.938Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.938Z"
+}
+[2025-05-26T18:37:19.940Z] [INFO] 🔄 Processed images for business ID: 3 - Call 14
+[2025-05-26T18:37:19.944Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:19.944Z"
+}
+[2025-05-26T18:37:20.048Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.048Z"
+}
+[2025-05-26T18:37:20.050Z] [INFO] 🔄 Processed images for business ID: 3 - Call 15
+[2025-05-26T18:37:20.052Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.052Z"
+}
+[2025-05-26T18:37:20.151Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.151Z"
+}
+[2025-05-26T18:37:20.153Z] [INFO] 🔄 Processed images for business ID: 3 - Call 16
+[2025-05-26T18:37:20.155Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.155Z"
+}
+[2025-05-26T18:37:20.261Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.261Z"
+}
+[2025-05-26T18:37:20.263Z] [INFO] 🔄 Processed images for business ID: 3 - Call 17
+[2025-05-26T18:37:20.265Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.265Z"
+}
+[2025-05-26T18:37:20.387Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.387Z"
+}
+[2025-05-26T18:37:20.389Z] [INFO] 🔄 Processed images for business ID: 3 - Call 18
+[2025-05-26T18:37:20.394Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.394Z"
+}
+[2025-05-26T18:37:20.544Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.544Z"
+}
+[2025-05-26T18:37:20.546Z] [INFO] 🔄 Processed images for business ID: 3 - Call 19
+[2025-05-26T18:37:20.548Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.548Z"
+}
+[2025-05-26T18:37:20.650Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.650Z"
+}
+[2025-05-26T18:37:20.653Z] [INFO] 🔄 Processed images for business ID: 3 - Call 20
+[2025-05-26T18:37:20.655Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.655Z"
+}
+[2025-05-26T18:37:20.778Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.778Z"
+}
+[2025-05-26T18:37:20.780Z] [INFO] 🔄 Processed images for business ID: 3 - Call 21
+[2025-05-26T18:37:20.781Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.781Z"
+}
+[2025-05-26T18:37:20.893Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.893Z"
+}
+[2025-05-26T18:37:20.894Z] [INFO] 🔄 Processed images for business ID: 3 - Call 22
+[2025-05-26T18:37:20.895Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:20.895Z"
+}
+[2025-05-26T18:37:21.002Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.002Z"
+}
+[2025-05-26T18:37:21.004Z] [INFO] 🔄 Processed images for business ID: 3 - Call 23
+[2025-05-26T18:37:21.004Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.004Z"
+}
+[2025-05-26T18:37:21.104Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.104Z"
+}
+[2025-05-26T18:37:21.107Z] [INFO] 🔄 Processed images for business ID: 3 - Call 24
+[2025-05-26T18:37:21.110Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.110Z"
+}
+[2025-05-26T18:37:21.220Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.220Z"
+}
+[2025-05-26T18:37:21.222Z] [INFO] 🔄 Processed images for business ID: 3 - Call 25
+[2025-05-26T18:37:21.224Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.224Z"
+}
+[2025-05-26T18:37:21.343Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.343Z"
+}
+[2025-05-26T18:37:21.344Z] [INFO] 🔄 Processed images for business ID: 3 - Call 26
+[2025-05-26T18:37:21.345Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.345Z"
+}
+[2025-05-26T18:37:21.447Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.447Z"
+}
+[2025-05-26T18:37:21.449Z] [INFO] 🔄 Processed images for business ID: 3 - Call 27
+[2025-05-26T18:37:21.451Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.450Z"
+}
+[2025-05-26T18:37:21.561Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.561Z"
+}
+[2025-05-26T18:37:21.563Z] [INFO] 🔄 Processed images for business ID: 3 - Call 28
+[2025-05-26T18:37:21.564Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.564Z"
+}
+[2025-05-26T18:37:21.687Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.687Z"
+}
+[2025-05-26T18:37:21.690Z] [INFO] 🔄 Processed images for business ID: 3 - Call 29
+[2025-05-26T18:37:21.694Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.694Z"
+}
+[2025-05-26T18:37:21.797Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.797Z"
+}
+[2025-05-26T18:37:21.799Z] [INFO] 🔄 Processed images for business ID: 3 - Call 30
+[2025-05-26T18:37:21.801Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.801Z"
+}
+[2025-05-26T18:37:21.906Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.905Z"
+}
+[2025-05-26T18:37:21.909Z] [INFO] 🔄 Processed images for business ID: 3 - Call 31
+[2025-05-26T18:37:21.911Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:21.911Z"
+}
+[2025-05-26T18:37:22.031Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:22.031Z"
+}
+[2025-05-26T18:37:22.033Z] [INFO] 🔄 Processed images for business ID: 3 - Call 32
+[2025-05-26T18:37:22.034Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:22.034Z"
+}
+[2025-05-26T18:37:22.130Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:22.130Z"
+}
+[2025-05-26T18:37:22.132Z] [INFO] 🔄 Processed images for business ID: 3 - Call 33
+[2025-05-26T18:37:22.134Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:22.134Z"
+}
+[2025-05-26T18:37:22.235Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:22.235Z"
+}
+[2025-05-26T18:37:22.237Z] [INFO] 🔄 Processed images for business ID: 3 - Call 34
+[2025-05-26T18:37:22.238Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:22.238Z"
+}
+[2025-05-26T18:37:22.358Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:22.358Z"
+}
+[2025-05-26T18:37:22.361Z] [INFO] 🔄 Processed images for business ID: 3 - Call 35
+[2025-05-26T18:37:22.362Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:22.362Z"
+}
+[2025-05-26T18:37:22.469Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:22.469Z"
+}
+[2025-05-26T18:37:22.471Z] [INFO] 🔄 Processed images for business ID: 3 - Call 36
+[2025-05-26T18:37:22.473Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:22.473Z"
+}
+[2025-05-26T18:37:22.572Z] [WARN] ⚠️ No users found for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:22.572Z"
+}
+[2025-05-26T18:37:22.574Z] [INFO] 🔄 Processed images for business ID: 3 - Call 37
+[2025-05-26T18:37:22.577Z] [INFO] 🔄 Starting image processing for business ID: 3
+{
+  "timestamp": "2025-05-26T18:37:22.577Z"
+}
