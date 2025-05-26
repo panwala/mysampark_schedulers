@@ -567,7 +567,7 @@ async function uploadToPostImages(imagePath: string): Promise<string> {
       } catch (cleanupError) {
         await logger.error('Error during file cleanup', cleanupError);
       }
-    }, 1800000);
+    }, 43200000); // 12 hours in milliseconds
 
     const publicUrl = `${serverAddress}/uploads/${uniqueFilename}`;
     await logger.success('File uploaded successfully', { publicUrl });
@@ -847,12 +847,12 @@ async function generateForAllUsers() {
   }
 }
 
-// Update cron schedule to run every 10 minutes
+// Update cron schedule to run every 30 minutes
 
-cron.schedule("55 10 * * *", () => {
+cron.schedule("*/30 * * * *", () => {
   logger.info('🚀 Starting scheduled job', { 
     timestamp: new Date().toISOString(),
-    schedule: 'Every 10 minutes'
+    schedule: 'Every 30 minutes'
   })
     .then(() => generateForAllUsers())
     .catch(async (err) => {
