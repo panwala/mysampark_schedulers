@@ -1,0 +1,136 @@
+[2025-05-26T10:32:00.703Z] [INFO] 🚀 Starting scheduled job
+{
+  "timestamp": "2025-05-26T10:32:00.702Z",
+  "schedule": "Every 10 minutes"
+}
+[2025-05-26T10:32:00.710Z] [INFO] 🔄 Starting batch image generation process
+{
+  "startTime": "2025-05-26T10:32:00.710Z",
+  "environment": "development"
+}
+[2025-05-26T10:32:01.328Z] [INFO] 👥 Retrieved user list
+{
+  "totalUsers": 1,
+  "timestamp": "2025-05-26T10:32:01.328Z"
+}
+[2025-05-26T10:32:01.405Z] [INFO] ⏰ Current processing time (IST)
+{
+  "currentTime": "16:02:01",
+  "timestamp": "2025-05-26T10:32:01.405Z"
+}
+[2025-05-26T10:32:01.408Z] [INFO] 🏢 Processing business
+{
+  "businessId": 6,
+  "businessName": "Saurabh Pottery",
+  "whatsappNumber": "7041427465",
+  "timestamp": "2025-05-26T10:32:01.408Z"
+}
+[2025-05-26T10:32:01.410Z] [INFO] 🎨 Fetching frame data
+{
+  "businessId": 6
+}
+[2025-05-26T10:32:03.091Z] [INFO] 📝 Retrieved caption
+{
+  "businessId": 6,
+  "caption": {
+    "post_id": 10,
+    "story": "https://testadmin.mysampark.com/images/10/story/67da5c0737acd_9.png",
+    "post": "https://testadmin.mysampark.com/images/10/post/67da5bd837dc3_9.png",
+    "caption": "\"Find inspiration in the beauty of everyday moments with Saurabh Pottery. #DailyMotivation #ArtisticVibes\"",
+    "bussiness_name": "Saurabh Pottery",
+    "category_name": "Daily Motivation"
+  },
+  "timestamp": "2025-05-26T10:32:03.091Z"
+}
+[2025-05-26T10:32:03.098Z] [INFO] 🎨 Generating story image
+{
+  "businessId": 6,
+  "imageNumber": 1,
+  "timestamp": "2025-05-26T10:32:03.098Z"
+}
+[2025-05-26T10:32:05.729Z] [SUCCESS] ✅ story image generated
+{
+  "businessId": 6,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\routes\\output\\0.4396360537014872user-6-6.png",
+  "timestamp": "2025-05-26T10:32:05.729Z"
+}
+[2025-05-26T10:32:05.736Z] [INFO] Starting file upload
+{
+  "originalFilename": "0.4396360537014872user-6-6.png",
+  "uniqueFilename": "1748255525736-aac88thyzeh-0.4396360537014872user-6-6.png"
+}
+[2025-05-26T10:32:05.763Z] [SUCCESS] File uploaded successfully
+{
+  "publicUrl": "https://cron.mysampark.com/uploads/1748255525736-aac88thyzeh-0.4396360537014872user-6-6.png"
+}
+[2025-05-26T10:32:05.768Z] [SUCCESS] 📤 Image uploaded successfully
+{
+  "businessId": 6,
+  "url": "https://cron.mysampark.com/uploads/1748255525736-aac88thyzeh-0.4396360537014872user-6-6.png",
+  "timestamp": "2025-05-26T10:32:05.768Z"
+}
+[2025-05-26T10:32:06.108Z] [INFO] 💬 WhatsApp message status
+{
+  "businessId": 6,
+  "success": true,
+  "phone": "7041427465",
+  "timestamp": "2025-05-26T10:32:06.108Z"
+}
+[2025-05-26T10:32:06.110Z] [INFO] 🎨 Generating post image
+{
+  "businessId": 6,
+  "imageNumber": 2,
+  "timestamp": "2025-05-26T10:32:06.110Z"
+}
+[2025-05-26T10:32:07.239Z] [SUCCESS] ✅ post image generated
+{
+  "businessId": 6,
+  "outputPath": "D:\\image_text_rendering_mysamprak_2\\dist\\routes\\output\\0.5037508873965468user-6-6.png",
+  "timestamp": "2025-05-26T10:32:07.239Z"
+}
+[2025-05-26T10:32:07.249Z] [INFO] Starting file upload
+{
+  "originalFilename": "0.5037508873965468user-6-6.png",
+  "uniqueFilename": "1748255527249-16dcvwhqmakh-0.5037508873965468user-6-6.png"
+}
+[2025-05-26T10:32:07.287Z] [SUCCESS] File uploaded successfully
+{
+  "publicUrl": "https://cron.mysampark.com/uploads/1748255527249-16dcvwhqmakh-0.5037508873965468user-6-6.png"
+}
+[2025-05-26T10:32:07.289Z] [SUCCESS] 📤 Image uploaded successfully
+{
+  "businessId": 6,
+  "url": "https://cron.mysampark.com/uploads/1748255527249-16dcvwhqmakh-0.5037508873965468user-6-6.png",
+  "timestamp": "2025-05-26T10:32:07.289Z"
+}
+[2025-05-26T10:32:07.357Z] [INFO] 💬 WhatsApp message status
+{
+  "businessId": 6,
+  "success": true,
+  "phone": "7041427465",
+  "timestamp": "2025-05-26T10:32:07.357Z"
+}
+[2025-05-26T10:32:07.439Z] [SUCCESS] ✅ Server updated with successful send
+{
+  "businessId": 6,
+  "timestamp": "2025-05-26T10:32:07.439Z"
+}
+[2025-05-26T10:32:07.440Z] [INFO] 🏁 Batch processing completed
+{
+  "totalProcessed": 1,
+  "successful": 1,
+  "failed": 0,
+  "durationSeconds": 6.73,
+  "startTime": "2025-05-26T10:32:00.710Z",
+  "endTime": "2025-05-26T10:32:07.440Z"
+}
+[2025-05-26T10:32:15.820Z] [INFO] Files cleaned up successfully
+{
+  "imagePath": "D:\\image_text_rendering_mysamprak_2\\dist\\routes\\output\\0.4396360537014872user-6-6.png",
+  "destinationPath": "D:\\image_text_rendering_mysamprak_2\\public\\uploads\\1748255525736-aac88thyzeh-0.4396360537014872user-6-6.png"
+}
+[2025-05-26T10:32:17.308Z] [INFO] Files cleaned up successfully
+{
+  "imagePath": "D:\\image_text_rendering_mysamprak_2\\dist\\routes\\output\\0.5037508873965468user-6-6.png",
+  "destinationPath": "D:\\image_text_rendering_mysamprak_2\\public\\uploads\\1748255527249-16dcvwhqmakh-0.5037508873965468user-6-6.png"
+}

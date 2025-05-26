@@ -37,47 +37,48 @@ logDownloadRoute.get('/logs', async (req: Request, res: Response) => {
 });
 
 // Download a specific log file
-logDownloadRoute.get('/logs/download/:filename', async (req: Request, res: Response) => {
-    try {
-        const filename = req.params.filename;
+// logDownloadRoute.get('/logs/download/:filename', async (req: Request, res: Response) => {
+//     try {
+//         const filename = req.params.filename;
         
-        // Security check - ensure filename only contains safe characters
-        if (!filename.match(/^[\w\-. ]+\.log$/)) {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid filename'
-            });
-        }
+//         // Security check - ensure filename only contains safe characters
+//         if (!filename.match(/^[\w\-. ]+\.log$/)) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: 'Invalid filename'
+//             });
+//         }
 
-        const logDir = path.join(__dirname, '..', '..', 'logs');
-        const filePath = path.join(logDir, filename);
+//         const logDir = path.join(__dirname, '..', '..', 'logs');
+//         const filePath = path.join(logDir, filename);
 
-        // Check if file exists and is within logs directory
-        if (!fs.existsSync(filePath) || !filePath.startsWith(logDir)) {
-            return res.status(404).json({
-                success: false,
-                message: 'File not found'
-            });
-        }
+//         // Check if file exists and is within logs directory
+//         if (!fs.existsSync(filePath) || !filePath.startsWith(logDir)) {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: 'File not found'
+//             });
+//         }
 
-        // Log the download
-        await logger.info(`Log file download requested`, { filename, ip: req.ip });
+//         // Log the download
+//         await logger.info(`Log file download requested`, { filename, ip: req.ip });
 
-        // Set headers for file download
-        res.setHeader('Content-Type', 'text/plain');
-        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+//         // Set headers for file download
+//         res.setHeader('Content-Type', 'text/plain');
+//         res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
 
-        // Stream the file
-        const fileStream = fs.createReadStream(filePath);
-        fileStream.pipe(res);
+//         // Stream the file
+//         const fileStream = fs.createReadStream(filePath);
+//         fileStream.pipe(res);
 
-    } catch (error) {
-        await logger.error('Error downloading log file', error);
-        res.status(500).json({
-            success: false,
-            message: 'Error downloading log file'
-        });
-    }
-});
+//         return res; // Ensure to return the response object
+//     } catch (error) {
+//         await logger.error('Error downloading log file', error);
+//         return res.status(500).json({
+//             success: false,
+//             message: 'Error downloading log file'
+//         });
+//     }
+// });
 
 export { logDownloadRoute }; 
