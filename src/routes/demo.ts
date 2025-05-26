@@ -739,21 +739,24 @@ async function generateForAllUsers() {
           
           try {
             const buffer = await generateImageBuffer(user, customFrames, business, j);
+            if (!buffer) {
+                throw new Error('Image buffer generation failed');
+            }
             const filename = `${Math.random()}user-${business.id}-${business.id}.png`;
             const outputPath = path.join(outputDir, filename);
             fs.writeFileSync(outputPath, buffer);
             
             await logger.success(`✅ ${imageType} image generated`, { 
-              businessId: business.id,
-              outputPath,
-              timestamp: new Date().toISOString()
+                businessId: business.id,
+                outputPath,
+                timestamp: new Date().toISOString()
             });
 
             const uploadResponse = await uploadToPostImages(outputPath);
             await logger.success('📤 Image uploaded successfully', { 
-              businessId: business.id,
-              url: uploadResponse,
-              timestamp: new Date().toISOString()
+                businessId: business.id,
+                url: uploadResponse,
+                timestamp: new Date().toISOString()
             });
 
             const whatsappResponse = await sendWhatsAppTemplate(
@@ -763,10 +766,10 @@ async function generateForAllUsers() {
             );
             
             await logger.info('💬 WhatsApp message status', { 
-              businessId: business.id,
-              success: whatsappResponse,
-              phone: business.whatsapp_number || "919624863068",
-              timestamp: new Date().toISOString()
+                businessId: business.id,
+                success: whatsappResponse,
+                phone: business.whatsapp_number || "919624863068",
+                timestamp: new Date().toISOString()
             });
 
             if (backgroundImagePostIdCache.has(`${business.id}-post_id`) && j > 0) {
@@ -846,7 +849,7 @@ async function generateForAllUsers() {
 
 // Update cron schedule to run every 10 minutes
 
-cron.schedule("*/10 * * * *", () => {
+cron.schedule("52 10 * * *", () => {
   logger.info('🚀 Starting scheduled job', { 
     timestamp: new Date().toISOString(),
     schedule: 'Every 10 minutes'
