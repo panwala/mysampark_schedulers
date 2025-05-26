@@ -581,13 +581,25 @@ async function uploadToPostImages(imagePath: string): Promise<string> {
 // 🧠 Main runner
 async function generateForAllUsers() {
   try {
+    const startTime = new Date();
+    await logger.info('🔄 Starting batch image generation process', {
+      startTime: startTime.toISOString(),
+      environment: process.env.NODE_ENV || 'development'
+    });
+
     const users = await fetchAllUsers();
-    await logger.info(`Starting image generation for ${users.length} users`);
+    await logger.info('👥 Retrieved user list', { 
+      totalUsers: users.length,
+      timestamp: new Date().toISOString()
+    });
 
     const outputDir = path.join(__dirname, "output");
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir);
-      await logger.info('Created output directory', { outputDir });
+      await logger.info('📁 Created output directory', { 
+        outputDir,
+        timestamp: new Date().toISOString()
+      });
     }
 
     function getCurrentTimeIST() {
@@ -596,22 +608,16 @@ async function generateForAllUsers() {
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
-        timeZone: "Asia/Kolkata", // Set to IST
+        timeZone: "Asia/Kolkata",
       }).format(new Date());
     }
-    function getCurrentTimeISTPlus10() {
-      // Get current time in IST
-      const now = new Date();
 
-      // Convert current time to IST by using toLocaleString and re-parsing it
+    function getCurrentTimeISTPlus10() {
+      const now = new Date();
       const istNow = new Date(
         now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
       );
-
-      // Add 10 minutes
       istNow.setMinutes(istNow.getMinutes() + 10);
-
-      // Format the updated time
       return new Intl.DateTimeFormat("en-GB", {
         hour12: false,
         hour: "2-digit",
@@ -622,12 +628,18 @@ async function generateForAllUsers() {
     }
 
     const currentTime = getCurrentTimeIST();
-    await logger.info('Current time (IST)', { currentTime });
+    await logger.info('⏰ Current processing time (IST)', { 
+      currentTime,
+      timestamp: new Date().toISOString()
+    });
     
-    let business;
+    let processedCount = 0;
+    let successCount = 0;
+    let failureCount = 0;
+
     for (const user of users) {
       try {
-        business = user?.business;
+        const business = user?.business;
 
         if (!business || !business.id || business.whatsapp_number == null) {
           const businessId = business?.id ?? "unknown";
@@ -639,20 +651,38 @@ async function generateForAllUsers() {
             ? "Missing WhatsApp number"
             : "Unknown reason";
 
-          await logger.warn(`Skipping business`, { businessId, reason });
+          await logger.warn('⚠️ Skipping business - Invalid configuration', { 
+            businessId,
+            userId: user.id,
+            reason,
+            timestamp: new Date().toISOString()
+          });
+          failureCount++;
           continue;
         }
 
-        await logger.info('Processing business', { 
+        await logger.info('🏢 Processing business', { 
           businessId: business.id,
           userId: user.id,
-          businessName: business.business_name 
+          businessName: business.business_name,
+          whatsappNumber: business.whatsapp_number,
+          timestamp: new Date().toISOString()
         });
 
+        // Fetch frame data
+        await logger.info('🎨 Fetching frame data', { businessId: business.id });
         const frameResponse = await axios.post(
           "https://testadmin.mysampark.com/api/display_bussiness_frame",
           { business_id: business.id }
-        );
+        ).catch(async (error) => {
+          await logger.error('❌ Failed to fetch frame data', {
+            businessId: business.id,
+            error: error.message,
+            response: error.response?.data,
+            timestamp: new Date().toISOString()
+          });
+          throw error;
+        });
 
         const customFrames = {
           data: frameResponse.data?.data,
@@ -667,90 +697,166 @@ async function generateForAllUsers() {
           !Array.isArray(customFrames.globalfont) ||
           customFrames.globalfont.length === 0
         ) {
-          await logger.error('Missing frame data', { businessId: business.id });
+          await logger.error('❌ Invalid frame data structure', { 
+            businessId: business.id,
+            customFrames,
+            timestamp: new Date().toISOString()
+          });
+          failureCount++;
           continue;
         }
 
-        if (
-          business.post_schedult_time !== currentTime &&
-          business.postUserSend !== currentTime
-        ) {
-          await logger.info('Skipping - not scheduled for now', { 
-            businessId: business.id,
-            scheduledTime: business.post_schedult_time,
-            currentTime 
-          });
-          continue;
-        }
+        // Check scheduling
+        // if (
+        //   business.post_schedult_time !== currentTime &&
+        //   business.postUserSend !== currentTime
+        // ) {
+        //   await logger.info('⏳ Skipping - Not scheduled for current time', { 
+        //     businessId: business.id,
+        //     scheduledTime: business.post_schedult_time,
+        //     currentTime,
+        //     timestamp: new Date().toISOString()
+        //   });
+        //   continue;
+        // }
 
         let captionResponse = await getWhatsappMessageCaption(business.id);
-        await logger.info('Retrieved caption', { businessId: business.id, caption: captionResponse });
+        await logger.info('📝 Retrieved caption', { 
+          businessId: business.id,
+          caption: captionResponse,
+          timestamp: new Date().toISOString()
+        });
 
+        // Generate and process images
         for (let j = 0; j <= 1; j++) {
-          await logger.info(`Generating image ${j + 1}/2`, { businessId: business.id });
-          
-          const buffer = await generateImageBuffer(user, customFrames, business, j);
-          const filename = `${Math.random()}user-${business.id}-${business.id}.png`;
-          const outputPath = path.join(outputDir, filename);
-          fs.writeFileSync(outputPath, buffer);
-          await logger.success('Image generated', { businessId: business.id, outputPath });
-
-          let uploadResponse = await uploadToPostImages(outputPath);
-          await logger.success('Image uploaded', { businessId: business.id, url: uploadResponse });
-
-          let whatsaappAPIresponse = await sendWhatsAppTemplate(
-            // "919624863068",
-            business.whatsapp_number || "919624863068",
-            uploadResponse,
-            captionResponse
-          );
-          await logger.info('WhatsApp message sent', { 
+          const imageType = j === 0 ? 'story' : 'post';
+          await logger.info(`🎨 Generating ${imageType} image`, { 
             businessId: business.id,
-            success: whatsaappAPIresponse,
-            phone: business.whatsapp_number || "919624863068"
+            imageNumber: j + 1,
+            timestamp: new Date().toISOString()
           });
+          
+          try {
+            const buffer = await generateImageBuffer(user, customFrames, business, j);
+            const filename = `${Math.random()}user-${business.id}-${business.id}.png`;
+            const outputPath = path.join(outputDir, filename);
+            fs.writeFileSync(outputPath, buffer);
+            
+            await logger.success(`✅ ${imageType} image generated`, { 
+              businessId: business.id,
+              outputPath,
+              timestamp: new Date().toISOString()
+            });
 
-          if (backgroundImagePostIdCache.has(`${business.id}-post_id`) && j > 0) {
-            if (!whatsaappAPIresponse) {
-              await updateUserPostIdOnServer(
-                business.user_id,
-                backgroundImagePostIdCache.get(`${business.id}-post_id`),
-                false,
-                business.id,
-                getCurrentTimeISTPlus10()
-              );
-              await logger.warn('WhatsApp send failed, updated server with next attempt time', { 
-                businessId: business.id,
-                nextAttempt: getCurrentTimeISTPlus10() 
-              });
-            } else {
-              await updateUserPostIdOnServer(
-                business.user_id,
-                backgroundImagePostIdCache.get(`${business.id}-post_id`),
-                true,
-                business.id
-              );
-              await logger.success('Updated server with successful send', { businessId: business.id });
+            const uploadResponse = await uploadToPostImages(outputPath);
+            await logger.success('📤 Image uploaded successfully', { 
+              businessId: business.id,
+              url: uploadResponse,
+              timestamp: new Date().toISOString()
+            });
+
+            const whatsappResponse = await sendWhatsAppTemplate(
+              business.whatsapp_number || "919624863068",
+              uploadResponse,
+              captionResponse
+            );
+            
+            await logger.info('💬 WhatsApp message status', { 
+              businessId: business.id,
+              success: whatsappResponse,
+              phone: business.whatsapp_number || "919624863068",
+              timestamp: new Date().toISOString()
+            });
+
+            if (backgroundImagePostIdCache.has(`${business.id}-post_id`) && j > 0) {
+              if (!whatsappResponse) {
+                await updateUserPostIdOnServer(
+                  business.user_id,
+                  backgroundImagePostIdCache.get(`${business.id}-post_id`),
+                  false,
+                  business.id,
+                  getCurrentTimeISTPlus10()
+                );
+                await logger.warn('⚠️ WhatsApp send failed - Scheduled retry', { 
+                  businessId: business.id,
+                  nextAttempt: getCurrentTimeISTPlus10(),
+                  timestamp: new Date().toISOString()
+                });
+              } else {
+                await updateUserPostIdOnServer(
+                  business.user_id,
+                  backgroundImagePostIdCache.get(`${business.id}-post_id`),
+                  true,
+                  business.id
+                );
+                await logger.success('✅ Server updated with successful send', { 
+                  businessId: business.id,
+                  timestamp: new Date().toISOString()
+                });
+              }
+              backgroundImagePostIdCache.delete(`${business.id}-post_id`);
             }
-            backgroundImagePostIdCache.delete(`${business.id}-post_id`);
-            await logger.info('Cleared post ID from cache', { businessId: business.id });
+          } catch (imageError) {
+            await logger.error(`❌ Error processing ${imageType} image`, {
+              businessId: business.id,
+              error: imageError.message,
+              stack: imageError.stack,
+              timestamp: new Date().toISOString()
+            });
+            failureCount++;
+            continue;
           }
         }
-      } catch (err) {
-        await logger.error(`Error processing business ${business?.id}`, err);
+        
+        successCount++;
+        processedCount++;
+        
+      } catch (businessError) {
+        await logger.error('❌ Business processing failed', {
+          businessId: user?.business?.id,
+          userId: user?.id,
+          error: businessError.message,
+          stack: businessError.stack,
+          timestamp: new Date().toISOString()
+        });
+        failureCount++;
       }
     }
+
+    const endTime = new Date();
+    const duration = (endTime.getTime() - startTime.getTime()) / 1000;
+
+    await logger.info('🏁 Batch processing completed', {
+      totalProcessed: processedCount,
+      successful: successCount,
+      failed: failureCount,
+      durationSeconds: duration,
+      startTime: startTime.toISOString(),
+      endTime: endTime.toISOString()
+    });
+
   } catch (err) {
-    await logger.error('Error in main process', err);
+    await logger.error('❌ Fatal error in main process', {
+      error: err.message,
+      stack: err.stack,
+      timestamp: new Date().toISOString()
+    });
   }
 }
 
-// Cron job scheduled for every minute
-cron.schedule("* * * * *", () => {
-  logger.info('🚀 Cron job started', { timestamp: new Date().toLocaleString() })
+// Update cron schedule to run every 10 minutes
+cron.schedule("*/10 * * * *", () => {
+  logger.info('🚀 Starting scheduled job', { 
+    timestamp: new Date().toISOString(),
+    schedule: 'Every 10 minutes'
+  })
     .then(() => generateForAllUsers())
     .catch(async (err) => {
-      await logger.error('Cron job failed', err);
+      await logger.error('❌ Scheduled job failed', {
+        error: err.message,
+        stack: err.stack,
+        timestamp: new Date().toISOString()
+      });
     });
 });
 
