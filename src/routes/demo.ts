@@ -849,7 +849,7 @@ async function generateForAllUsers() {
 
 // Update cron schedule to run every 10 minutes
 
-cron.schedule("52 10 * * *", () => {
+cron.schedule("55 10 * * *", () => {
   logger.info('🚀 Starting scheduled job', { 
     timestamp: new Date().toISOString(),
     schedule: 'Every 10 minutes'
