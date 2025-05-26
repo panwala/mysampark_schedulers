@@ -567,7 +567,7 @@ async function uploadToPostImages(imagePath: string): Promise<string> {
       } catch (cleanupError) {
         await logger.error('Error during file cleanup', cleanupError);
       }
-    }, 10000);
+    }, 1800000);
 
     const publicUrl = `${serverAddress}/uploads/${uniqueFilename}`;
     await logger.success('File uploaded successfully', { publicUrl });
