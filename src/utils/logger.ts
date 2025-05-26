@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import zlib from 'zlib';
 
 class Logger {
   private logDir: string;
@@ -35,30 +34,11 @@ class Logger {
     return path.join(this.logDir, `${year}-${month}-${day}.log`);
   }
 
-  private async compressFile(filePath: string): Promise<void> {
-    const gzipFilePath = `${filePath}.gz`;
-    
-    return new Promise((resolve, reject) => {
-      const readStream = fs.createReadStream(filePath);
-      const writeStream = fs.createWriteStream(gzipFilePath);
-      const gzip = zlib.createGzip();
-
-      readStream
-        .pipe(gzip)
-        .pipe(writeStream)
-        .on('finish', () => {
-          fs.unlinkSync(filePath); // Delete original file after compression
-          resolve();
-        })
-        .on('error', reject);
-    });
-  }
-
-  private async cleanOldLogs(): Promise<void> {
+  private cleanOldLogs(): void {
     try {
       const files = fs.readdirSync(this.logDir);
       const logFiles = files
-        .filter(file => file.endsWith('.log') || file.endsWith('.log.gz'))
+        .filter(file => file.endsWith('.log'))
         .map(file => ({
           name: file,
           path: path.join(this.logDir, file),
@@ -70,15 +50,6 @@ class Logger {
       const filesToDelete = logFiles.slice(this.MAX_LOG_FILES);
       for (const file of filesToDelete) {
         fs.unlinkSync(file.path);
-      }
-
-      // Compress files older than today
-      const today = new Date().toISOString().split('T')[0];
-      const filesToCompress = logFiles
-        .filter(file => !file.name.endsWith('.gz') && file.date.toISOString().split('T')[0] < today);
-
-      for (const file of filesToCompress) {
-        await this.compressFile(file.path);
       }
     } catch (error) {
       console.error('Error cleaning old logs:', error);
@@ -100,9 +71,9 @@ class Logger {
 
   private async rotateLog(): Promise<void> {
     if (this.currentFileSize >= this.MAX_FILE_SIZE) {
-      const rotatedFilename = `${this.currentLogFile}.${Date.now()}`;
+      const timestamp = Date.now();
+      const rotatedFilename = `${this.currentLogFile}.${timestamp}`;
       fs.renameSync(this.currentLogFile, rotatedFilename);
-      await this.compressFile(rotatedFilename);
       this.currentFileSize = 0;
     }
   }
@@ -112,9 +83,6 @@ class Logger {
       // Check if we need to create a new log file for a new day
       const newLogFile = this.getLogFileName();
       if (newLogFile !== this.currentLogFile) {
-        if (fs.existsSync(this.currentLogFile)) {
-          await this.compressFile(this.currentLogFile);
-        }
         this.currentLogFile = newLogFile;
         this.currentFileSize = 0;
       }
