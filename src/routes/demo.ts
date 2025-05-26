@@ -638,6 +638,7 @@ async function generateForAllUsers() {
     let failureCount = 0;
 
     for (const user of users) {
+      processedCount++; // Increment processed count at the start of each user
       try {
         const business = user?.business;
 
@@ -809,8 +810,7 @@ async function generateForAllUsers() {
         }
         
         successCount++;
-        processedCount++;
-        
+
       } catch (businessError) {
         await logger.error('❌ Business processing failed', {
           businessId: user?.business?.id,
