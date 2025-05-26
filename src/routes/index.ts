@@ -1,4 +1,5 @@
 import { imageTextRenderRoute } from "./imageTextRenderRoute";
+import { logDownloadRoute } from "./logDownloadRoute";
 
-const routes = [imageTextRenderRoute]
-export default routes
+const routes = [imageTextRenderRoute, logDownloadRoute];
+export default routes;
