@@ -221,7 +221,7 @@ const sendWhatsAppTemplate = async (
     const result: any = await response.json(); // 👈 parse response as JSON
     console.log(`📤 WhatsApp response:`, result);
     console.log(`📤 WhatsApp response data:`, result.success);
-    await logger.info('💬 sendWhatsAppTemplate whatsAPP API   status', {
+    await logger.info('💬sendWhatsAppTemplate whatsAPP API   status', {
       success:  result.success,
       statusDesc: result.statusDesc,
       timestamp: new Date().toISOString()
