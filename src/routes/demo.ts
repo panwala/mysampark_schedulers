@@ -224,6 +224,7 @@ const sendWhatsAppTemplate = async (
     return result.success || true;
   } catch (error) {
     console.error("❌ Error sending WhatsApp message:", error);
+    await logger.info("❌ Error sending WhatsApp message:", { error });
     return false;
   }
 };
@@ -338,7 +339,7 @@ export const generateImageBuffer = async (
         counter == 0
           ? backgroundImageUrl?.data?.story
           : backgroundImageUrl?.data?.post;
-       await logger.info('Background url', {bgUrl});
+      await logger.info('Background url', { bgUrl });
       if (!bgUrl) throw new Error("Missing background image URL");
       backgroundImage = await loadImage(bgUrl);
     } catch (bgErr) {
