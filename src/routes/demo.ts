@@ -45,6 +45,7 @@ registerFont(`${fontPath}/montserrat/Montserrat-Black.ttf`, {
   family: "montserrat",
   weight: "900",
 });
+
 const backgroundImageCache = new Map();
 const backgroundImagePostIdCache = new Map();
 async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
@@ -221,10 +222,11 @@ const sendWhatsAppTemplate = async (
     const result: any = await response.json(); // 👈 parse response as JSON
     console.log(`📤 WhatsApp response:`, result);
     console.log(`📤 WhatsApp response data:`, result.success);
+    await logger.info("📤 WhatsApp response:", { result, body });
     return result.success || true;
   } catch (error) {
     console.error("❌ Error sending WhatsApp message:", error);
-    await logger.info("❌ Error sending WhatsApp message:", { error });
+    await logger.error("❌ Error sending WhatsApp message:", { error });
     return false;
   }
 };
