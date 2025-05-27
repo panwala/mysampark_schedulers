@@ -861,10 +861,10 @@ async function generateForAllUsers() {
 
 // Update cron schedule to run every 30 minutes
 
-cron.schedule("*/30 * * * *", () => {
+cron.schedule("*/10 * * * *", () => {
   logger.info('🚀 Starting scheduled job', {
     timestamp: new Date().toISOString(),
-    schedule: 'Every 30 minutes'
+    schedule: 'Every 10 minutes'
   })
     .then(() => generateForAllUsers())
     .catch(async (err) => {
