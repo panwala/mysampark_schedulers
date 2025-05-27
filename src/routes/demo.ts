@@ -225,6 +225,8 @@ const sendWhatsAppTemplate = async (
     await logger.info('💬 sendWhatsAppTemplate whatsAPP API   status', {
       success:  result.success,
       statusDesc: result.statusDesc,
+      phoneNumber: phoneNumber,
+      payload: body,
       timestamp: new Date().toISOString()
     });
     return result.success || false;
