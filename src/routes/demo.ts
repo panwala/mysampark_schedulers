@@ -221,7 +221,7 @@ const sendWhatsAppTemplate = async (
     const result: any = await response.json(); // 👈 parse response as JSON
     console.log(`📤 WhatsApp response:`, result);
     console.log(`📤 WhatsApp response data:`, result.success);
-    return result.success || true;
+    return result.success || false;
   } catch (error) {
     console.error("❌ Errors sending WhatsApp message:", error);
     return false;
