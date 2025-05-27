@@ -45,6 +45,7 @@ registerFont(`${fontPath}/montserrat/Montserrat-Black.ttf`, {
   family: "montserrat",
   weight: "900",
 });
+
 const backgroundImageCache = new Map();
 const backgroundImagePostIdCache = new Map();
 async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
@@ -230,6 +231,7 @@ const sendWhatsAppTemplate = async (
     
   } catch (error) {
     console.error("❌ Errors sending WhatsApp message:", error);
+    await logger.error("❌ Error sending WhatsApp message:", { error });
     return false;
   }
 };
@@ -278,8 +280,18 @@ async function recolorImage(
   return loadImage(canvas.toBuffer("image/png"));
 }
 
-// 🎨 Image rendering logic (reusable)
+const createFallbackImage = (width = 800, height = 600) => {
+  const fallbackCanvas = createCanvas(width, height);
+  const ctx = fallbackCanvas.getContext("2d");
+  ctx.fillStyle = "#f5f5f5";
+  ctx.fillRect(0, 0, fallbackCanvas.width, fallbackCanvas.height);
+  ctx.fillStyle = "#333";
+  ctx.font = "bold 30px sans-serif";
+  ctx.fillText("Image generation failed", 50, 300);
+  return fallbackCanvas.toBuffer("image/png");
+};
 
+// 🎨 Image rendering logic (reusable)
 export const generateImageBuffer = async (
   singleuserData: any,
   actualframesData: {
@@ -291,17 +303,23 @@ export const generateImageBuffer = async (
   counter: any
 ) => {
   try {
+
     const framesData = actualframesData;
     const userData = singleuserData;
 
     // Extract necessary data from frames and user input
+    const frameData = framesData.data[0];
+    if (!frameData) throw new Error("Missing frameData");
+
+    const framesVariantData = frameData.frames_varinat[0];
+    if (!framesVariantData) throw new Error("Missing framesVariantData");
+
+    const framesVariantLines = framesVariantData.framesvariantline;
+
     const lineContent = framesData.line_content;
     const globalFont = framesData.globalfont;
-    const frameData = framesData.data[0];
     const framesTextColour = frameData.frames_text_colour;
-    const framesVariantData = frameData.frames_varinat[0];
-    const framesVariantLines = framesVariantData.framesvariantline;
-    const fontFamily = frameData.font_type || "montserrat"; // Default font family
+    const fontFamily = frameData.font_type || "montserrat";
 
     // Prepare business data array in a specific order
     const businessData = [
@@ -315,12 +333,27 @@ export const generateImageBuffer = async (
     ];
 
     // Load background image (story or post based on counter)
-    const backgroundImageUrl = await getBackgroundImageUrl(businessDatas.id);
-    const backgroundImage = await loadImage(
-      counter == 0
-        ? backgroundImageUrl.data.story
-        : backgroundImageUrl.data.post
-    );
+    // const backgroundImageUrl = await getBackgroundImageUrl(businessDatas.id);
+    // const backgroundImage = await loadImage(
+    //   counter == 0
+    //     ? backgroundImageUrl.data.story
+    //     : backgroundImageUrl.data.post
+    // );
+    let backgroundImage;
+    try {
+      const backgroundImageUrl = await getBackgroundImageUrl(businessDatas.id);
+      const bgUrl =
+        counter == 0
+          ? backgroundImageUrl?.data?.story
+          : backgroundImageUrl?.data?.post;
+      await logger.info('Background url', { bgUrl });
+      if (!bgUrl) throw new Error("Missing background image URL");
+      backgroundImage = await loadImage(bgUrl);
+    } catch (bgErr) {
+      console.error("Error loading background image:", bgErr);
+      throw bgErr;
+    }
+
 
     // Create base canvas and draw background
     const canvas = createCanvas(backgroundImage.width, backgroundImage.height);
@@ -337,29 +370,48 @@ export const generateImageBuffer = async (
     ctx.scale(scale, scale);
 
     // Draw the frame overlay at the bottom of the canvas
-    const frameOverlayImage = await loadImage(framesVariantData.image_url);
-    ctx.drawImage(
-      frameOverlayImage,
-      0,
-      canvas.height - frameOverlayImage.height
-    );
+    // const frameOverlayImage = await loadImage(framesVariantData.image_url);
+    // ctx.drawImage(
+    //   frameOverlayImage,
+    //   0,
+    //   canvas.height - frameOverlayImage.height
+    // );
+    // Load frame overlay
+    let frameOverlayImage
+    try {
+      frameOverlayImage = await loadImage(framesVariantData.image_url);
+      ctx.drawImage(
+        frameOverlayImage,
+        0,
+        canvas.height - frameOverlayImage.height
+      );
+    } catch (overlayErr) {
+      console.error("Error loading overlay image:", overlayErr);
+      throw overlayErr;
+    }
 
     // Load and draw business logo, centered at the top
-    const logoImage = await loadImage(
-      businessDatas.logo_image_url ||
-      "https://img.freepik.com/premium-vector/water-logo-design-concept_761413-7077.jpg?semt=ais_hybrid&w=250"
-    );
-    const desiredLogoHeight = 150;
-    const aspectRatio = logoImage.width / logoImage.height;
-    const calculatedWidth = desiredLogoHeight * aspectRatio;
-    const logoXPosition = canvas.width / 2 - calculatedWidth / 2;
-    ctx.drawImage(
-      logoImage,
-      logoXPosition,
-      50,
-      calculatedWidth,
-      desiredLogoHeight
-    );
+    // Draw logo
+    try {
+      const logoImage = await loadImage(
+        businessDatas.logo_image_url ||
+        "https://img.freepik.com/premium-vector/water-logo-design-concept_761413-7077.jpg?semt=ais_hybrid&w=250"
+      );
+      const desiredLogoHeight = 150;
+      const aspectRatio = logoImage.width / logoImage.height;
+      const calculatedWidth = desiredLogoHeight * aspectRatio;
+      const logoXPosition = canvas.width / 2 - calculatedWidth / 2;
+      ctx.drawImage(
+        logoImage,
+        logoXPosition,
+        50,
+        calculatedWidth,
+        desiredLogoHeight
+      );
+    } catch (logoErr) {
+      console.error("Error loading logo image:", logoErr);
+      // Not fatal, continue
+    }
 
     // Calculate vertical offset for text based on overlay height
     let bottomTextContentHeight = canvas.height - frameOverlayImage.height;
@@ -383,7 +435,7 @@ export const generateImageBuffer = async (
       globalFont.find((f: { type: string }) => f.type === "email"),
       globalFont.find((f: { type: string }) => f.type === "address"),
       globalFont.find((f: { type: string }) => f.type === "website"),
-    ].filter((f) => f !== undefined);
+    ].filter((f) => f !== undefined).filter(Boolean);
 
     // Extract color toggles for each line (Y = use color 'y', otherwise 'x')
     const textColours = [
@@ -392,7 +444,7 @@ export const generateImageBuffer = async (
       framesTextColour.line3,
       framesTextColour.line4,
       framesTextColour.line5,
-    ].filter((f) => f !== null);
+    ].filter((f) => f !== null).filter(Boolean);;
 
     // Group business data lines by line index
     const groupOfLines = [
@@ -401,100 +453,108 @@ export const generateImageBuffer = async (
       lineContent.line3,
       lineContent.line4,
       lineContent.line5,
-    ].filter((f) => f !== null);
+    ].filter((f) => f !== null).filter(Boolean);;
 
     // Loop through each line layout configuration
     for (const [index, row] of framesVariantLines.entries()) {
-      let fontSize = +fontsData[0]?.font_size || 20;
-      const fontWeight = "normal";
-      const iconSize = fontSize * 2;
+      try {
+        let fontSize = +fontsData[0]?.font_size || 20;
+        const fontWeight = "normal";
+        const iconSize = fontSize * 2;
 
-      // Set default font and color for this line
-      ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
-      const currentTextColor =
-        textColours[index] === "Y" ? frameData.y : frameData.x;
-      ctx.fillStyle = currentTextColor;
+        // Set default font and color for this line
+        ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
+        const currentTextColor =
+          textColours[index] === "Y" ? frameData.y : frameData.x;
+        ctx.fillStyle = currentTextColor;
 
-      // Get the business data values for this line
-      const linesOfCurrentRow = groupOfLines[index].split(",");
-      const texts = linesOfCurrentRow
-        .map((line: string | number) => {
-          const lineText = businessData[+line - 1];
-          return { lineNo: +line, text: lineText || "" };
-        })
-        .filter((f: null) => f !== null);
+        // Get the business data values for this line
+        const lineStr = groupOfLines[index];
+        if (!lineStr) continue;
+        const linesOfCurrentRow = lineStr.split(",");
+        const texts = linesOfCurrentRow
+          .map((line: string | number) => {
+            const lineText = businessData[+line - 1];
+            return { lineNo: +line, text: lineText || "" };
+          })
+          .filter((f: null) => f !== null);
 
-      // Calculate total width needed for text and icons
-      const totalTextWidth =
-        index === 0
-          ? texts.reduce(
-            (sum: any, text: { text: any }) =>
-              sum + ctx.measureText(text.text).width,
-            0
-          )
-          : texts.reduce(
-            (sum: any, text: { text: any }) =>
-              sum + ctx.measureText(text.text).width,
-            0
-          ) + iconSize;
+        // Calculate total width needed for text and icons
+        const totalTextWidth =
+          index === 0
+            ? texts.reduce(
+              (sum: any, text: { text: any }) =>
+                sum + ctx.measureText(text.text).width,
+              0
+            )
+            : texts.reduce(
+              (sum: any, text: { text: any }) =>
+                sum + ctx.measureText(text.text).width,
+              0
+            ) + iconSize;
 
-      const spacing = (+row.width - totalTextWidth) / (texts.length + 1);
-      let xPos = +row.x + spacing;
+        const spacing = (+row.width - totalTextWidth) / (texts.length + 1);
+        let xPos = +row.x + spacing;
 
-      // Draw each text + optional icon
-      for (const text of texts) {
-        const getFontSize = fontsData[text.lineNo - 1];
-        const fontWeight = +getFontSize.font_weight || "normal";
-        ctx.font = `${fontWeight} ${+getFontSize.font_size}px ${fontFamily}`;
-        fontSize = +getFontSize.font_size;
+        // Draw each text + optional icon
+        for (const text of texts) {
 
-        let icon: Image | null = null;
 
-        // Determine which icon to draw based on line number
-        switch (text.lineNo) {
-          case 2:
-            icon = await recolorImage(icons.mobile1, currentTextColor);
-            break;
-          case 3:
-            icon = await recolorImage(icons.mobile2, currentTextColor);
-            break;
-          case 4:
-            icon = await recolorImage(icons.instagram, currentTextColor);
-            break;
-          case 5:
-            icon = await recolorImage(icons.email, currentTextColor);
-            break;
-          case 6:
-            icon = await recolorImage(icons.location, currentTextColor);
-            break;
-          case 7:
-            icon = await recolorImage(icons.website, currentTextColor);
-            break;
-          default:
-            icon = null;
+          const getFontSize = fontsData[text.lineNo - 1];
+          const fontWeight = +getFontSize.font_weight || "normal";
+          ctx.font = `${fontWeight} ${+getFontSize.font_size}px ${fontFamily}`;
+          fontSize = +getFontSize.font_size;
+
+          let icon: Image | null = null;
+
+          // Determine which icon to draw based on line number
+          switch (text.lineNo) {
+            case 2:
+              icon = await recolorImage(icons.mobile1, currentTextColor);
+              break;
+            case 3:
+              icon = await recolorImage(icons.mobile2, currentTextColor);
+              break;
+            case 4:
+              icon = await recolorImage(icons.instagram, currentTextColor);
+              break;
+            case 5:
+              icon = await recolorImage(icons.email, currentTextColor);
+              break;
+            case 6:
+              icon = await recolorImage(icons.location, currentTextColor);
+              break;
+            case 7:
+              icon = await recolorImage(icons.website, currentTextColor);
+              break;
+            default:
+              icon = null;
+          }
+
+          // Calculate vertical position for current line
+          const yPos =
+            +row.y + +row.height / 2 + fontSize / 3 + bottomTextContentHeight;
+          const textWidth = ctx.measureText(text.text).width;
+
+          if (icon) {
+            // Draw icon and then text with spacing
+            ctx.drawImage(
+              icon,
+              +xPos,
+              +yPos - iconSize / 1.5,
+              iconSize,
+              iconSize
+            );
+            ctx.fillText(text.text, +xPos + iconSize, +yPos);
+            xPos += textWidth + spacing;
+          } else {
+            // Draw text only
+            ctx.fillText(text.text, +xPos, +yPos);
+            xPos += textWidth + spacing;
+          }
         }
-
-        // Calculate vertical position for current line
-        const yPos =
-          +row.y + +row.height / 2 + fontSize / 3 + bottomTextContentHeight;
-        const textWidth = ctx.measureText(text.text).width;
-
-        if (icon) {
-          // Draw icon and then text with spacing
-          ctx.drawImage(
-            icon,
-            +xPos,
-            +yPos - iconSize / 1.5,
-            iconSize,
-            iconSize
-          );
-          ctx.fillText(text.text, +xPos + iconSize, +yPos);
-          xPos += textWidth + spacing;
-        } else {
-          // Draw text only
-          ctx.fillText(text.text, +xPos, +yPos);
-          xPos += textWidth + spacing;
-        }
+      } catch (lineErr) {
+        console.error(`Error rendering text for line ${index}:`, lineErr);
       }
     }
 
@@ -515,8 +575,10 @@ export const generateImageBuffer = async (
     return canvas.toBuffer("image/png");
   } catch (error) {
     console.log("GenerateImageBuffer Function Error L-511 :", error);
+    return createFallbackImage();
   }
 };
+
 async function uploadImageToAPI(
   filePath: string,
   apiDomainUrl: string,
@@ -753,6 +815,7 @@ async function generateForAllUsers() {
 
           try {
             const buffer = await generateImageBuffer(user, customFrames, business, j);
+            console.log("generateImageBuffer buffer :", buffer);
             if (!buffer) {
               throw new Error('Image buffer generation failed');
             }
