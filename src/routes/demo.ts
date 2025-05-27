@@ -338,6 +338,7 @@ export const generateImageBuffer = async (
         counter == 0
           ? backgroundImageUrl?.data?.story
           : backgroundImageUrl?.data?.post;
+       await logger.info('Background url', {bgUrl});
       if (!bgUrl) throw new Error("Missing background image URL");
       backgroundImage = await loadImage(bgUrl);
     } catch (bgErr) {
