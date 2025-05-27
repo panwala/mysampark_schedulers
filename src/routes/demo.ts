@@ -78,7 +78,7 @@ async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
       }
     );
   } catch (error) {
-    console.error("Error fetching background image L-80:", error);
+    console.error("Error  fetching background image L-80:", error);
     // return null;
     return {
       story: "https://testadmin.mysampark.com/images/15/story/67da6410d8d52_3.png",
