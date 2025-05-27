@@ -223,7 +223,7 @@ const sendWhatsAppTemplate = async (
     console.log(`📤 WhatsApp response data:`, result.success);
     return result.success || true;
   } catch (error) {
-    console.error("❌ Error sending WhatsApp message:", error);
+    console.error("❌ Errors sending WhatsApp message:", error);
     return false;
   }
 };
