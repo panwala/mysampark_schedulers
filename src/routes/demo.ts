@@ -227,6 +227,7 @@ const sendWhatsAppTemplate = async (
       statusDesc: result.statusDesc,
       phoneNumber: phoneNumber,
       payload: body,
+      captionResponse:caption,
       timestamp: new Date().toISOString()
     });
     return result.success || false;
