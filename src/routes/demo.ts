@@ -223,15 +223,15 @@ const sendWhatsAppTemplate = async (
     console.log(`📤 WhatsApp response:`, result);
     console.log(`📤 WhatsApp response data:`, result.success);
     await logger.info('💬 sendWhatsAppTemplate whatsAPP API   status', {
-      success:  result.success,
+      success: result.success,
       statusDesc: result.statusDesc,
       phoneNumber: phoneNumber,
       payload: body,
-      captionResponse:caption,
+      captionResponse: caption,
       timestamp: new Date().toISOString()
     });
     return result.success || false;
-    
+
   } catch (error) {
     console.error("❌ Errors sending WhatsApp message:", error);
     await logger.error("❌ Error sending WhatsApp message:", { error });
@@ -467,8 +467,15 @@ export const generateImageBuffer = async (
 
         // Set default font and color for this line
         ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
+        // const currentTextColor =
+        //   textColours[index] === "Y" ? frameData.y : frameData.x;
         const currentTextColor =
-          textColours[index] === "Y" ? frameData.y : frameData.x;
+          textColours[index] === "X"
+            ? frameData.x
+            : textColours[index] === "Y"
+              ? frameData.y
+              : "#000000";
+
         ctx.fillStyle = currentTextColor;
 
         // Get the business data values for this line
