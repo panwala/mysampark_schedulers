@@ -104,7 +104,7 @@ app.get("/test", (req: Request, res: Response) => {
 //     }
 
 //     const frameResponse = await axios.post(
-//       "https://testadmin.mysampark.com/api/display_bussiness_frame",
+//       "https://admin.mysampark.com//api/display_bussiness_frame",
 //       { business_id: business.id }
 //     );
 
