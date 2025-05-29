@@ -89,12 +89,12 @@ const frames = {
                 id: 76,
                 frame_id: 49,
                 name_icon: null,
-                mobile_no_1_icon: "https://admin.mysampark.com//images/icons/67c53dca723f3.png",
-                mobile_no_2_icon: "https://admin.mysampark.com//images/icons/67c53dca89dd5.png",
-                email_icon: "https://admin.mysampark.com//images/icons/67c53dcaa1cdc.png",
-                location_icon: "https://admin.mysampark.com//images/icons/67c53dcabb7b8.png",
-                website_icon: "https://admin.mysampark.com//images/icons/67c53dcad1c05.png",
-                instragram_icon: "https://admin.mysampark.com//images/icons/67c53dcaeaff2.png",
+                mobile_no_1_icon: "https://admin.mysampark.com/images/icons/67c53dca723f3.png",
+                mobile_no_2_icon: "https://admin.mysampark.com/images/icons/67c53dca89dd5.png",
+                email_icon: "https://admin.mysampark.com/images/icons/67c53dcaa1cdc.png",
+                location_icon: "https://admin.mysampark.com/images/icons/67c53dcabb7b8.png",
+                website_icon: "https://admin.mysampark.com/images/icons/67c53dcad1c05.png",
+                instragram_icon: "https://admin.mysampark.com/images/icons/67c53dcaeaff2.png",
                 created_at: "2025-03-19T07:42:56.000000Z",
                 updated_at: "2025-03-19T07:42:56.000000Z"
             },
@@ -131,7 +131,7 @@ const frames = {
                     frame_variant_number: "7",
                     created_at: "2025-03-19T10:40:07.000000Z",
                     updated_at: "2025-03-19T10:40:07.000000Z",
-                    image_url: "https://admin.mysampark.com//images/variants/67da749de213d.png",
+                    image_url: "https://admin.mysampark.com/images/variants/67da749de213d.png",
                     framesvariantline: [
                         {
                             id: 1766,
@@ -200,12 +200,12 @@ const frames = {
                 id: 88,
                 frame_id: 64,
                 name_icon: null,
-                mobile_no_1_icon: "https://admin.mysampark.com//images/icons/67c53dca723f3.png",
-                mobile_no_2_icon: "https://admin.mysampark.com//images/icons/67c53dca89dd5.png",
-                email_icon: "https://admin.mysampark.com//images/icons/67c53dcaa1cdc.png",
-                location_icon: "https://admin.mysampark.com//images/icons/67c53dcabb7b8.png",
-                website_icon: "https://admin.mysampark.com//images/icons/67c53dcad1c05.png",
-                instragram_icon: "https://admin.mysampark.com//images/icons/67c53dcaeaff2.png",
+                mobile_no_1_icon: "https://admin.mysampark.com/images/icons/67c53dca723f3.png",
+                mobile_no_2_icon: "https://admin.mysampark.com/images/icons/67c53dca89dd5.png",
+                email_icon: "https://admin.mysampark.com/images/icons/67c53dcaa1cdc.png",
+                location_icon: "https://admin.mysampark.com/images/icons/67c53dcabb7b8.png",
+                website_icon: "https://admin.mysampark.com/images/icons/67c53dcad1c05.png",
+                instragram_icon: "https://admin.mysampark.com/images/icons/67c53dcaeaff2.png",
                 created_at: "2025-03-19T07:47:59.000000Z",
                 updated_at: "2025-03-19T07:47:59.000000Z"
             },
@@ -322,7 +322,7 @@ const frames = {
 
 const user = {
     id: 5,
-    logo_image: "https://admin.mysampark.com//images/1738047526.67988026b1ad8.jpg",
+    logo_image: "https://admin.mysampark.com/images/1738047526.67988026b1ad8.jpg",
     business_name: "Test7 Business Solutions", // 20 characters
     owner_name: "John Doe",
     mobile_no: "1234567890", // 10 characters

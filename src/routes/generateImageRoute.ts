@@ -42,7 +42,7 @@ registerFont(`${fontPath}/montserrat/Montserrat-Black.ttf`, {
 });
 // Helper: fetch background image URL
 async function getBackgroundImageUrl(): Promise<string> {
-  const res = await axios.get("https://admin.mysampark.com//api/imageapi");
+  const res = await axios.get("https://admin.mysampark.com/api/imageapi");
   return res.data?.data;
 }
 
@@ -169,7 +169,7 @@ async function sendWhatsApp(phone: string, imageUrl: string): Promise<void> {
 // Core function: process image for specific user ID
 export async function processUserImage(userId: number | string) {
   // fetch all users
-  const usersRes = await axios.get("https://admin.mysampark.com//api/all_user_list");
+  const usersRes = await axios.get("https://admin.mysampark.com/api/all_user_list");
   console.log("usersRes",usersRes)
   const user = usersRes.data.data.find((u: any) => u.id == userId);
   console.log("user",user)
@@ -178,7 +178,7 @@ export async function processUserImage(userId: number | string) {
 
   // fetch frame data
   const frameRes = await axios.post(
-    "https://admin.mysampark.com//api/display_bussiness_frame",
+    "https://admin.mysampark.com/api/display_bussiness_frame",
     { business_id: user.businesses[0].id }
   );
   const framesData = {

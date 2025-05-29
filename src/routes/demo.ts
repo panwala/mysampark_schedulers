@@ -60,7 +60,7 @@ async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
       return cacheBusinessBackgroundImageResponse;
     }
     const res = await axios.post(
-      "https://admin.mysampark.com//api/imageapi",
+      "https://admin.mysampark.com/api/imageapi",
       { bussiness_id: bussiness_id }
     );
     backgroundImagePostIdCache.set(
@@ -71,8 +71,8 @@ async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
     return (
       res.data || {
         story:
-          "https://admin.mysampark.com//images/15/story/67da6410d8d52_3.png",
-        post: "https://admin.mysampark.com//images/15/post/67da637ea1787_3.png",
+          "https://admin.mysampark.com/images/15/story/67da6410d8d52_3.png",
+        post: "https://admin.mysampark.com/images/15/post/67da637ea1787_3.png",
         caption:
           "Success is a mindset, not a destination.  Transform your attitude, transform your results. #TechSolutions #SuccessMindset ",
       }
@@ -81,7 +81,7 @@ async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
     console.error("Error fetching background image L-80:", error);
     // return null;
     return {
-      story: "https://admin.mysampark.com//images/15/post/67da637ea1787_3.png",
+      story: "https://admin.mysampark.com/images/15/post/67da637ea1787_3.png",
       caption: "Success is a mindset, not a destination.  Transform your attitude, transform your results. #TechSolutions #SuccessMindset ",
     };
   }
@@ -90,7 +90,7 @@ async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
 async function getWhatsappMessageCaption(bussiness_id: Number): Promise<any> {
   try {
     const res = await axios.post(
-      "https://admin.mysampark.com//api/imageapi",
+      "https://admin.mysampark.com/api/imageapi",
       { bussiness_id: bussiness_id }
     );
     // console.log("ress", res.data.data);
@@ -123,7 +123,7 @@ async function updateUserPostIdOnServer(
     let res;
     if (!status) {
       res = await axios.post(
-        "https://admin.mysampark.com//api/store_user_post",
+        "https://admin.mysampark.com/api/store_user_post",
         {
           user_id: user_id,
           post_id: post_id,
@@ -134,7 +134,7 @@ async function updateUserPostIdOnServer(
       );
     } else {
       res = await axios.post(
-        "https://admin.mysampark.com//api/store_user_post",
+        "https://admin.mysampark.com/api/store_user_post",
         { user_id: user_id, post_id: post_id, status, bussiness_id }
       );
     }
@@ -626,7 +626,7 @@ async function uploadImageToAPI(
 // 🌐 Fetch all users
 export async function fetchAllUsers() {
   const response = await axios.get(
-    "https://admin.mysampark.com//api/bussiness_list"
+    "https://admin.mysampark.com/api/bussiness_list"
   );
   return response.data.data;
 }
@@ -758,7 +758,7 @@ async function generateForAllUsers() {
         // Fetch frame data
         await logger.info('🎨 Fetching frame data', { businessId: business.id });
         const frameResponse = await axios.post(
-          "https://admin.mysampark.com//api/display_bussiness_frame",
+          "https://admin.mysampark.com/api/display_bussiness_frame",
           { business_id: business.id }
         ).catch(async (error) => {
           await logger.error('❌ Failed to fetch frame data', {
