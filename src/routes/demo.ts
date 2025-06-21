@@ -1041,7 +1041,7 @@ async function generateForAllUsers() {
 
 // Update cron schedule to run every 30 minutes
 //*/10 * * * *
-cron.schedule("* * * * *", () => {
+cron.schedule("*/10 * * * *", () => {
   logger
     .info("🚀 Starting scheduled job", {
       timestamp: new Date().toISOString(),
