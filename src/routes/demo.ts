@@ -8,7 +8,7 @@ const path = require("path");
 const https = require("https");
 import { Image } from "canvas";
 const { createCanvas, loadImage, registerFont } = require("canvas");
-import { logger } from '../utils/logger';
+import { logger } from "../utils/logger";
 
 /// Define font paths
 const fontPath = "./public/font";
@@ -48,64 +48,109 @@ registerFont(`${fontPath}/montserrat/Montserrat-Black.ttf`, {
 
 const backgroundImageCache = new Map();
 const backgroundImagePostIdCache = new Map();
-async function getBackgroundImageUrl(bussiness_id: Number): Promise<any> {
+async function getBackgroundImageUrl(
+  bussiness_id: Number,
+  recordIndex: number = 0
+): Promise<any> {
   try {
     // at the top of your file, create a cache map
-
+    await logger.info("🎨 Fetching data using imageAPI", {
+      businessId: bussiness_id,
+      recordIndex,
+    });
     // if we've already fetched for this ID, return the cached promise/result
     if (backgroundImageCache.has(bussiness_id)) {
       let cacheBusinessBackgroundImageResponse =
         backgroundImageCache.get(bussiness_id);
       backgroundImageCache.delete(bussiness_id);
+      // If cached data is an array, return the specific record
+      if (Array.isArray(cacheBusinessBackgroundImageResponse)) {
+        return (
+          cacheBusinessBackgroundImageResponse[recordIndex] ||
+          cacheBusinessBackgroundImageResponse[0]
+        );
+      }
       return cacheBusinessBackgroundImageResponse;
     }
     const res = await axios.post(
-      "https://admin.mysampark.com/api/imageapi",
+      "https://admin.mysampark.com/api/imageapi_testing",
       { bussiness_id: bussiness_id }
     );
-    backgroundImagePostIdCache.set(
-      `${bussiness_id}-post_id`,
-      res.data.data.post_id
-    );
-    backgroundImageCache.set(bussiness_id, res.data);
-    return (
-      res.data || {
-        story:
-          "https://admin.mysampark.com/images/15/story/67da6410d8d52_3.png",
-        post: "https://admin.mysampark.com/images/15/post/67da637ea1787_3.png",
-        caption:
-          "Success is a mindset, not a destination.  Transform your attitude, transform your results. #TechSolutions #SuccessMindset ",
-      }
-    );
+    // Store each image's data in cache with a unique key
+    if (res.data.data && Array.isArray(res.data.data)) {
+      res.data.data.forEach((imageData: any, index: number) => {
+        backgroundImagePostIdCache.set(
+          `${bussiness_id}-post_id-${index}`,
+          imageData.post_id
+        );
+      });
+    } // Store the complete response data in cache
+    backgroundImageCache.set(bussiness_id, res.data.data);
+
+    // Return the specific record from the array or default if not found
+    const resultData =
+      res.data.data && Array.isArray(res.data.data) && res.data.data.length > 0
+        ? res.data.data[recordIndex] || res.data.data[0] // Get the specific record or fallback to first record
+        : {
+            story:
+              "https://admin.mysampark.com/images/15/story/67da6410d8d52_3.png",
+            post: "https://admin.mysampark.com/images/15/post/67da637ea1787_3.png",
+            caption:
+              "Success is a mindset, not a destination. Transform your attitude, transform your results. #TechSolutions #SuccessMindset",
+            bussiness_name: "Default Business",
+            category_name: "Default Category",
+            post_id: 0,
+          };
+    console.log("resultData in getBackgroundImageUrl :", resultData);
+    return resultData;
   } catch (error) {
     console.error("Error fetching background image L-80:", error);
     // return null;
     return {
       story: "https://admin.mysampark.com/images/15/post/67da637ea1787_3.png",
-      caption: "Success is a mindset, not a destination.  Transform your attitude, transform your results. #TechSolutions #SuccessMindset ",
+      caption:
+        "Success is a mindset, not a destination.  Transform your attitude, transform your results. #TechSolutions #SuccessMindset ",
     };
   }
 }
 
-async function getWhatsappMessageCaption(bussiness_id: Number): Promise<any> {
+async function getWhatsappMessageCaption(
+  bussiness_id: Number,
+  recordIndex: number = 0
+): Promise<any> {
   try {
     const res = await axios.post(
-      "https://admin.mysampark.com/api/imageapi",
+      "https://admin.mysampark.com/api/imageapi_testing",
       { bussiness_id: bussiness_id }
     );
-    // console.log("ress", res.data.data);
-    return (
-      res.data.data || {
-        caption:
-          "Success is a mindset, not a destination.  Transform your attitude, transform your results. #TechSolutions #SuccessMindset ",
-      }
-    );
-  } catch (error) {
-    console.error("Error fetching background image L-104:", error);
-    // return null;
+
+    if (
+      res.data.data &&
+      Array.isArray(res.data.data) &&
+      res.data.data.length > 0
+    ) {
+      // Get the specific record or fallback to first record
+      const selectedRecord = res.data.data[recordIndex] || res.data.data[0];
+      return {
+        caption: selectedRecord.caption,
+        bussiness_name: selectedRecord.bussiness_name,
+        category_name: selectedRecord.category_name,
+      };
+    }
+
     return {
       caption:
-        "Success is a mindset, not a destination.  Transform your attitude, transform your results. #TechSolutions #SuccessMindset ",
+        "Success is a mindset, not a destination. Transform your attitude, transform your results. #TechSolutions #SuccessMindset",
+      bussiness_name: "Default Business",
+      category_name: "Default Category",
+    };
+  } catch (error) {
+    console.error("Error fetching background image L-104:", error);
+    return {
+      caption:
+        "Success is a mindset, not a destination. Transform your attitude, transform your results. #TechSolutions #SuccessMindset",
+      bussiness_name: "Default Business",
+      category_name: "Default Category",
     };
   }
 }
@@ -138,7 +183,6 @@ async function updateUserPostIdOnServer(
         { user_id: user_id, post_id: post_id, status, bussiness_id }
       );
     }
-    // console.log("updateUserPostIdOnServer", res);
     return res;
   } catch (error) {
     console.error("Error Updating User PostId on Server:", error);
@@ -164,7 +208,6 @@ const sendWhatsAppTemplate = async (
     "Content-Type": "application/json; charset=UTF-8",
     Authorization: "Bearer OQW891APcEuT47TnB4ml0w",
   };
-  // console.log("imageUrl", imageUrl);
   console.log("caption in sendWhatsAppTemplate ", caption);
   const body = {
     messaging_product: "whatsapp",
@@ -221,16 +264,15 @@ const sendWhatsAppTemplate = async (
     const result: any = await response.json(); // 👈 parse response as JSON
     console.log(`📤 WhatsApp response:`, result);
     console.log(`📤 WhatsApp response data:`, result.success);
-    await logger.info('💬 sendWhatsAppTemplate whatsAPP API   status', {
+    await logger.info("💬 sendWhatsAppTemplate whatsAPP API   status", {
       success: result.success,
       statusDesc: result.statusDesc,
       phoneNumber: phoneNumber,
       payload: body,
       captionResponse: caption,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
     return result.success || false;
-
   } catch (error) {
     console.error("❌ Errors sending WhatsApp message:", error);
     await logger.error("❌ Error sending WhatsApp message:", { error });
@@ -302,13 +344,12 @@ export const generateImageBuffer = async (
     globalfont: any;
   },
   businessDatas: any,
-  counter: any
+  counter: any,
+  recordIndex: any = 0
 ) => {
   try {
-
     const framesData = actualframesData;
     const userData = singleuserData;
-
     // Extract necessary data from frames and user input
     const frameData = framesData.data[0];
     if (!frameData) throw new Error("Missing frameData");
@@ -343,19 +384,19 @@ export const generateImageBuffer = async (
     // );
     let backgroundImage;
     try {
-      const backgroundImageUrl = await getBackgroundImageUrl(businessDatas.id);
+      const backgroundImageUrl = await getBackgroundImageUrl(
+        businessDatas.id,
+        recordIndex
+      );
       const bgUrl =
-        counter == 0
-          ? backgroundImageUrl?.data?.story
-          : backgroundImageUrl?.data?.post;
-      await logger.info('Background url', { bgUrl });
+        counter == 0 ? backgroundImageUrl?.story : backgroundImageUrl?.post;
+      await logger.info("Background url", { bgUrl });
       if (!bgUrl) throw new Error("Missing background image URL");
       backgroundImage = await loadImage(bgUrl);
     } catch (bgErr) {
       console.error("Error loading background image:", bgErr);
       throw bgErr;
     }
-
 
     // Create base canvas and draw background
     const canvas = createCanvas(backgroundImage.width, backgroundImage.height);
@@ -379,7 +420,7 @@ export const generateImageBuffer = async (
     //   canvas.height - frameOverlayImage.height
     // );
     // Load frame overlay
-    let frameOverlayImage
+    let frameOverlayImage;
     try {
       frameOverlayImage = await loadImage(framesVariantData.image_url);
       ctx.drawImage(
@@ -397,7 +438,7 @@ export const generateImageBuffer = async (
     try {
       const logoImage = await loadImage(
         businessDatas.logo_image_url ||
-        "https://img.freepik.com/premium-vector/water-logo-design-concept_761413-7077.jpg?semt=ais_hybrid&w=250"
+          "https://img.freepik.com/premium-vector/water-logo-design-concept_761413-7077.jpg?semt=ais_hybrid&w=250"
       );
       const desiredLogoHeight = 150;
       const aspectRatio = logoImage.width / logoImage.height;
@@ -437,7 +478,9 @@ export const generateImageBuffer = async (
       globalFont.find((f: { type: string }) => f.type === "email"),
       globalFont.find((f: { type: string }) => f.type === "address"),
       globalFont.find((f: { type: string }) => f.type === "website"),
-    ].filter((f) => f !== undefined).filter(Boolean);
+    ]
+      .filter((f) => f !== undefined)
+      .filter(Boolean);
 
     // Extract color toggles for each line (Y = use color 'y', otherwise 'x')
     const textColours = [
@@ -446,7 +489,9 @@ export const generateImageBuffer = async (
       framesTextColour.line3,
       framesTextColour.line4,
       framesTextColour.line5,
-    ].filter((f) => f !== null).filter(Boolean);;
+    ]
+      .filter((f) => f !== null)
+      .filter(Boolean);
 
     // Group business data lines by line index
     const groupOfLines = [
@@ -455,7 +500,9 @@ export const generateImageBuffer = async (
       lineContent.line3,
       lineContent.line4,
       lineContent.line5,
-    ].filter((f) => f !== null).filter(Boolean);;
+    ]
+      .filter((f) => f !== null)
+      .filter(Boolean);
 
     // Loop through each line layout configuration
     for (const [index, row] of framesVariantLines.entries()) {
@@ -472,8 +519,8 @@ export const generateImageBuffer = async (
           textColours[index] === "X"
             ? frameData.x
             : textColours[index] === "Y"
-              ? frameData.y
-              : "#000000";
+            ? frameData.y
+            : "#000000";
 
         ctx.fillStyle = currentTextColor;
 
@@ -492,23 +539,21 @@ export const generateImageBuffer = async (
         const totalTextWidth =
           index === 0
             ? texts.reduce(
-              (sum: any, text: { text: any }) =>
-                sum + ctx.measureText(text.text).width,
-              0
-            )
+                (sum: any, text: { text: any }) =>
+                  sum + ctx.measureText(text.text).width,
+                0
+              )
             : texts.reduce(
-              (sum: any, text: { text: any }) =>
-                sum + ctx.measureText(text.text).width,
-              0
-            ) + iconSize;
+                (sum: any, text: { text: any }) =>
+                  sum + ctx.measureText(text.text).width,
+                0
+              ) + iconSize;
 
         const spacing = (+row.width - totalTextWidth) / (texts.length + 1);
         let xPos = +row.x + spacing;
 
         // Draw each text + optional icon
         for (const text of texts) {
-
-
           const getFontSize = fontsData[text.lineNo - 1];
           const fontWeight = +getFontSize.font_weight || "normal";
           ctx.font = `${fontWeight} ${+getFontSize.font_size}px ${fontFamily}`;
@@ -635,10 +680,22 @@ export async function fetchAllUsers() {
 async function uploadToPostImages(imagePath: string): Promise<string> {
   try {
     const originalFilename = path.basename(imagePath);
-    const uniqueFilename = `${Date.now()}-${Math.random().toString(36).substring(2)}-${originalFilename}`;
-    const destinationPath = path.join(__dirname, '..', '..', 'public', 'uploads', uniqueFilename);
+    const uniqueFilename = `${Date.now()}-${Math.random()
+      .toString(36)
+      .substring(2)}-${originalFilename}`;
+    const destinationPath = path.join(
+      __dirname,
+      "..",
+      "..",
+      "public",
+      "uploads",
+      uniqueFilename
+    );
 
-    await logger.info('Starting file upload', { originalFilename, uniqueFilename });
+    await logger.info("Starting file upload", {
+      originalFilename,
+      uniqueFilename,
+    });
 
     fs.copyFileSync(imagePath, destinationPath);
 
@@ -648,18 +705,21 @@ async function uploadToPostImages(imagePath: string): Promise<string> {
       try {
         fs.unlinkSync(imagePath);
         fs.unlinkSync(destinationPath);
-        await logger.info('Files cleaned up successfully', { imagePath, destinationPath });
+        await logger.info("Files cleaned up successfully", {
+          imagePath,
+          destinationPath,
+        });
       } catch (cleanupError) {
-        await logger.error('Error during file cleanup', cleanupError);
+        await logger.error("Error during file cleanup", cleanupError);
       }
     }, 300000); // 5 minutes in milliseconds
 
     const publicUrl = `${serverAddress}/uploads/${uniqueFilename}`;
-    await logger.success('File uploaded successfully', { publicUrl });
+    await logger.success("File uploaded successfully", { publicUrl });
 
     return publicUrl;
   } catch (error) {
-    await logger.error('Error saving image', error);
+    await logger.error("Error saving image", error);
     throw error;
   }
 }
@@ -667,23 +727,23 @@ async function uploadToPostImages(imagePath: string): Promise<string> {
 async function generateForAllUsers() {
   try {
     const startTime = new Date();
-    await logger.info('🔄 Starting batch image generation process', {
+    await logger.info("🔄 Starting batch image generation process", {
       startTime: startTime.toISOString(),
-      environment: process.env.NODE_ENV || 'development'
+      environment: process.env.NODE_ENV || "development",
     });
 
     const users = await fetchAllUsers();
-    await logger.info('👥 Retrieved user list', {
+    await logger.info("👥 Retrieved user list", {
       totalUsers: users.length,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
 
     const outputDir = path.join(__dirname, "output");
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir);
-      await logger.info('📁 Created output directory', {
+      await logger.info("📁 Created output directory", {
         outputDir,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     }
 
@@ -713,9 +773,9 @@ async function generateForAllUsers() {
     }
 
     const currentTime = getCurrentTimeIST();
-    await logger.info('⏰ Current processing time (IST)', {
+    await logger.info("⏰ Current processing time (IST)", {
       currentTime,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
 
     let processedCount = 0;
@@ -732,43 +792,46 @@ async function generateForAllUsers() {
           const reason = !business
             ? "Missing business object"
             : !business.id
-              ? "Missing business ID"
-              : business.whatsapp_number == null
-                ? "Missing WhatsApp number"
-                : "Unknown reason";
+            ? "Missing business ID"
+            : business.whatsapp_number == null
+            ? "Missing WhatsApp number"
+            : "Unknown reason";
 
-          await logger.warn('⚠️ Skipping business - Invalid configuration', {
+          await logger.warn("⚠️ Skipping business - Invalid configuration", {
             businessId,
             userId: user.id,
             reason,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
           });
           failureCount++;
           continue;
         }
 
-        await logger.info('🏢 Processing business', {
+        await logger.info("🏢 Processing business", {
           businessId: business.id,
           userId: user.id,
           businessName: business.business_name,
           whatsappNumber: business.whatsapp_number,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         });
 
         // Fetch frame data
-        await logger.info('🎨 Fetching frame data', { businessId: business.id });
-        const frameResponse = await axios.post(
-          "https://admin.mysampark.com/api/display_bussiness_frame",
-          { business_id: business.id }
-        ).catch(async (error) => {
-          await logger.error('❌ Failed to fetch frame data', {
-            businessId: business.id,
-            error: error.message,
-            response: error.response?.data,
-            timestamp: new Date().toISOString()
-          });
-          throw error;
+        await logger.info("🎨 Fetching frame data", {
+          businessId: business.id,
         });
+        const frameResponse = await axios
+          .post("https://admin.mysampark.com/api/display_bussiness_frame", {
+            business_id: business.id,
+          })
+          .catch(async (error) => {
+            await logger.error("❌ Failed to fetch frame data", {
+              businessId: business.id,
+              error: error.message,
+              response: error.response?.data,
+              timestamp: new Date().toISOString(),
+            });
+            throw error;
+          });
 
         const customFrames = {
           data: frameResponse.data?.data,
@@ -783,10 +846,10 @@ async function generateForAllUsers() {
           !Array.isArray(customFrames.globalfont) ||
           customFrames.globalfont.length === 0
         ) {
-          await logger.error('❌ Invalid frame data structure', {
+          await logger.error("❌ Invalid frame data structure", {
             businessId: business.id,
             customFrames,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
           });
           failureCount++;
           continue;
@@ -806,111 +869,151 @@ async function generateForAllUsers() {
         //   continue;
         // }
 
-        let captionResponse = await getWhatsappMessageCaption(business.id);
-        await logger.info('📝 Retrieved caption', {
-          businessId: business.id,
-          caption: captionResponse,
-          timestamp: new Date().toISOString()
-        });
-
-        // Generate and process images
-        for (let j = 0; j <= 1; j++) {
-          const imageType = j === 0 ? 'story' : 'post';
-          await logger.info(`🎨 Generating ${imageType} image`, {
+        const res = await axios.post(
+          "https://admin.mysampark.com/api/imageapi_testing",
+          { bussiness_id: business.id }
+        );
+        console.log(
+          `Total Number of post send to particular business"` +
+            res.data.data.length
+        );
+        await logger.info(
+          `Total Number of post send to particular business: ${res.data.data.length}`
+        );
+        for (
+          let recordIndex = 0;
+          recordIndex < res.data.data.length;
+          recordIndex++
+        ) {
+          let captionResponse = await getWhatsappMessageCaption(
+            business.id,
+            recordIndex
+          );
+          await logger.info("📝 Retrieved caption", {
             businessId: business.id,
-            imageNumber: j + 1,
-            timestamp: new Date().toISOString()
+            caption: captionResponse,
+            timestamp: new Date().toISOString(),
           });
 
-          try {
-            const buffer = await generateImageBuffer(user, customFrames, business, j);
-            console.log("generateImageBuffer buffer :", buffer);
-            if (!buffer) {
-              throw new Error('Image buffer generation failed');
-            }
-            const filename = `${Math.random()}user-${business.id}-${business.id}.png`;
-            const outputPath = path.join(outputDir, filename);
-            fs.writeFileSync(outputPath, buffer);
-
-            await logger.success(`✅ ${imageType} image generated`, {
+          // Generate and process images
+          for (let j = 0; j <= 1; j++) {
+            const imageType = j === 0 ? "story" : "post";
+            await logger.info(`🎨 Generating ${imageType} image`, {
               businessId: business.id,
-              outputPath,
-              timestamp: new Date().toISOString()
-            });
-
-            const uploadResponse = await uploadToPostImages(outputPath);
-            await logger.success('📤 Image uploaded successfully', {
-              businessId: business.id,
-              url: uploadResponse,
-              timestamp: new Date().toISOString()
-            });
-
-            const whatsappResponse = await sendWhatsAppTemplate(
-              business.whatsapp_number || "919624863068",
-              uploadResponse,
-              captionResponse
-            );
-
-            await logger.info('💬 WhatsApp message status', {
-              businessId: business.id,
-              success: whatsappResponse,
-              phone: business.whatsapp_number || "919624863068",
-              timestamp: new Date().toISOString()
-            });
-
-            if (backgroundImagePostIdCache.has(`${business.id}-post_id`) && j > 0) {
-              if (!whatsappResponse) {
-                await updateUserPostIdOnServer(
-                  business.user_id,
-                  backgroundImagePostIdCache.get(`${business.id}-post_id`),
-                  false,
-                  business.id,
-                  getCurrentTimeISTPlus10()
-                );
-                await logger.warn('⚠️ WhatsApp send failed - Scheduled retry', {
-                  businessId: business.id,
-                  nextAttempt: getCurrentTimeISTPlus10(),
-                  timestamp: new Date().toISOString()
-                });
-              } else {
-                await updateUserPostIdOnServer(
-                  business.user_id,
-                  backgroundImagePostIdCache.get(`${business.id}-post_id`),
-                  true,
-                  business.id
-                );
-                await logger.success('✅ Server updated with successful send', {
-                  businessId: business.id,
-                  timestamp: new Date().toISOString()
-                });
-              }
-              backgroundImagePostIdCache.delete(`${business.id}-post_id`);
-            }
-          } catch (imageError) {
-            await logger.error(`❌ Error processing ${imageType} image`, {
-              businessId: business.id,
-              error: imageError.message,
-              stack: imageError.stack,
+              imageNumber: j + 1,
               timestamp: new Date().toISOString(),
-              customFrames,
-              business,
-              user
-
             });
-            failureCount++;
-            continue;
+
+            try {
+              const buffer = await generateImageBuffer(
+                user,
+                customFrames,
+                business,
+                j,
+                recordIndex
+              );
+              console.log("generateImageBuffer buffer :", buffer);
+              if (!buffer) {
+                throw new Error("Image buffer generation failed");
+              }
+              const filename = `${Math.random()}user-${business.id}-${
+                business.id
+              }.png`;
+              const outputPath = path.join(outputDir, filename);
+              fs.writeFileSync(outputPath, buffer);
+
+              await logger.success(`✅ ${imageType} image generated`, {
+                businessId: business.id,
+                outputPath,
+                timestamp: new Date().toISOString(),
+              });
+
+              const uploadResponse = await uploadToPostImages(outputPath);
+              await logger.success("📤 Image uploaded successfully", {
+                businessId: business.id,
+                url: uploadResponse,
+                timestamp: new Date().toISOString(),
+              });
+
+              const whatsappResponse = await sendWhatsAppTemplate(
+                // "919624863068",
+                business.whatsapp_number || "919624863068",
+                uploadResponse,
+                captionResponse
+              );
+
+              await logger.info("💬 WhatsApp message status", {
+                businessId: business.id,
+                success: whatsappResponse,
+                phone: business.whatsapp_number || "919624863068",
+                timestamp: new Date().toISOString(),
+              });
+
+              if (
+                backgroundImagePostIdCache.has(`${business.id}-post_id`) &&
+                j > 0
+              ) {
+                if (!whatsappResponse) {
+                  await updateUserPostIdOnServer(
+                    business.user_id,
+                    backgroundImagePostIdCache.get(`${business.id}-post_id`),
+                    false,
+                    business.id,
+                    getCurrentTimeISTPlus10()
+                  );
+                  await logger.warn(
+                    "⚠️ WhatsApp send failed - Scheduled retry",
+                    {
+                      businessId: business.id,
+                      nextAttempt: getCurrentTimeISTPlus10(),
+                      timestamp: new Date().toISOString(),
+                    }
+                  );
+                } else {
+                  await updateUserPostIdOnServer(
+                    business.user_id,
+                    backgroundImagePostIdCache.get(`${business.id}-post_id`),
+                    true,
+                    business.id
+                  );
+                  await logger.success(
+                    "✅ Server updated with successful send",
+                    {
+                      businessId: business.id,
+                      timestamp: new Date().toISOString(),
+                    }
+                  );
+                }
+                backgroundImagePostIdCache.delete(`${business.id}-post_id`);
+              }
+            } catch (imageError) {
+              await logger.error(`❌ Error processing ${imageType} image`, {
+                businessId: business.id,
+                error: imageError.message,
+                stack: imageError.stack,
+                timestamp: new Date().toISOString(),
+                customFrames,
+                business,
+                user,
+              });
+              failureCount++;
+              continue;
+            }
           }
+
+          successCount++;
+          await logger.success("✅ Successfully processed business", {
+            businessId: business.id,
+            timestamp: new Date().toISOString(),
+          });
         }
-
-        successCount++;
-
       } catch (businessError) {
-        await logger.error('❌ Business processing failed', {
+        await logger.error("❌ Business processing failed", {
           businessId: user?.business?.id,
           userId: user?.id,
           error: businessError.message,
           stack: businessError.stack,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         });
         failureCount++;
       }
@@ -919,37 +1022,37 @@ async function generateForAllUsers() {
     const endTime = new Date();
     const duration = (endTime.getTime() - startTime.getTime()) / 1000;
 
-    await logger.info('🏁 Batch processing completed', {
+    await logger.info("🏁 Batch processing completed", {
       totalProcessed: processedCount,
       successful: successCount,
       failed: failureCount,
       durationSeconds: duration,
       startTime: startTime.toISOString(),
-      endTime: endTime.toISOString()
+      endTime: endTime.toISOString(),
     });
-
   } catch (err) {
-    await logger.error('❌ Fatal error in main process', {
+    await logger.error("❌ Fatal error in main process", {
       error: err.message,
       stack: err.stack,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   }
 }
 
 // Update cron schedule to run every 30 minutes
-
-cron.schedule("*/10 * * * *", () => {
-  logger.info('🚀 Starting scheduled job', {
-    timestamp: new Date().toISOString(),
-    schedule: 'Every 10 minutes'
-  })
+//*/10 * * * *
+cron.schedule("* * * * *", () => {
+  logger
+    .info("🚀 Starting scheduled job", {
+      timestamp: new Date().toISOString(),
+      schedule: "Every 10 minutes",
+    })
     .then(() => generateForAllUsers())
     .catch(async (err) => {
-      await logger.error('❌ Scheduled job failed', {
+      await logger.error("❌ Scheduled job failed", {
         error: err.message,
         stack: err.stack,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     });
 });
