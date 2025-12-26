@@ -80,7 +80,7 @@ async function getBackgroundImageUrl(
     if (res.data.data && Array.isArray(res.data.data)) {
       res.data.data.forEach((imageData: any, index: number) => {
         backgroundImagePostIdCache.set(
-          `${bussiness_id}-post_id-${index}`,
+          `${bussiness_id}-post_id`,
           imageData.post_id
         );
       });
@@ -163,26 +163,34 @@ async function updateUserPostIdOnServer(
   new_post_schedult_time?: String
 ): Promise<any> {
   try {
-    console.log("user_id", user_id);
-    console.log("post_id", post_id);
     let res;
     if (!status) {
+      const payload = {
+        user_id: user_id,
+        post_id: post_id,
+        status: status ? "1" : "0",
+        bussiness_id,
+        next_image_send_time: new_post_schedult_time,
+      };
+      await logger.info("✅ Update user post payload", payload);
       res = await axios.post(
         "https://admin.mysampark.com/api/store_user_post",
-        {
-          user_id: user_id,
-          post_id: post_id,
-          status,
-          bussiness_id,
-          next_image_send_time: new_post_schedult_time,
-        }
+        payload
       );
     } else {
+      const payload = {
+        user_id: user_id,
+        post_id: post_id,
+        status: status ? "1" : "0",
+        bussiness_id,
+      };
+      await logger.info("✅ Update user post payload", payload);
       res = await axios.post(
         "https://admin.mysampark.com/api/store_user_post",
-        { user_id: user_id, post_id: post_id, status, bussiness_id }
+        payload
       );
     }
+    console.log("✅ Update user post id on server response", res);
     return res;
   } catch (error) {
     console.error("Error Updating User PostId on Server:", error);
@@ -948,7 +956,6 @@ async function generateForAllUsers() {
                 phone: business.whatsapp_number || "919624863068",
                 timestamp: new Date().toISOString(),
               });
-
               if (
                 backgroundImagePostIdCache.has(`${business.id}-post_id`) &&
                 j > 0
