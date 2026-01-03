@@ -9,6 +9,7 @@ const https = require("https");
 import { Image } from "canvas";
 const { createCanvas, loadImage, registerFont } = require("canvas");
 import { logger } from "../utils/logger";
+import { AxiosResponse } from "axios";
 
 /// Define font paths
 const fontPath = "./public/font";
@@ -155,48 +156,61 @@ async function getWhatsappMessageCaption(
   }
 }
 
-async function updateUserPostIdOnServer(
-  user_id: Number,
-  post_id: Number,
-  status: Boolean,
-  bussiness_id: Number,
-  new_post_schedult_time?: String
-): Promise<any> {
+async function updateUserPostIdOnServer({
+  user_id,
+  post_id,
+  status,
+  business_id,
+  new_post_schedule_time,
+  fail_reason,
+}: {
+  user_id: number;
+  post_id: number;
+  status: boolean;
+  business_id: number;
+  new_post_schedule_time?: string;
+  fail_reason?: string;
+}): Promise<AxiosResponse> {
   try {
-    let res;
-    if (!status) {
-      const payload = {
-        user_id: user_id,
-        post_id: post_id,
-        status: status ? "1" : "0",
-        bussiness_id,
-        next_image_send_time: new_post_schedult_time,
-      };
-      await logger.info("✅ Update user post payload", payload);
-      res = await axios.post(
-        "https://admin.mysampark.com/api/store_user_post",
-        payload
-      );
-    } else {
-      const payload = {
-        user_id: user_id,
-        post_id: post_id,
-        status: status ? "1" : "0",
-        bussiness_id,
-      };
-      await logger.info("✅ Update user post payload", payload);
-      res = await axios.post(
-        "https://admin.mysampark.com/api/store_user_post",
-        payload
-      );
-    }
-    console.log("✅ Update user post id on server response", res);
+    const payload = {
+      user_id,
+      post_id,
+      status: status ? "1" : "0",
+      business_id,
+      ...(status === false && {
+        next_image_send_time: new_post_schedule_time ?? "",
+        fail_reason: fail_reason ?? "",
+      }),
+    };
+
+    await logger.info("Update user post payload", payload);
+
+    const res = await axios.post(
+      "https://admin.mysampark.com/api/store_user_post",
+      payload
+    );
+
+    await logger.info("Update user post response", {
+      status: res.status,
+      data: res.data,
+    });
+
     return res;
   } catch (error) {
-    console.error("Error Updating User PostId on Server:", error);
+    if (axios.isAxiosError(error)) {
+      await logger.error("Axios error while updating user post", {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      });
+    } else {
+      await logger.error("Unknown error while updating user post", error);
+    }
+
     return null;
   }
 }
+
 // Function to send WhatsApp message
 const sendWhatsAppTemplate = async (
   phoneNumber: any,
@@ -811,6 +825,16 @@ async function generateForAllUsers() {
             reason,
             timestamp: new Date().toISOString(),
           });
+
+          await updateUserPostIdOnServer({
+            user_id: business.user_id,
+            post_id: backgroundImagePostIdCache.get(`${business.id}-post_id`),
+            status: false,
+            business_id: business.id,
+            new_post_schedule_time: getCurrentTimeISTPlus10(),
+            fail_reason: reason ?? "Skipping business - Invalid configuration",
+          });
+
           failureCount++;
           continue;
         }
@@ -859,6 +883,7 @@ async function generateForAllUsers() {
             customFrames,
             timestamp: new Date().toISOString(),
           });
+
           failureCount++;
           continue;
         }
@@ -961,13 +986,16 @@ async function generateForAllUsers() {
                 j > 0
               ) {
                 if (!whatsappResponse) {
-                  await updateUserPostIdOnServer(
-                    business.user_id,
-                    backgroundImagePostIdCache.get(`${business.id}-post_id`),
-                    false,
-                    business.id,
-                    getCurrentTimeISTPlus10()
-                  );
+                  await updateUserPostIdOnServer({
+                    user_id: business.user_id,
+                    post_id: backgroundImagePostIdCache.get(
+                      `${business.id}-post_id`
+                    ),
+                    status: false,
+                    business_id: business.id,
+                    new_post_schedule_time: getCurrentTimeISTPlus10(),
+                    fail_reason: "⚠️ WhatsApp send failed - Scheduled retry",
+                  });
                   await logger.warn(
                     "⚠️ WhatsApp send failed - Scheduled retry",
                     {
@@ -977,12 +1005,14 @@ async function generateForAllUsers() {
                     }
                   );
                 } else {
-                  await updateUserPostIdOnServer(
-                    business.user_id,
-                    backgroundImagePostIdCache.get(`${business.id}-post_id`),
-                    true,
-                    business.id
-                  );
+                  await updateUserPostIdOnServer({
+                    user_id: business.user_id,
+                    post_id: backgroundImagePostIdCache.get(
+                      `${business.id}-post_id`
+                    ),
+                    status: true,
+                    business_id: business.id,
+                  });
                   await logger.success(
                     "✅ Server updated with successful send",
                     {
@@ -1003,6 +1033,7 @@ async function generateForAllUsers() {
                 business,
                 user,
               });
+
               failureCount++;
               continue;
             }
@@ -1022,6 +1053,7 @@ async function generateForAllUsers() {
           stack: businessError.stack,
           timestamp: new Date().toISOString(),
         });
+
         failureCount++;
       }
     }
