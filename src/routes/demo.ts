@@ -176,7 +176,7 @@ async function updateUserPostIdOnServer({
       user_id,
       post_id,
       status: status ? "1" : "0",
-      business_id,
+      bussiness_id: business_id,
       ...(status === false && {
         next_image_send_time: new_post_schedule_time ?? "",
         fail_reason: fail_reason ?? "",
@@ -227,19 +227,21 @@ const sendWhatsAppTemplate = async (
   }
 
   const headers = {
-    "Content-Type": "application/json; charset=UTF-8",
+    // "Content-Type": "application/json; charset=UTF-8",
     // Authorization: "Bearer OQW891APcEuT47TnB4ml0w",
     Authorization: "b3c62a5a-1b41-49e0-bcca-2c82772f856d",
     Accept: "application/json",
   };
   console.log("caption in sendWhatsAppTemplate ", caption);
+
   const body = {
     messaging_product: "whatsapp",
     recipient_type: "individual",
     to: phoneNumber,
     type: "template",
     template: {
-      name: "post_delivery_notification",
+      // name: "post_delivery_notification",
+      name: "delivery_update",
       language: { code: "en" },
       components: [
         {
@@ -288,16 +290,18 @@ const sendWhatsAppTemplate = async (
 
     const result: any = await response.json(); // 👈 parse response as JSON
     console.log(`📤 WhatsApp response:`, result);
-    console.log(`📤 WhatsApp response data:`, result.success);
+    const isSuccess = !!(result?.messages?.[0]?.message_status === "accepted");
+    // console.log(`📤 WhatsApp response data:`, result.success);
     await logger.info("💬 sendWhatsAppTemplate whatsAPP API   status", {
-      success: result.success,
-      statusDesc: result.statusDesc,
+      // success: result.success,
+      success: isSuccess,
+      // statusDesc: result.statusDesc,
       phoneNumber: phoneNumber,
       payload: body,
       captionResponse: caption,
       timestamp: new Date().toISOString(),
     });
-    return result.success || false;
+    return isSuccess || false;
   } catch (error) {
     console.error("❌ Errors sending WhatsApp message:", error);
     await logger.error("❌ Error sending WhatsApp message:", { error });
@@ -724,7 +728,8 @@ async function uploadToPostImages(imagePath: string): Promise<string> {
 
     fs.copyFileSync(imagePath, destinationPath);
 
-    const serverAddress = `https://cron.mysampark.com`;
+    // const serverAddress = `https://cron.mysampark.com`;
+    const serverAddress = `https://admin.mysampark.com`;
 
     setTimeout(async () => {
       try {
@@ -1010,6 +1015,9 @@ async function generateForAllUsers() {
                 timestamp: new Date().toISOString(),
               });
 
+              await logger.success("📤 Image uploaded outputPath url", {
+                outputPath,
+              });
               const uploadResponse = await uploadToPostImages(outputPath);
               await logger.success("📤 Image uploaded successfully", {
                 businessId: business.id,
