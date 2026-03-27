@@ -229,7 +229,8 @@ const sendWhatsAppTemplate = async (
   const headers = {
     "Content-Type": "application/json; charset=UTF-8",
     // Authorization: "Bearer OQW891APcEuT47TnB4ml0w",
-    Authorization: "Bearer b3c62a5a-1b41-49e0-bcca-2c82772f856d",
+    Authorization: "b3c62a5a-1b41-49e0-bcca-2c82772f856d",
+    Accept: "application/json",
   };
   console.log("caption in sendWhatsAppTemplate ", caption);
   const body = {
@@ -276,7 +277,7 @@ const sendWhatsAppTemplate = async (
   try {
     const response = await fetch(
       // "https://cloudapi.wbbox.in/api/v1.0/messages/send-template/918849987778",
-      "https://alots.io/v23.0/1088058691049659",
+      "https://alots.io/v23.0/1088058691049659/messages",
       {
         method: "POST",
         headers,
