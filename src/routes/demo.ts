@@ -757,6 +757,51 @@ async function generateForAllUsers() {
     });
 
     const users = await fetchAllUsers();
+    // const users = [
+    //   {
+    //     business: {
+    //       id: 19,
+    //       logo_image: "1756267663.68ae848f8f3a7.png",
+    //       business_name: "Bestto Cricket Club",
+    //       mobile_no: "7339928167",
+    //       email: null,
+    //       website: null,
+    //       address: null,
+    //       pincode: "382418",
+    //       instragram_id: null,
+    //       mobile_no_2: "9322863229",
+    //       frame_variant_no: "98",
+    //       status: "1",
+    //       user_id: "12",
+    //       business_category_id: 14,
+    //       bussiness_category_name: null,
+    //       post_schedult_time: "16:29:00",
+    //       is_sameday: 0,
+    //       user_frame_id: "907",
+    //       whatsapp_number: "7339928167",
+    //       is_sendpostnumber: 0,
+    //       logo_visiblity: 0,
+    //       formatted_id: "BUS0019",
+    //       is_no_active: 1,
+    //       festival_post_update: 1,
+    //       everyday_post_update: 1,
+    //       is_bussiness_active: 1,
+    //       last_post_send_status: "1",
+    //       post_story_send_count: 1,
+    //       post_updated_time: "16:42:00",
+    //       created_at: "2025-05-23T06:46:37.000000Z",
+    //       updated_at: "2026-03-27T10:40:21.000000Z",
+    //       user_personal_frame: null,
+    //       user_personal_frame_by_default: 0,
+    //       domain_name: "bestocrick",
+    //       domain_name_visiblity: 0,
+    //       bio: null,
+    //       logo_image_url:
+    //         "https://admin.mysampark.com/images/1756267663.68ae848f8f3a7.png",
+    //     },
+    //     postUserSend: null,
+    //   },
+    // ];
     await logger.info("👥 Retrieved user list", {
       totalUsers: users.length,
       timestamp: new Date().toISOString(),
@@ -810,6 +855,7 @@ async function generateForAllUsers() {
       processedCount++; // Increment processed count at the start of each user
       try {
         const business = user?.business;
+        const userId = Number(user?.business?.user_id ?? null);
 
         if (!business || !business.id || business.whatsapp_number == null) {
           const businessId = business?.id ?? "unknown";
@@ -823,13 +869,13 @@ async function generateForAllUsers() {
 
           await logger.warn("⚠️ Skipping business - Invalid configuration", {
             businessId,
-            userId: user.id,
+            userId: userId,
             reason,
             timestamp: new Date().toISOString(),
           });
 
           await updateUserPostIdOnServer({
-            user_id: business.user_id,
+            user_id: userId,
             post_id: backgroundImagePostIdCache.get(`${business.id}-post_id`),
             status: false,
             business_id: business.id,
@@ -843,7 +889,7 @@ async function generateForAllUsers() {
 
         await logger.info("🏢 Processing business", {
           businessId: business.id,
-          userId: user.id,
+          userId: userId,
           businessName: business.business_name,
           whatsappNumber: business.whatsapp_number,
           timestamp: new Date().toISOString(),
@@ -989,7 +1035,7 @@ async function generateForAllUsers() {
               ) {
                 if (!whatsappResponse) {
                   await updateUserPostIdOnServer({
-                    user_id: business.user_id,
+                    user_id: userId,
                     post_id: backgroundImagePostIdCache.get(
                       `${business.id}-post_id`,
                     ),
@@ -1008,7 +1054,7 @@ async function generateForAllUsers() {
                   );
                 } else {
                   await updateUserPostIdOnServer({
-                    user_id: business.user_id,
+                    user_id: userId,
                     post_id: backgroundImagePostIdCache.get(
                       `${business.id}-post_id`,
                     ),
@@ -1050,7 +1096,7 @@ async function generateForAllUsers() {
       } catch (businessError) {
         await logger.error("❌ Business processing failed", {
           businessId: user?.business?.id,
-          userId: user?.id,
+          userId: user?.business?.user_id,
           error: businessError.message,
           stack: businessError.stack,
           timestamp: new Date().toISOString(),
@@ -1079,7 +1125,7 @@ async function generateForAllUsers() {
     });
   } finally {
     await logger.info(
-      "=============================================================== End generateForAllUsers ===============================================================",
+      "=============================================================== End ===============================================================",
     );
   }
 }
