@@ -728,8 +728,8 @@ async function uploadToPostImages(imagePath: string): Promise<string> {
 
     fs.copyFileSync(imagePath, destinationPath);
 
-    // const serverAddress = `https://cron.mysampark.com`;
-    const serverAddress = `https://admin.mysampark.com`;
+    const serverAddress = `https://cron.mysampark.com`;
+    // const serverAddress = `https://admin.mysampark.com`;
 
     setTimeout(async () => {
       try {
