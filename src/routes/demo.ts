@@ -813,7 +813,8 @@ async function generateForAllUsers() {
       timestamp: new Date().toISOString(),
     });
 
-    const outputDir = path.join(__dirname, "output");
+    // const outputDir = path.join(__dirname, "output");
+    const outputDir = path.join(__dirname, "..", "public", "uploads");
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir);
       await logger.info("📁 Created output directory", {

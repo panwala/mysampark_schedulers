@@ -47,30 +47,33 @@ async function getBackgroundImageUrl(): Promise<string> {
 }
 
 // Helper: generate image buffer for a user
-async function generateImageBuffer(user: any, framesData: any): Promise<Buffer> {
+async function generateImageBuffer(
+  user: any,
+  framesData: any,
+): Promise<Buffer> {
   // load background
   const bgUrl = await getBackgroundImageUrl();
   const bgImage = await loadImage(bgUrl);
-  
+
   // Create canvas with optimized dimensions
   const maxWidth = 1200; // Maximum width to maintain quality while reducing size
   const aspectRatio = bgImage.height / bgImage.width;
   const width = Math.min(bgImage.width, maxWidth);
   const height = Math.round(width * aspectRatio);
-  
+
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext("2d");
-  
+
   // Draw background with smooth scaling
   ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = 'high';
+  ctx.imageSmoothingQuality = "high";
   ctx.drawImage(bgImage, 0, 0, width, height);
 
   // load frame overlay
   const frame = framesData.data[0];
   const variant = frame.frames_varinat[0];
   const overlay = await loadImage(variant.image_url);
-  
+
   // Scale overlay proportionally
   const overlayScale = width / bgImage.width;
   const overlayHeight = overlay.height * overlayScale;
@@ -98,24 +101,35 @@ async function generateImageBuffer(user: any, framesData: any): Promise<Buffer> 
     user.active_business.address,
     user.active_business.website,
   ];
-  const lineKeys = ["line1","line2","line3","line4","line5"];
-  const textColors = [frame.frames_text_colour.line1,frame.frames_text_colour.line2,frame.frames_text_colour.line3,frame.frames_text_colour.line4,frame.frames_text_colour.line5];
+  const lineKeys = ["line1", "line2", "line3", "line4", "line5"];
+  const textColors = [
+    frame.frames_text_colour.line1,
+    frame.frames_text_colour.line2,
+    frame.frames_text_colour.line3,
+    frame.frames_text_colour.line4,
+    frame.frames_text_colour.line5,
+  ];
 
   // draw each text line with icons
   variant.framesvariantline.forEach((lineDef: any, idx: number) => {
     const contentKey = lineKeys[idx];
     const content = line_content[contentKey];
     if (!content) return;
-    const fields = content.split(",").map((i: string) => businessFields[+i - 1] || "");
+    const fields = content
+      .split(",")
+      .map((i: string) => businessFields[+i - 1] || "");
 
     // basic font settings
-    const fontDef = globalfont.find((f: any) => f.type === contentKey.replace('line','name')) || globalfont[0];
+    const fontDef =
+      globalfont.find(
+        (f: any) => f.type === contentKey.replace("line", "name"),
+      ) || globalfont[0];
     ctx.font = `${fontDef.font_weight || "normal"} ${fontDef.font_size}px ${frame.font_type}`;
     ctx.fillStyle = textColors[idx] === "Y" ? frame.y : frame.x;
 
     // position and draw
     let x = +lineDef.x + 10;
-    const y = canvas.height - overlay.height + +lineDef.y + +lineDef.height/2;
+    const y = canvas.height - overlay.height + +lineDef.y + +lineDef.height / 2;
     fields.forEach((text: string, i: number) => {
       ctx.fillText(text, x, y);
       x += ctx.measureText(text).width + 20;
@@ -123,10 +137,10 @@ async function generateImageBuffer(user: any, framesData: any): Promise<Buffer> 
   });
 
   // Return optimized PNG buffer
-  return canvas.toBuffer('image/png', {
+  return canvas.toBuffer("image/png", {
     compressionLevel: 8,
     filters: canvas.PNG_FILTER_NONE,
-    resolution: 72
+    resolution: 72,
   });
 }
 
@@ -137,7 +151,12 @@ async function uploadImageToAPI(filePath: string): Promise<string> {
   const res = await axios.post(
     "https://cloudapi.wbbox.in/api/v1.0/uploads/918849987778",
     form,
-    { headers: { Authorization: `Bearer OQW891APcEuT47TnB4ml0w`, ...form.getHeaders() } }
+    {
+      headers: {
+        Authorization: `Bearer OQW891APcEuT47TnB4ml0w`,
+        ...form.getHeaders(),
+      },
+    },
   );
   return res.data.data.ImageUrl;
 }
@@ -153,33 +172,49 @@ async function sendWhatsApp(phone: string, imageUrl: string): Promise<void> {
       name: "image_delivery_update",
       language: { code: "en" },
       components: [
-        { type: "header", parameters: [{ type: "image", image: { link: imageUrl } }] },
+        {
+          type: "header",
+          parameters: [{ type: "image", image: { link: imageUrl } }],
+        },
         { type: "body", parameters: [{ type: "text", text: "Banner Image" }] },
-        { type: "button", sub_type: "url", index: "0", parameters: [{ type: "text", text: "http://www.mysampark.com/" }] }
-      ]
-    }
+        {
+          type: "button",
+          sub_type: "url",
+          index: "0",
+          parameters: [{ type: "text", text: "http://www.mysampark.com/" }],
+        },
+      ],
+    },
   };
   await axios.post(
     "https://cloudapi.wbbox.in/api/v1.0/messages/send-template/918849987778",
     payload,
-    { headers: { "Content-Type": "application/json", Authorization: `Bearer OQW891APcEuT47TnB4ml0w` } }
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer OQW891APcEuT47TnB4ml0w`,
+      },
+    },
   );
 }
 
 // Core function: process image for specific user ID
 export async function processUserImage(userId: number | string) {
   // fetch all users
-  const usersRes = await axios.get("https://admin.mysampark.com/api/all_user_list");
-  console.log("usersRes",usersRes)
+  const usersRes = await axios.get(
+    "https://admin.mysampark.com/api/all_user_list",
+  );
+  console.log("usersRes", usersRes);
   const user = usersRes.data.data.find((u: any) => u.id == userId);
-  console.log("user",user)
+  console.log("user", user);
   if (!user) throw new Error(`User with id=${userId} not found`);
-  if (!user.businesses[0]?.id) throw new Error(`User ${userId} has no active business`);
+  if (!user.businesses[0]?.id)
+    throw new Error(`User ${userId} has no active business`);
 
   // fetch frame data
   const frameRes = await axios.post(
     "https://admin.mysampark.com/api/display_bussiness_frame",
-    { business_id: user.businesses[0].id }
+    { business_id: user.businesses[0].id },
   );
   const framesData = {
     data: frameRes.data.data,
@@ -191,7 +226,8 @@ export async function processUserImage(userId: number | string) {
   const buffer = await generateImageBuffer(user, framesData);
 
   // save locally
-  const outputDir = path.join(__dirname, "output");
+  // const outputDir = path.join(__dirname, "output");
+  const outputDir = path.join(__dirname, "..", "public", "uploads");
   if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
   const filename = `user_${userId}_${Date.now()}.png`;
   const outputPath = path.join(outputDir, filename);
@@ -199,8 +235,8 @@ export async function processUserImage(userId: number | string) {
 
   // upload & send
   const imageUrl = await uploadImageToAPI(outputPath);
-  await sendWhatsApp("919624863068",imageUrl)
-//   await sendWhatsApp(user.mobileno || user.active_business.mobile_no || "919624863068", imageUrl);
+  await sendWhatsApp("919624863068", imageUrl);
+  //   await sendWhatsApp(user.mobileno || user.active_business.mobile_no || "919624863068", imageUrl);
 
   return imageUrl;
 }
