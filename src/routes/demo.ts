@@ -739,18 +739,18 @@ async function uploadToPostImages(imagePath: string): Promise<string> {
     const serverAddress = `https://cron.mysampark.com`;
     // const serverAddress = `https://admin.mysampark.com`;
 
-    setTimeout(async () => {
-      try {
-        fs.unlinkSync(imagePath);
-        fs.unlinkSync(destinationPath);
-        await logger.info("Files cleaned up successfully", {
-          imagePath,
-          destinationPath,
-        });
-      } catch (cleanupError) {
-        await logger.error("Error during file cleanup", cleanupError);
-      }
-    }, 300000); // 5 minutes in milliseconds
+    // setTimeout(async () => {
+    //   try {
+    //     fs.unlinkSync(imagePath);
+    //     fs.unlinkSync(destinationPath);
+    //     await logger.info("Files cleaned up successfully", {
+    //       imagePath,
+    //       destinationPath,
+    //     });
+    //   } catch (cleanupError) {
+    //     await logger.error("Error during file cleanup", cleanupError);
+    //   }
+    // }, 300000); // 5 minutes in milliseconds
 
     const publicUrl = `${serverAddress}/uploads/${uniqueFilename}`;
     await logger.success("File uploaded successfully", { publicUrl });
