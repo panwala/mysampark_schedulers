@@ -1062,8 +1062,8 @@ async function generateForAllUsers() {
               const whatsappResponse = await sendWhatsAppTemplate(
                 // "919624863068",
                 business.whatsapp_number || "919624863068",
-                // uploadResponse,
-                "https://media.istockphoto.com/id/814423752/photo/eye-of-model-with-colorful-art-make-up-close-up.jpg?s=612x612&w=0&k=20&c=l15OdMWjgCKycMMShP8UK94ELVlEGvt7GmB_esHWPYE=",
+                uploadResponse,
+                // "https://media.istockphoto.com/id/814423752/photo/eye-of-model-with-colorful-art-make-up-close-up.jpg?s=612x612&w=0&k=20&c=l15OdMWjgCKycMMShP8UK94ELVlEGvt7GmB_esHWPYE=",
                 captionResponse,
               );
 
