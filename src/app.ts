@@ -202,7 +202,7 @@ app.get("/test", (req: Request, res: Response) => {
 // });
 app.get("/", async (req: Request, res: Response) => {
   await generateForAllUsers();
-  res.send("Run");
+  res.send("Run test 1");
 });
 app.get("/generate-image", async (req: Request, res: Response) => {
   console.log("req.body", req.body);
