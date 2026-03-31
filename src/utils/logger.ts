@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 
 class Logger {
   private logDir: string;
@@ -7,6 +8,7 @@ class Logger {
   private readonly MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
   private readonly MAX_LOG_FILES = 30; // Keep last 30 days of logs
   private currentFileSize: number;
+  private readonly fileFormat: 'json' | 'pretty';
 
   constructor() {
     this.logDir = path.join(__dirname, '..', '..', 'logs');
@@ -16,6 +18,7 @@ class Logger {
     this.currentLogFile = this.getLogFileName();
     this.currentFileSize = this.getCurrentFileSize();
     this.cleanOldLogs();
+    this.fileFormat = (process.env.LOG_FILE_FORMAT === 'pretty' ? 'pretty' : 'json');
   }
 
   private getCurrentFileSize(): number {
@@ -56,17 +59,50 @@ class Logger {
     }
   }
 
-  private formatMessage(level: string, message: string, data?: any): string {
+  private toSerializableError(error: unknown) {
+    if (error instanceof Error) {
+      return { message: error.message, stack: error.stack, name: error.name };
+    }
+    return { value: error };
+  }
+
+  private buildRecord(level: string, message: string, data?: any) {
     const timestamp = new Date().toISOString();
-    let logMessage = `[${timestamp}] [${level}] ${message}`;
-    if (data) {
-      if (data instanceof Error) {
-        logMessage += `\nError: ${data.message}\nStack: ${data.stack}`;
-      } else {
-        logMessage += `\n${JSON.stringify(data, null, 2)}`;
-      }
+
+    if (data instanceof Error) {
+      return {
+        timestamp,
+        level,
+        message,
+        pid: process.pid,
+        host: os.hostname(),
+        error: this.toSerializableError(data),
+      };
+    }
+
+    return {
+      timestamp,
+      level,
+      message,
+      pid: process.pid,
+      host: os.hostname(),
+      ...(data !== undefined ? { data } : {}),
+    };
+  }
+
+  private formatConsole(record: any): string {
+    let logMessage = `[${record.timestamp}] [${record.level}] ${record.message}`;
+    if (record.error) {
+      logMessage += `\n${JSON.stringify(record.error, null, 2)}`;
+    } else if (record.data !== undefined) {
+      logMessage += `\n${JSON.stringify(record.data, null, 2)}`;
     }
     return logMessage + '\n';
+  }
+
+  private formatFile(record: any): string {
+    if (this.fileFormat === 'pretty') return this.formatConsole(record);
+    return JSON.stringify(record) + '\n';
   }
 
   private async rotateLog(): Promise<void> {
@@ -100,27 +136,27 @@ class Logger {
   }
 
   async info(message: string, data?: any) {
-    const formattedMessage = this.formatMessage('INFO', message, data);
-    console.log(formattedMessage);
-    await this.writeToFile(formattedMessage);
+    const record = this.buildRecord('INFO', message, data);
+    console.log(this.formatConsole(record));
+    await this.writeToFile(this.formatFile(record));
   }
 
   async error(message: string, error?: any) {
-    const formattedMessage = this.formatMessage('ERROR', message, error);
-    console.error(formattedMessage);
-    await this.writeToFile(formattedMessage);
+    const record = this.buildRecord('ERROR', message, error);
+    console.error(this.formatConsole(record));
+    await this.writeToFile(this.formatFile(record));
   }
 
   async warn(message: string, data?: any) {
-    const formattedMessage = this.formatMessage('WARN', message, data);
-    console.warn(formattedMessage);
-    await this.writeToFile(formattedMessage);
+    const record = this.buildRecord('WARN', message, data);
+    console.warn(this.formatConsole(record));
+    await this.writeToFile(this.formatFile(record));
   }
 
   async success(message: string, data?: any) {
-    const formattedMessage = this.formatMessage('SUCCESS', message, data);
-    console.log(formattedMessage);
-    await this.writeToFile(formattedMessage);
+    const record = this.buildRecord('SUCCESS', message, data);
+    console.log(this.formatConsole(record));
+    await this.writeToFile(this.formatFile(record));
   }
 }
 

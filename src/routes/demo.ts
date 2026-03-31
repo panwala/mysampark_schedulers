@@ -211,12 +211,62 @@ async function updateUserPostIdOnServer({
   }
 }
 
+const CONFIG = {
+  // Base URL where your server publicly serves `/uploads/<filename>`.
+  publicBaseUrl: "https://cron.mysampark.com",
+
+  // Where to store generated images on disk.
+  uploadsDir: path.join(__dirname, "..", "..", "public", "uploads"),
+
+  // WhatsApp provider endpoint + auth key.
+  whatsappMessagesUrl: "https://alots.io/v23.0/1088058691049659/messages",
+  whatsappAuthKey: "b3c62a5a-1b41-49e0-bcca-2c82772f856d",
+} as const;
+
+function getPublicBaseUrl(): string {
+  return String(CONFIG.publicBaseUrl || "")
+    .trim()
+    .replace(/\/+$/, "");
+}
+
+function getUploadsDir(): string {
+  return String(CONFIG.uploadsDir || "").trim();
+}
+
+function scheduleFileDeletion(filePath: string, delayMs = 300000) {
+  const timer: any = setTimeout(async () => {
+    try {
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+        await logger.info("🧹 Cleaned up file", { filePath });
+      }
+    } catch (cleanupError) {
+      await logger.error("🧹 Cleanup failed", { filePath, cleanupError });
+    }
+  }, delayMs);
+
+  // Don't keep the Node process alive just for cleanup timers.
+  if (typeof timer?.unref === "function") timer.unref();
+}
+
+function buildAuthorizationHeader(
+  key: string,
+  scheme: "Bearer" | "raw",
+): string {
+  const value = String(key || "").trim();
+  if (!value) return "";
+  if (/^bearer\s+/i.test(value)) return value;
+  if (scheme === "raw") return value;
+  return `Bearer ${value}`;
+}
+
 // Function to send WhatsApp message
 const sendWhatsAppTemplate = async (
   phoneNumber: any,
   imageUrl: string,
   caption: any,
 ) => {
+  const normalizedPhone = String(phoneNumber ?? "").replace(/[^\d]/g, "");
   function unicodeEscape(str) {
     return str.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function (char) {
       const high = char.charCodeAt(0);
@@ -226,18 +276,12 @@ const sendWhatsAppTemplate = async (
     });
   }
 
-  const headers = {
-    // "Content-Type": "application/json; charset=UTF-8",
-    // Authorization: "Bearer OQW891APcEuT47TnB4ml0w",
-    Authorization: "b3c62a5a-1b41-49e0-bcca-2c82772f856d",
-    Accept: "application/json",
-  };
   console.log("caption in sendWhatsAppTemplate ", caption);
 
   const body = {
     messaging_product: "whatsapp",
     recipient_type: "individual",
-    to: phoneNumber,
+    to: normalizedPhone,
     type: "template",
     template: {
       // name: "post_delivery_notification",
@@ -277,31 +321,68 @@ const sendWhatsAppTemplate = async (
   };
 
   try {
-    const response = await fetch(
-      // "https://cloudapi.wbbox.in/api/v1.0/messages/send-template/918849987778",
-      "https://alots.io/v23.0/1088058691049659/messages",
-      {
-        method: "POST",
-        headers,
-        body: JSON.stringify(body),
-        redirect: "follow",
-      },
-    );
+    const messagesUrl = CONFIG.whatsappMessagesUrl;
+    const authSchemesToTry: Array<"Bearer" | "raw"> = ["Bearer", "raw"];
 
-    const result: any = await response.json(); // 👈 parse response as JSON
-    console.log(`📤 WhatsApp response:`, result);
-    const isSuccess = !!(result?.messages?.[0]?.message_status === "accepted");
-    // console.log(`📤 WhatsApp response data:`, result.success);
+    let lastStatus: number | undefined;
+    let lastResult: any = undefined;
+    let isAcceptedByApi = false;
+
+    for (const scheme of authSchemesToTry) {
+      const headers = {
+        "Content-Type": "application/json; charset=UTF-8",
+        Authorization: buildAuthorizationHeader(CONFIG.whatsappAuthKey, scheme),
+        Accept: "application/json",
+      } as const;
+
+      const response = await axios.post(messagesUrl, body, {
+        headers,
+        timeout: 30000,
+        validateStatus: () => true,
+      });
+
+      lastStatus = response.status;
+      lastResult = response?.data;
+      console.log(`📤 WhatsApp response:`, {
+        scheme,
+        status: response.status,
+        result: lastResult,
+      });
+
+      isAcceptedByApi =
+        response.status >= 200 &&
+        response.status < 300 &&
+        !!(
+          lastResult?.messages?.[0]?.id ||
+          lastResult?.messages?.[0]?.message_status === "accepted" ||
+          lastResult?.success === true
+        );
+
+      if (isAcceptedByApi) break;
+
+      // Only retry on auth-like failures (common when switching providers).
+      if (response.status !== 401 && response.status !== 403) break;
+    }
+
+    if (!isAcceptedByApi) {
+      await logger.error("❌ WhatsApp API rejected message", {
+        status: lastStatus,
+        response: lastResult,
+        phoneNumber: normalizedPhone,
+        imageUrl,
+        template: body?.template?.name,
+        timestamp: new Date().toISOString(),
+      });
+    }
+
     await logger.info("💬 sendWhatsAppTemplate whatsAPP API   status", {
-      // success: result.success,
-      success: isSuccess,
-      // statusDesc: result.statusDesc,
-      phoneNumber: phoneNumber,
+      success: isAcceptedByApi,
+      phoneNumber: normalizedPhone,
       payload: body,
       captionResponse: caption,
       timestamp: new Date().toISOString(),
     });
-    return isSuccess || false;
+    return isAcceptedByApi || false;
   } catch (error) {
     console.error("❌ Errors sending WhatsApp message:", error);
     await logger.error("❌ Error sending WhatsApp message:", { error });
@@ -708,26 +789,16 @@ export async function fetchAllUsers() {
 // Add image upload function
 async function uploadToPostImages(imagePath: string): Promise<string> {
   try {
+    const uploadsDir = getUploadsDir();
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir, { recursive: true });
+    }
+
     const originalFilename = path.basename(imagePath);
     const uniqueFilename = `${Date.now()}-${Math.random()
       .toString(36)
       .substring(2)}-${originalFilename}`;
-    // const destinationPath = path.join(
-    //   __dirname,
-    //   "..",
-    //   "..",
-    //   "public",
-    //   "uploads",
-    //   uniqueFilename,
-    // );
-    const destinationPath = path.join(
-      __dirname,
-      "..",
-      "..",
-      "public_html",
-      "uploads",
-      uniqueFilename,
-    );
+    const destinationPath = path.join(uploadsDir, uniqueFilename);
 
     await logger.info("Starting file upload", {
       originalFilename,
@@ -736,8 +807,20 @@ async function uploadToPostImages(imagePath: string): Promise<string> {
 
     fs.copyFileSync(imagePath, destinationPath);
 
-    const serverAddress = `https://cron.mysampark.com`;
-    // const serverAddress = `https://admin.mysampark.com`;
+    // Remove the source temp image immediately to avoid duplicates.
+    try {
+      if (imagePath !== destinationPath && fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
+    } catch (sourceCleanupError) {
+      await logger.warn("🧹 Source cleanup failed (ignored)", {
+        imagePath,
+        sourceCleanupError,
+      });
+    }
+
+    // Remove the publicly-served file after 5 minutes.
+    scheduleFileDeletion(destinationPath, 5 * 60 * 1000);
 
     // setTimeout(async () => {
     //   try {
@@ -752,7 +835,7 @@ async function uploadToPostImages(imagePath: string): Promise<string> {
     //   }
     // }, 300000); // 5 minutes in milliseconds
 
-    const publicUrl = `${serverAddress}/uploads/${uniqueFilename}`;
+    const publicUrl = `${getPublicBaseUrl()}/uploads/${uniqueFilename}`;
     await logger.success("File uploaded successfully", { publicUrl });
 
     return publicUrl;
@@ -767,7 +850,7 @@ async function generateForAllUsers() {
     const startTime = new Date();
     await logger.info("🔄 Starting batch image generation process", {
       startTime: startTime.toISOString(),
-      environment: process.env.NODE_ENV || "development",
+      environment: "production",
     });
 
     const users = await fetchAllUsers();
@@ -777,17 +860,9 @@ async function generateForAllUsers() {
       timestamp: new Date().toISOString(),
     });
 
-    // const outputDir = path.join(__dirname, "output");
-    // const outputDir = path.join(__dirname, "..", "public", "uploads");
-    const outputDir = path.join(
-      __dirname,
-      "..",
-      "..",
-      "public_html",
-      "uploads",
-    );
+    const outputDir = getUploadsDir();
     if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir);
+      fs.mkdirSync(outputDir, { recursive: true });
       await logger.info("📁 Created output directory", {
         outputDir,
         timestamp: new Date().toISOString(),
@@ -913,20 +988,6 @@ async function generateForAllUsers() {
           failureCount++;
           continue;
         }
-
-        // Check scheduling
-        // if (
-        //   business.post_schedult_time !== currentTime &&
-        //   business.postUserSend !== currentTime
-        // ) {
-        //   await logger.info('⏳ Skipping - Not scheduled for current time', {
-        //     businessId: business.id,
-        //     scheduledTime: business.post_schedult_time,
-        //     currentTime,
-        //     timestamp: new Date().toISOString()
-        //   });
-        //   continue;
-        // }
 
         const res = await axios.post(
           "https://admin.mysampark.com/api/imageapi_testing",

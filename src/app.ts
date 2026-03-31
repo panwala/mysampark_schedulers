@@ -1,4 +1,9 @@
-import express, { Request, Response, NextFunction, ErrorRequestHandler } from "express";
+import express, {
+  Request,
+  Response,
+  NextFunction,
+  ErrorRequestHandler,
+} from "express";
 import dotenv from "dotenv";
 import routes from "./routes";
 const axios = require("axios");
@@ -8,11 +13,13 @@ import FormData from "form-data";
 import { processUserImage } from "./routes/generateImageRoute";
 const https = require("https");
 const { createCanvas, loadImage, registerFont } = require("canvas");
-const os = require('os');
+const os = require("os");
 const path = require("path");
+import { logger } from "./utils/logger";
+import { generateForAllUsers } from "./routes/demo";
 
 // Create uploads directory if it doesn't exist
-const uploadsDir = path.join(__dirname, '..', 'public', 'uploads');
+const uploadsDir = path.join(__dirname, "..", "public", "uploads");
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
@@ -22,23 +29,46 @@ app.use(express.json({ limit: "8mb" }));
 app.use(express.urlencoded({ extended: true, limit: "8mb" }));
 
 // Serve static files from public directory
-app.use('/uploads', express.static(path.join(__dirname, '..', 'public', 'uploads')));
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "..", "public", "uploads")),
+);
 
 dotenv.config();
 require("./routes/demo");
 const PORT = 43007;
 
+process.on("unhandledRejection", async (reason: any) => {
+  await logger.error(
+    "UnhandledRejection",
+    reason instanceof Error ? reason : { reason },
+  );
+});
+
+process.on("uncaughtException", async (err: Error) => {
+  await logger.error("UncaughtException", err);
+  // Exit so your process manager (PM2/systemd) can restart cleanly.
+  setTimeout(() => process.exit(1), 250);
+});
+
+const shutdown = async (signal: string) => {
+  await logger.warn("Shutdown signal received", { signal });
+  process.exit(0);
+};
+process.on("SIGTERM", () => void shutdown("SIGTERM"));
+process.on("SIGINT", () => void shutdown("SIGINT"));
+
 // Function to get server IP addresses
-function getServerAddresses(): { internal: string[], external: string[] } {
+function getServerAddresses(): { internal: string[]; external: string[] } {
   const interfaces = os.networkInterfaces();
   const addresses = {
     internal: [],
-    external: []
+    external: [],
   };
 
   Object.keys(interfaces).forEach((interfaceName) => {
     interfaces[interfaceName]?.forEach((interface_: any) => {
-      if (interface_.family === 'IPv4') {
+      if (interface_.family === "IPv4") {
         if (interface_.internal) {
           addresses.internal.push(interface_.address);
         } else {
@@ -54,21 +84,21 @@ function getServerAddresses(): { internal: string[], external: string[] } {
 // Function to get public IP using external service
 async function getPublicIP(): Promise<string | null> {
   try {
-    const response = await axios.get('https://api.ipify.org?format=json');
+    const response = await axios.get("https://api.ipify.org?format=json");
     return response.data.ip;
   } catch (error) {
-    console.error('Failed to fetch public IP:', error.message);
+    console.error("Failed to fetch public IP:", error.message);
     return null;
   }
 }
 
 // Test URL endpoint to verify server is accessible
 app.get("/test", (req: Request, res: Response) => {
-  res.json({ 
+  res.json({
     message: "Server is running",
     clientIP: req.ip,
     headers: req.headers,
-    host: req.get('host')
+    host: req.get("host"),
   });
 });
 
@@ -170,29 +200,30 @@ app.get("/test", (req: Request, res: Response) => {
 //     res.status(500).json({ success: false, error: err.message });
 //   }
 // });
-app.get("/", (req: Request, res: Response) => {
+app.get("/", async (req: Request, res: Response) => {
+  await generateForAllUsers();
   res.send("Run");
 });
-app.get("/generate-image", async(req: Request, res: Response) => {
-  console.log("req.body",req.body)
-  await processUserImage(req.body.userId)
+app.get("/generate-image", async (req: Request, res: Response) => {
+  console.log("req.body", req.body);
+  await processUserImage(req.body.userId);
   res.send("Done");
 });
 app.use("/api/v1", ...routes);
 
 // Add error handling middleware
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  console.error('Error:', err);
-  if ((err as any).type === 'entity.too.large') {
-    res.status(413).json({ 
-      error: 'Payload too large',
-      message: 'The uploaded file exceeds the size limit of 8MB'
+  console.error("Error:", err);
+  if ((err as any).type === "entity.too.large") {
+    res.status(413).json({
+      error: "Payload too large",
+      message: "The uploaded file exceeds the size limit of 8MB",
     });
     return;
   }
-  res.status(500).json({ 
-    error: 'Internal server error',
-    message: err.message 
+  res.status(500).json({
+    error: "Internal server error",
+    message: err.message,
   });
   return;
 };
@@ -202,43 +233,43 @@ app.use(errorHandler);
 app.listen(PORT, async () => {
   const addresses = getServerAddresses();
   const publicIP = await getPublicIP();
-  
-  console.log('\n=== SERVER INFORMATION ===');
-  console.log('\n1. Local Network URLs:');
-  addresses.internal.forEach(ip => {
+
+  console.log("\n=== SERVER INFORMATION ===");
+  console.log("\n1. Local Network URLs:");
+  addresses.internal.forEach((ip) => {
     console.log(`   • http://${ip}:${PORT}`);
   });
-  
-  console.log('\n2. Private Network URLs:');
-  addresses.external.forEach(ip => {
+
+  console.log("\n2. Private Network URLs:");
+  addresses.external.forEach((ip) => {
     console.log(`   • http://${ip}:${PORT}`);
   });
-  
-  console.log('\n3. Public URL:');
+
+  console.log("\n3. Public URL:");
   if (publicIP) {
     console.log(`   • http://${publicIP}:${PORT}`);
   } else {
-    console.log('   • Could not determine public IP');
+    console.log("   • Could not determine public IP");
   }
-  
-  console.log('\n4. Environment URL:');
+
+  console.log("\n4. Environment URL:");
   if (process.env.BASE_URL) {
     console.log(`   • ${process.env.BASE_URL}`);
   } else {
-    console.log('   • Not set (BASE_URL environment variable is missing)');
+    console.log("   • Not set (BASE_URL environment variable is missing)");
   }
-  
-  console.log('\n5. Test URLs:');
-  addresses.external.forEach(ip => {
+
+  console.log("\n5. Test URLs:");
+  addresses.external.forEach((ip) => {
     console.log(`   • http://${ip}:${PORT}/test`);
   });
   if (publicIP) {
     console.log(`   • http://${publicIP}:${PORT}/test`);
   }
-  
-  console.log('\nTo verify server accessibility:');
-  console.log('1. Try opening the test URLs in your browser');
-  console.log('2. The working URL is the one you should use as BASE_URL');
-  console.log('3. Set it using: export BASE_URL=http://your.working.ip:43007');
-  console.log('\n=========================\n');
+
+  console.log("\nTo verify server accessibility:");
+  console.log("1. Try opening the test URLs in your browser");
+  console.log("2. The working URL is the one you should use as BASE_URL");
+  console.log("3. Set it using: export BASE_URL=http://your.working.ip:43007");
+  console.log("\n=========================\n");
 });
